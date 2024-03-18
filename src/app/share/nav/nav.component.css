@@ -5,32 +5,25 @@
   align-items: first baseline;
   position: fixed;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  border-right: 1px solid black;
 }
 
 .title {
   display: flex;
   align-items: center;
+  border-bottom: 1px solid black;
 }
 .title svg {
   margin-right: 10px;
 }
 
-.nav-item {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-.nav-item svg {
-  margin-right: 10px;
+
+button:hover {
+  color: bisque;
 }
 
-li {
-  cursor: pointer;
-}
-li:hover {
-  background-color: #457D89;
-}
+
+
 
 p {
   font-weight: 900;

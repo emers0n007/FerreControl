@@ -6,9 +6,19 @@ import { Injectable } from '@angular/core';
 })
 export class AuthenticationService {
  
+  userActual = "NN"
+
+
+  setUserAdmin(){
+    this.userActual = "Administrador"
+  }
+
+  setUserGerent(){
+    this.userActual = "Gerente"
+  }
+
   private readonly AUTH_KEY = 'authenticated';
-  usuarioAutenticado = false;
-  
+  usuarioAutenticado = true;
 
   autenticarUsuario() {
     localStorage.setItem(this.AUTH_KEY, 'true');

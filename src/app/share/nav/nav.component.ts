@@ -21,7 +21,7 @@ export class NavComponent implements OnInit, OnDestroy {
 
 
   manageInventory(){
-    this.router.navigateByUrl('manage-inventory')
+    this.router.navigateByUrl('product')
   }
 
   manageSupplier(){

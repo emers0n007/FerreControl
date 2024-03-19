@@ -24,3 +24,19 @@ export class ProductService {
     return this.httpClient.get<any>('http://localhost:9000/FerreControl' + '/delete/'+ id).pipe(map(resp => resp));
   }
 }
+
+/*
+// Generar un ID aleatorio entre 1 y 1000
+const id = Math.floor(Math.random() * 1000) + 1;
+
+// Crear el objeto con el ID aleatorio
+const requestBody = {
+  "id": id
+};
+
+// Establecer el cuerpo de la solicitud con el objeto JSON generado
+pm.request.body.raw = JSON.stringify(requestBody);
+
+// Imprimir el cuerpo de la solicitud en la consola de Postman para verificar
+console.log("Cuerpo de la solicitud:", pm.request.body.raw);
+*/

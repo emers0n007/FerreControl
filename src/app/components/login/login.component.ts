@@ -29,6 +29,11 @@ export class LoginComponent implements OnInit {
       (u) => u.usuario === this.usuario && u.password === this.password
     );
     if (usuarioValido) {
+      if (this.usuario === 'admin'){
+        this.authService.setUserAdmin();
+      }else{
+        this.authService.setUserGerent();
+      }
       this.mensaje = 'Inicio de sesión exitoso';
       this.authService.autenticarUsuario();
       this.router.navigateByUrl('/product');

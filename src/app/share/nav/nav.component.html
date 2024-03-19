@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg">
-  <ul class="navbar-nav flex-column">
+  <ul class="navbar-nav flex-column mr-auto">
     <div class="title mb-4">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -17,13 +17,13 @@
         <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
         <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
       </svg>
-      <h4>Admin/User</h4>
+      <h4 [(ngModel)]="usuario" >{{ usuario }}</h4>
     </div>
 
     <button
       type="button"
       class="nav-link btn btn-primary mb-4"
-      (click)="manageInventory()"
+      (click)="manageInventory(); activarBoton('Gestionar Productos')" [ngClass]="{'active': botonActivo === 'Gestionar Productos'}"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +50,7 @@
     <button
       type="button"
       class="nav-link btn btn-primary mb-4"
-      (click)="manageSupplier()"
+      (click)="manageSupplier(); activarBoton('Gestionar Proveedores')" [ngClass]="{'active': botonActivo === 'Gestionar Proveedores'}"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +74,7 @@
       Gestionar Proveedores
     </button>
 
-    <button type="button" class="nav-link btn btn-primary mb-4" (click)="report()">
+    <button type="button" class="nav-link btn btn-primary mb-4" (click)="report(); activarBoton('Reportes')" [ngClass]="{'active': botonActivo === 'Reportes'}">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="icon icon-tabler icon-tabler-report-search"
@@ -101,7 +101,7 @@
       Reportes
     </button>
 
-    <button type="button" class="nav-link btn btn-primary" (click)="exit()">
+    <button type="button" class="nav-link btn btn-primary" (click)="exit(); activarBoton('Cerrar Sesión')" [ngClass]="{'active': botonActivo === 'Cerrar Sesión'}">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="icon icon-tabler icon-tabler-door-exit"

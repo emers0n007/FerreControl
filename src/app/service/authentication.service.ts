@@ -14,11 +14,15 @@ export class AuthenticationService {
   }
 
   setUserGerent(){
-    this.userActual = "Gerente"
+    this.userActual = "Gerente Financiero"
   }
 
+    getUserActual(): string{
+      return this.userActual;
+    }
+
   private readonly AUTH_KEY = 'authenticated';
-  usuarioAutenticado = true;
+  usuarioAutenticado = false;
 
   autenticarUsuario() {
     localStorage.setItem(this.AUTH_KEY, 'true');

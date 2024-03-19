@@ -5,7 +5,7 @@
   align-items: first baseline;
   position: fixed;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  border-right: 1px solid black;
+  
 }
 
 .title {
@@ -20,12 +20,11 @@
 
 button:hover {
   color: bisque;
+  transform: scale(1.015);
 }
 
-
-
-
-p {
+button {
   font-weight: 900;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-}/*# sourceMappingURL=nav.component.css.map */
+}
+/*# sourceMappingURL=nav.component.css.map */

@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {ProductService} from "../../service/product.service";
 import {ProductModel} from "../../model/ProductModel";
 import {FormControl, FormGroup} from "@angular/forms";
+import { Observable, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-product',
@@ -11,8 +14,12 @@ import {FormControl, FormGroup} from "@angular/forms";
 export class ProductComponent implements OnInit{
 
   list:ProductModel[] = [];
+  listComplet:ProductModel[] = [];
   formProduct:FormGroup= new FormGroup({});
   isUpdate:boolean = false;
+  selectedProduct: ProductModel = new ProductModel();
+  filteredProducts: ProductModel[] = [];
+
   constructor(private producService:ProductService) {
 }
   ngOnInit(): void {
@@ -30,6 +37,7 @@ export class ProductComponent implements OnInit{
     this.producService.getProducts().subscribe(resp=> {
       if (resp) {
         this.list = resp;
+        this.listComplet = resp;
       }
     });
   }
@@ -75,6 +83,32 @@ export class ProductComponent implements OnInit{
     this.formProduct.controls['quantity'].setValue(item.quantity);
     this.formProduct.controls['price'].setValue(item.price);
   }
+
+  search = (text$: Observable<string>) =>
+  text$.pipe(
+    distinctUntilChanged(),
+    map(term => {
+      const lowercaseTerm = term.toLowerCase();
+      this.filteredProducts = lowercaseTerm.length < 1 ? this.filteredProducts = this.listComplet : this.listComplet.filter(product => {
+        const includesTerm = product.name.toLowerCase().includes(lowercaseTerm);
+        this.console.log(includesTerm);
+        return includesTerm;
+      });
+      this.list = this.filteredProducts;
+      return [];
+    })
+  );
+
+  //formatProduct = (product: ProductModel) => product.name.toString();
+
+
+  // Método para manejar la selección de producto
+  /*onProductSelect(selectedProduct: ProductModel) {
+    console.log('Producto seleccionado:', selectedProduct);
+    // Aquí puedes realizar acciones adicionales cuando se selecciona un producto
+  }*/
+  
+
 
   protected readonly console = console;
 }

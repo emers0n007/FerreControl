@@ -22,7 +22,7 @@ export class AuthenticationService {
     }
 
   private readonly AUTH_KEY = 'authenticated';
-  usuarioAutenticado = false;
+  usuarioAutenticado = true;
 
   autenticarUsuario() {
     localStorage.setItem(this.AUTH_KEY, 'true');

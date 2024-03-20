@@ -9,7 +9,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import { NavComponent } from './share/nav/nav.component';
 import { LoginComponent } from './components/login/login.component';
 import { FormsModule } from '@angular/forms';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -25,7 +25,7 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

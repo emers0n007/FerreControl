@@ -4,7 +4,7 @@ import {ProductModel} from "../../model/ProductModel";
 import {FormControl, FormGroup} from "@angular/forms";
 import { Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
-
+import { ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-product',
@@ -12,7 +12,7 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit{
-
+  @ViewChild('toast') toast: any;
   list:ProductModel[] = [];
   listComplet:ProductModel[] = [];
   formProduct:FormGroup= new FormGroup({});
@@ -33,6 +33,13 @@ export class ProductComponent implements OnInit{
     });
   }
 
+  showToast() {
+    this.toast.nativeElement.classList.add('show');
+    setTimeout(() => {
+      this.toast.nativeElement.classList.remove('show');
+    }, 5000);
+  }
+
   listProducts(){
     this.producService.getProducts().subscribe(resp=> {
       if (resp) {
@@ -50,11 +57,10 @@ export class ProductComponent implements OnInit{
   save() {
     this.formProduct.controls['status'].setValue('1');
     this.producService.saveProduct(this.formProduct.value).subscribe(resp=>{
-
       if(resp){
         this.listProducts();
         this.formProduct.reset();
-
+        this.showToast();
       }
     });
   }
@@ -62,6 +68,7 @@ export class ProductComponent implements OnInit{
   update(){
     this.producService.updateProduct(this.formProduct.value).subscribe(resp=>{
       if(resp){
+        this.console.log(resp)
         this.listProducts();
         this.formProduct.reset();
       }
@@ -91,7 +98,6 @@ export class ProductComponent implements OnInit{
       const lowercaseTerm = term.toLowerCase();
       this.filteredProducts = lowercaseTerm.length < 1 ? this.filteredProducts = this.listComplet : this.listComplet.filter(product => {
         const includesTerm = product.name.toLowerCase().includes(lowercaseTerm);
-        this.console.log(includesTerm);
         return includesTerm;
       });
       this.list = this.filteredProducts;
@@ -101,14 +107,11 @@ export class ProductComponent implements OnInit{
 
   //formatProduct = (product: ProductModel) => product.name.toString();
 
-
   // Método para manejar la selección de producto
   /*onProductSelect(selectedProduct: ProductModel) {
     console.log('Producto seleccionado:', selectedProduct);
     // Aquí puedes realizar acciones adicionales cuando se selecciona un producto
   }*/
-  
-
 
   protected readonly console = console;
 }

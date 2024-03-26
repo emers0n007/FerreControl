@@ -1,7 +1,7 @@
 
 # FerreControl (FC)
 
-![176shots_so](https://github.com/camilonull/Ferrecontrol-FC/assets/82956281/7ec5c699-6ee2-40ea-917e-a37db1635ad8)
+![ferrecontrol](https://github.com/camilonull/Ferrecontrol-FC/assets/82956281/3ebf73d0-b6b1-473c-b8ca-2e4194e2a0d6)
 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.12.

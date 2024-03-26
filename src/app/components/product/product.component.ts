@@ -75,7 +75,6 @@ export class ProductComponent implements OnInit{
     });
   }
 
-
   delete(id: any){
     this.producService.deleteProduct(id).subscribe(resp=>{
       if(resp){

@@ -22,7 +22,9 @@ export class LoginComponent implements OnInit {
   password: string | undefined;
   mensaje: string = '';
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authService.cerrarSesion();
+  }
 
   login() {
     const usuarioValido = this.userOkay.find(

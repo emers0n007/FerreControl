@@ -46,17 +46,21 @@
       <tr>
         <th>Name</th>
         <th>ID</th>
-        <th>Quantity</th>
-        <th>Price</th>
+        <th>Stock</th>
+        <th>Price Buy</th>
+        <th>Price Sale</th>
+        <th>ID Supplier</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let item of list">
-        <td>{{ item.name }}</td>
-        <td>{{ item.id }}</td>
-        <td>{{ item.quantity }}</td>
-        <td>{{ item.price }}</td>
+        <td>{{item.name}}</td>
+        <td>{{item.id_product}}</td>
+        <td>{{item.stock}}</td>
+        <td>{{item.price_buy}}</td>
+        <td>{{item.price_sale}}</td>
+        <td>{{item.id_supplier}}</td>
         <td>
           <button
             type="button"
@@ -71,7 +75,7 @@
           <button
             type="button"
             class="btn btn-danger btn-sm"
-            (click)="delete(item.id)"
+            (click)="delete(item.id_product)"
           >
             <i class="fa fa-trash"></i>
           </button>
@@ -105,29 +109,37 @@
           <div class="mb-3 row">
             <label class="col-sm-2 col-form-label">Name</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" formControlName="name" />
+              <input type="text" class="form-control" formControlName="name">
             </div>
           </div>
           <div class="mb-3 row">
             <label class="col-sm-2 col-form-label">ID</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" formControlName="id" />
+              <input type="text" class="form-control" formControlName="id_product">
             </div>
           </div>
           <div class="mb-3 row">
             <label class="col-sm-2 col-form-label">Quantity</label>
             <div class="col-sm-10">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="quantity"
-              />
+              <input type="text" class="form-control" formControlName="stock">
             </div>
           </div>
           <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">Price</label>
+            <label class="col-sm-2 col-form-label">Price Buy</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" formControlName="price" />
+              <input type="text" class="form-control" formControlName="price_buy">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Price Sale</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" formControlName="price_sale">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">ID Supplier</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" formControlName="id_supplier">
             </div>
           </div>
         </form>

@@ -26,9 +26,11 @@ export class ProductComponent implements OnInit{
     this.listProducts();
     this.formProduct = new FormGroup({
       name: new FormControl(''),
-      id: new FormControl(''),
-      quantity: new FormControl(''),
-      price: new FormControl(''),
+      id_product: new FormControl(''),
+      stock: new FormControl(''),
+      price_buy: new FormControl(''),
+      price_sale: new FormControl(''),
+      id_supplier: new FormControl(''),
       status: new FormControl('1')
     });
   }
@@ -85,9 +87,13 @@ export class ProductComponent implements OnInit{
   selectItem(item:any){
     this.isUpdate = true;
     this.formProduct.controls['name'].setValue(item.name);
-    this.formProduct.controls['id'].setValue(item.id);
-    this.formProduct.controls['quantity'].setValue(item.quantity);
-    this.formProduct.controls['price'].setValue(item.price);
+    this.formProduct.controls['id_product'].setValue(item.id_product);
+    this.formProduct.controls['stock'].setValue(item.stock);
+    this.formProduct.controls['price_buy'].setValue(item.price_buy);
+    this.formProduct.controls['price_sale'].setValue(item.price_sale);
+    this.formProduct.controls['id_supplier'].setValue(item.id_supplier);
+    this.formProduct.controls['status'].setValue(item.status);
+
   }
 
   search = (text$: Observable<string>) =>

@@ -33,7 +33,7 @@ export class NavComponent implements OnInit, OnDestroy {
   }
 
   manageSupplier(){
-    this.router.navigateByUrl('manage-supplier')
+    this.router.navigateByUrl('supplier')
   }
 
   report(){

@@ -10,6 +10,7 @@ import { NavComponent } from './share/nav/nav.component';
 import { LoginComponent } from './components/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SupplierComponent } from './components/supplier/supplier.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AppComponent,
     ProductComponent,
     NavComponent,
-    LoginComponent
+    LoginComponent,
+    SupplierComponent
   ],
   imports: [
     BrowserModule,

@@ -17,7 +17,6 @@ export class ProductComponent implements OnInit{
   listComplet:ProductModel[] = [];
   formProduct:FormGroup= new FormGroup({});
   isUpdate:boolean = false;
-  selectedProduct: ProductModel = new ProductModel();
   filteredProducts: ProductModel[] = [];
 
   constructor(private producService:ProductService) {

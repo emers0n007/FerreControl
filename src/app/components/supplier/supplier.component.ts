@@ -8,7 +8,7 @@ import {distinctUntilChanged, map} from "rxjs/operators";
 @Component({
   selector: 'app-supplier',
   templateUrl: './supplier.component.html',
-  styleUrls: ['./supplier.component.sass']
+  styleUrls: ['./supplier.component.css']
 })
 export class SupplierComponent implements  OnInit{
   @ViewChild('toast') toast: any;

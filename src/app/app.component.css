@@ -5,15 +5,15 @@ html, body {
 .contenedor-router {
   display: flex;
   height: 100vh;
-  background-color: rgba(186, 245, 249, 0.56);
+  background-color: #D6EAF8 ;
   overflow: auto;
 }
 
 app-nav {
-  width: 220px;
+  width: 270px;
 }
 
 .content {
   flex: 1;
   height: 100%;
-}/*# sourceMappingURL=app.component.css.map */
+}

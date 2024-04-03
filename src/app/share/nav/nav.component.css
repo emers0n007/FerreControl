@@ -1,7 +1,9 @@
+
+
 .navbar {
-  background-color: rgba(51, 90, 81, 0.44);
-  width: 220px;
-  height: 100%;
+  background-color: rgba(123, 176, 203, 0.638);
+  height: 95%;
+  width: 260px;
   align-items: first baseline;
   position: fixed;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -20,11 +22,9 @@
 
 button:hover {
   color: bisque;
-  transform: scale(1.015);
+  transform: scale(1.020);
 }
 
 button {
   font-weight: 900;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
-/*# sourceMappingURL=nav.component.css.map */

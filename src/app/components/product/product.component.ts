@@ -59,7 +59,7 @@ export class ProductComponent implements OnInit{
     this.formProduct.controls['status'].setValue('1');
     this.producService.saveProduct(this.formProduct.value).subscribe(resp=>{
       if(resp){
-        this.console.log(resp)
+        this.console.log(resp);
         this.showAlert(resp.message, resp.seccess);
         this.listProducts();
         this.formProduct.reset();
@@ -70,7 +70,8 @@ export class ProductComponent implements OnInit{
   update(){
     this.producService.updateProduct(this.formProduct.value).subscribe(resp=>{
       if(resp){
-        this.console.log(resp)
+        this.console.log(resp);
+        this.showAlert(resp.message, resp.seccess);
         this.listProducts();
         this.formProduct.reset();
       }

@@ -4,6 +4,7 @@ import {SupplierModel} from "../../model/SupplierModel";
 import {SupplierService} from "../../service/supplier.service";
 import {Observable} from "rxjs";
 import {distinctUntilChanged, map} from "rxjs/operators";
+import { AlertService } from 'src/app/service/alert.service';
 
 @Component({
   selector: 'app-supplier',
@@ -18,7 +19,7 @@ export class SupplierComponent implements  OnInit{
   isUpdate:boolean = false;
   filteredSupplier: SupplierModel[] = [];
 
-  constructor(private supplierService:SupplierService) {
+  constructor(private supplierService:SupplierService, private alertService: AlertService) {
   }
 
   ngOnInit(): void {
@@ -47,6 +48,10 @@ export class SupplierComponent implements  OnInit{
     });
   }
 
+  showAlert(message: string, okay: boolean){
+    this.alertService.showAlert(message, okay);
+  }
+
   newProduct(){
     this.isUpdate = false;
     this.formSupplier.reset();
@@ -56,6 +61,7 @@ export class SupplierComponent implements  OnInit{
     this.formSupplier.controls['status'].setValue('1');
     this.supplierService.saveSupplier(this.formSupplier.value).subscribe(resp=>{
       if(resp){
+        this.showAlert(resp.message, resp.seccess);
         this.listSupplier();
         this.formSupplier.reset();
         this.showToast();
@@ -66,6 +72,7 @@ export class SupplierComponent implements  OnInit{
   update(){
     this.supplierService.updateSupplier(this.formSupplier.value).subscribe(resp=>{
       if(resp){
+        this.showAlert(resp.message, resp.seccess);
         this.console.log(resp)
         this.listSupplier();
         this.formSupplier.reset();

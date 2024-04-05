@@ -23,7 +23,7 @@
           type="text"
           class="form-control"
           [ngbTypeahead]="search"
-          placeholder="Buscar productos..."
+          placeholder="Buscar proveedores..."
         />
       </div>
       <div class="col-sm-2">
@@ -34,7 +34,7 @@
           data-bs-target="#exampleModal"
         >
           <i class="fa fa-save"></i>
-          Nuevo Producto
+          Nuevo Proveedor
         </button>
       </div>
 
@@ -44,11 +44,11 @@
   <table class="table mt-2 table-bordered">
     <thead class="table-primary">
     <tr>
-      <th>Name</th>
+      <th>Nombre</th>
       <th>ID</th>
-      <th>Phone</th>
-      <th>Email</th>
-      <th>Actions</th>
+      <th>Telefono</th>
+      <th>Correo</th>
+      <th>Acciones</th>
     </tr>
     </thead>
     <tbody>
@@ -90,8 +90,8 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 *ngIf="!isUpdate" class="modal-title fs-5">New Product</h1>
-        <h1 *ngIf="isUpdate" class="modal-title fs-5">Update Product</h1>
+        <h1 *ngIf="!isUpdate" class="modal-title fs-5">Nuevo Proveedor</h1>
+        <h1 *ngIf="isUpdate" class="modal-title fs-5">Actualizar Proveedor</h1>
         <button
           type="button"
           class="btn-close"
@@ -103,7 +103,7 @@
       <div class="modal-body">
         <form [formGroup]="formSupplier">
           <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">Name</label>
+            <label class="col-sm-2 col-form-label">Nombre</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" formControlName="name">
             </div>
@@ -115,13 +115,13 @@
             </div>
           </div>
           <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">Phone</label>
+            <label class="col-sm-2 col-form-label">Telefono</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" formControlName="phone">
             </div>
           </div>
           <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">Email</label>
+            <label class="col-sm-2 col-form-label">Correo</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" formControlName="email">
             </div>
@@ -130,27 +130,24 @@
       </div>
       <div class="modal-footer">
         <button
-          type="button"
-          class="btn btn-secondary btn-sm"
-          data-bs-dismiss="modal"
-        >
-          Close
-        </button>
-        <button
           *ngIf="!isUpdate"
           type="button"
           class="btn btn-success btn-sm"
-          (click)="save()"
+          data-bs-dismiss="modal"
+          aria-label="close"
+          (click)="save(); newProduct()"
         >
-          Save
+          Guardar
         </button>
         <button
           *ngIf="isUpdate"
           type="button"
           class="btn btn-warning btn-sm"
-          (click)="update()"
+          data-bs-dismiss="modal"
+          aria-label="close"
+          (click)="update(); newProduct()"
         >
-          Update
+          Actualizar
         </button>
       </div>
     </div>

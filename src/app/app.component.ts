@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from './service/authentication.service';
+import { AlertService } from './service/alert.service';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +9,31 @@ import { AuthenticationService } from './service/authentication.service';
 })
 export class AppComponent {
   title = 'FerreControl (FC)';
+  showAlert = false;
+  mesage = '';
+  shakeAlert: boolean = false;
 
-  constructor(private authService: AuthenticationService) {}
+
+  constructor(private authService: AuthenticationService, private alertService: AlertService) {}
 
   get userOn(): boolean {
     return this.authService.usuarioAutenticado;
+  }
+
+  ngOnInit(): void {
+    this.alertService.alert$.subscribe((res: any) => {
+      console.log(res);
+      this.mesage = res.message;
+      this.showAlert = true;
+      this.triggerShake();
+      setTimeout(() => {this.showAlert = false}, res.time);
+    });
+  }
+
+  triggerShake() {
+    this.shakeAlert = true;
+    setTimeout(() => {
+      this.shakeAlert = false;
+    }, 300);
   }
 }

@@ -1,6 +1,9 @@
 
 
 <div class="contenedor-router">
+    <div class="alert alert-primary alerta" role="alert" *ngIf="showAlert" >
+        {{mesage}}
+    </div>
     <app-nav *ngIf="userOn"></app-nav>
     <div class="content">
         <router-outlet></router-outlet>

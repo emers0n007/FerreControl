@@ -5,6 +5,7 @@ import {FormControl, FormGroup} from "@angular/forms";
 import { Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { ViewChild } from '@angular/core';
+import { AlertService } from 'src/app/service/alert.service';
 
 @Component({
   selector: 'app-product',
@@ -18,8 +19,10 @@ export class ProductComponent implements OnInit{
   formProduct:FormGroup= new FormGroup({});
   isUpdate:boolean = false;
   filteredProducts: ProductModel[] = [];
+  notificationSuccess: boolean = false;
+  notificationMessage: string = '';
 
-  constructor(private producService:ProductService) {
+  constructor(private producService:ProductService, private alertService: AlertService) {
 }
   ngOnInit(): void {
     this.listProducts();
@@ -32,13 +35,6 @@ export class ProductComponent implements OnInit{
       id_supplier: new FormControl(''),
       status: new FormControl('1')
     });
-  }
-
-  showToast() {
-    this.toast.nativeElement.classList.add('show');
-    setTimeout(() => {
-      this.toast.nativeElement.classList.remove('show');
-    }, 5000);
   }
 
   listProducts(){
@@ -55,13 +51,18 @@ export class ProductComponent implements OnInit{
     this.formProduct.reset();
   }
 
+  showAlert(message: string, okay: boolean){
+    this.alertService.showAlert(message, okay);
+  }
+  
   save() {
     this.formProduct.controls['status'].setValue('1');
     this.producService.saveProduct(this.formProduct.value).subscribe(resp=>{
       if(resp){
+        this.console.log(resp)
+        this.showAlert(resp.message, resp.seccess);
         this.listProducts();
         this.formProduct.reset();
-        this.showToast();
       }
     });
   }

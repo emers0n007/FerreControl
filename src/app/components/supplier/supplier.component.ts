@@ -32,12 +32,6 @@ export class SupplierComponent implements  OnInit{
     });
   }
 
-  showToast() {
-    this.toast.nativeElement.classList.add('show');
-    setTimeout(() => {
-      this.toast.nativeElement.classList.remove('show');
-    }, 5000);
-  }
 
   listSupplier(){
     this.supplierService.getSupplier().subscribe(resp=> {
@@ -64,7 +58,6 @@ export class SupplierComponent implements  OnInit{
         this.showAlert(resp.message, resp.success);
         this.listSupplier();
         this.formSupplier.reset();
-        this.showToast();
       }
     });
   }
@@ -108,14 +101,6 @@ export class SupplierComponent implements  OnInit{
         return [];
       })
     );
-
-  //formatProduct = (product: ProductModel) => product.name.toString();
-
-  // Método para manejar la selección de producto
-  /*onProductSelect(selectedProduct: ProductModel) {
-    console.log('Producto seleccionado:', selectedProduct);
-    // Aquí puedes realizar acciones adicionales cuando se selecciona un producto
-  }*/
 
   protected readonly console = console;
 }

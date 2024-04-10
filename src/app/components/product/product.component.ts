@@ -6,6 +6,8 @@ import { Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { ViewChild } from '@angular/core';
 import { AlertService } from 'src/app/service/alert.service';
+import {SupplierModel} from "../../model/SupplierModel";
+import {SupplierService} from "../../service/supplier.service";
 
 @Component({
   selector: 'app-product',
@@ -15,6 +17,7 @@ import { AlertService } from 'src/app/service/alert.service';
 export class ProductComponent implements OnInit{
   @ViewChild('toast') toast: any;
   list:ProductModel[] = [];
+  listSuppliers:SupplierModel[] = [];
   listComplet:ProductModel[] = [];
   formProduct:FormGroup= new FormGroup({});
   isUpdate:boolean = false;
@@ -22,10 +25,11 @@ export class ProductComponent implements OnInit{
   notificationSuccess: boolean = false;
   notificationMessage: string = '';
 
-  constructor(private producService:ProductService, private alertService: AlertService) {
+  constructor(private producService:ProductService, private alertService: AlertService, private supplierService:SupplierService) {
 }
   ngOnInit(): void {
     this.listProducts();
+    this.listSupplier();
     this.formProduct = new FormGroup({
       name: new FormControl(''),
       id_product: new FormControl(''),
@@ -46,6 +50,14 @@ export class ProductComponent implements OnInit{
     });
   }
 
+  listSupplier(){
+    this.supplierService.getSupplier().subscribe(resp=> {
+      if (resp) {
+        this.listSuppliers = resp;
+      }
+    });
+  }
+
   newProduct(){
     this.isUpdate = false;
     this.formProduct.reset();
@@ -54,13 +66,31 @@ export class ProductComponent implements OnInit{
   showAlert(message: string, okay: boolean){
     this.alertService.showAlert(message, okay);
   }
-  
+
   save() {
-    this.formProduct.controls['status'].setValue('1');
-    this.producService.saveProduct(this.formProduct.value).subscribe(resp=>{
+    const supplierId = this.formProduct.controls['id_supplier'].value;
+    const supplierName = ' ';
+    const supplierPhone = ' ';
+    const supplierEmail = ' ';
+
+    const productData = {
+      id_product: this.formProduct.controls['id_product'].value,
+      name: this.formProduct.controls['name'].value,
+      stock: this.formProduct.controls['stock'].value,
+      price_buy: this.formProduct.controls['price_buy'].value,
+      price_sale: this.formProduct.controls['price_sale'].value,
+      supplier: {
+        id_supplier: supplierId,
+        name: supplierName,
+        phone: supplierPhone,
+        email: supplierEmail
+      },
+      status: 1
+    };
+    this.producService.saveProduct(productData).subscribe(resp=>{
       if(resp){
         this.console.log(resp);
-        this.showAlert(resp.message, resp.seccess);
+        this.showAlert(resp.message, resp.success);
         this.listProducts();
         this.formProduct.reset();
       }
@@ -68,10 +98,29 @@ export class ProductComponent implements OnInit{
   }
 
   update(){
-    this.producService.updateProduct(this.formProduct.value).subscribe(resp=>{
+    const supplierId = this.formProduct.controls['id_supplier'].value;
+    const supplierName = ' ';
+    const supplierPhone = ' ';
+    const supplierEmail = ' ';
+
+    const productData = {
+      id_product: this.formProduct.controls['id_product'].value,
+      name: this.formProduct.controls['name'].value,
+      stock: this.formProduct.controls['stock'].value,
+      price_buy: this.formProduct.controls['price_buy'].value,
+      price_sale: this.formProduct.controls['price_sale'].value,
+      supplier: {
+        id_supplier: supplierId,
+        name: supplierName,
+        phone: supplierPhone,
+        email: supplierEmail
+      },
+      status: 1
+    };
+    this.producService.updateProduct(productData).subscribe(resp=>{
       if(resp){
         this.console.log(resp);
-        this.showAlert(resp.message, resp.seccess);
+        this.showAlert(resp.message, resp.success);
         this.listProducts();
         this.formProduct.reset();
       }

@@ -61,7 +61,7 @@ export class SupplierComponent implements  OnInit{
     this.formSupplier.controls['status'].setValue('1');
     this.supplierService.saveSupplier(this.formSupplier.value).subscribe(resp=>{
       if(resp){
-        this.showAlert(resp.message, resp.seccess);
+        this.showAlert(resp.message, resp.success);
         this.listSupplier();
         this.formSupplier.reset();
         this.showToast();

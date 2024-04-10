@@ -1,11 +1,15 @@
 // authentication.service.ts
 import { Injectable } from '@angular/core';
+import {map, Observable} from "rxjs";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
- 
+
+  constructor(private httpClient:HttpClient) {
+  }
   userActual = "NN"
   private readonly AUTH_KEY = 'true';
   private readonly AUTH_USER = 'No debe estar aqui';
@@ -16,6 +20,10 @@ export class AuthenticationService {
     console.log(localStorage.getItem(this.AUTH_USER));
   }
 
+  listUsers(): Observable<any>{
+    return this.httpClient.get<any>('http://localhost:9000/FerreControl' + '/login').pipe(map(resp => resp));
+  }
+
   setUserGerent(){
     this.userActual = "Gerente Financiero"
     localStorage.setItem(this.AUTH_USER, 'Gerente Financiero');
@@ -23,10 +31,10 @@ export class AuthenticationService {
 
     getUserActual(): string{
       return this.isUser();
-      
+
     }
 
- 
+
 
   private isAuthenticated(): boolean {
     return localStorage.getItem(this.AUTH_KEY) === 'true';
@@ -49,5 +57,5 @@ export class AuthenticationService {
   }
 
 
-  
+
 }

@@ -1,42 +1,59 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from 'src/app/service/authentication.service';
+import {UserModel} from "../../model/Users";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit{
+
+  formLogin:FormGroup= new FormGroup({});
+  mensaje:String = '';
+
   constructor(
     private router: Router,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
   ) {}
 
-  userOkay = [
-    { usuario: 'admin', password: '123' },
-    { usuario: 'admin2', password: '123' },
-  ];
+  userOkay:UserModel[] = []
 
-  usuario: string | undefined;
-  password: string | undefined;
-  mensaje: string = '';
 
   ngOnInit(): void {
+    this.listUsers();
     this.authService.cerrarSesion();
+    this.formLogin = new FormGroup({
+    user: new FormControl(''),
+    password: new FormControl('')
+  });
+  }
+
+  listUsers(){
+    this.authService.listUsers().subscribe(resp=> {
+      if (resp) {
+        this.userOkay = resp;
+        }
+    });
   }
 
   login() {
+    console.log('Usuarios obtenidos:', this.userOkay); // Aquí imprimes userOkay
+    const userName = this.formLogin.controls['user'].value;
+    const password = this.formLogin.controls['password'].value;
+
     const usuarioValido = this.userOkay.find(
-      (u) => u.usuario === this.usuario && u.password === this.password
+      (u) => u.name_user === userName && u.password === password
     );
+
     if (usuarioValido) {
-      if (this.usuario === 'admin'){
+      if (this.formLogin.controls['user'].value === 'admin'){
         this.authService.setUserAdmin();
       }else{
         this.authService.setUserGerent();
       }
-      this.mensaje = 'Inicio de sesión exitoso';
+      this.mensaje = 'Inicio Correcto';
       this.authService.autenticarUsuario();
       this.router.navigateByUrl('/product');
     } else {

@@ -1,5 +1,5 @@
 <div class="login">
-    <form class="custom-form" method="post">
+    <form class="custom-form" method="post" [formGroup]="formLogin">
       <div class="icon">
         <svg
           width="90"
@@ -28,24 +28,24 @@
           </defs>
         </svg>
       </div>
-  
+
       <h1>LOGIN</h1>
-  
-      <div class="input-user">
+
+      <div class="input-user" >
         <input
           type="text"
+          formControlName="user"
           name="user"
           placeholder="Usuario"
-          [(ngModel)]="usuario"
           required="required"
         />
       </div>
-  
+
       <input
         type="password"
+        formControlName="password"
         name="password"
         placeholder="Contraseña"
-        [(ngModel)]="password"
         required="required"
       />
       <div *ngIf="mensaje" class="mensaje">{{ mensaje }}</div>
@@ -53,4 +53,4 @@
       <button type="submit" (click)="login()">Iniciar Sesion</button>
     </form>
   </div>
-  
+

@@ -1,4 +1,8 @@
 @import '@fontsource-variable/roboto-mono';
+/* styles.css */
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+
 /* styles.scss */
 body {
     font-family: 'Roboto Mono Variable', monospace;

@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {SupplierModel} from "../../model/SupplierModel";
 import {SupplierService} from "../../service/supplier.service";
 import {Observable} from "rxjs";
@@ -26,12 +26,19 @@ export class SupplierComponent implements  OnInit{
     this.listSupplier();
     this.formSupplier = new FormGroup({
       name: new FormControl(''),
-      id_supplier: new FormControl(''),
+      id_supplier: new FormControl('', Validators.required),
       phone: new FormControl(''),
       email: new FormControl('')
     });
   }
 
+  disableId(){
+    this.formSupplier.get('id_supplier')?.disable();
+  }
+
+  activeId(){
+    this.formSupplier.get('id_supplier')?.enable();
+  }
 
   listSupplier(){
     this.supplierService.getSupplier().subscribe(resp=> {
@@ -48,6 +55,7 @@ export class SupplierComponent implements  OnInit{
 
   newProduct(){
     this.isUpdate = false;
+    this.activeId();
     this.formSupplier.reset();
   }
 
@@ -82,6 +90,7 @@ export class SupplierComponent implements  OnInit{
   }
   selectItem(item:any){
     this.isUpdate = true;
+    this.disableId();
     this.formSupplier.controls['name'].setValue(item.name);
     this.formSupplier.controls['id_supplier'].setValue(item.id_supplier);
     this.formSupplier.controls['phone'].setValue(item.phone);

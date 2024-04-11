@@ -10,6 +10,7 @@ import { AlertService } from './service/alert.service';
 export class AppComponent {
   title = 'FerreControl (FC)';
   showAlert = false;
+  okay: boolean = false;
   mesage = '';
   shakeAlert: boolean = false;
 
@@ -24,6 +25,7 @@ export class AppComponent {
     this.alertService.alert$.subscribe((res: any) => {
       console.log(res);
       this.mesage = res.message;
+      this.okay = res.okay;
       this.showAlert = true;
       this.triggerShake();
       setTimeout(() => {this.showAlert = false}, res.time);

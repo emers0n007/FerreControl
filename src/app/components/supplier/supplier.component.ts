@@ -64,7 +64,7 @@ export class SupplierComponent implements  OnInit{
     this.formSupplier.controls['status'].setValue('1');
     this.supplierService.saveSupplier(this.formSupplier.value).subscribe(resp=>{
       if(resp){
-        this.showAlert(resp.message, resp.success);
+        this.showAlert(resp.message, resp.seccess);
         this.listSupplier();
         this.formSupplier.reset();
       }
@@ -81,7 +81,7 @@ export class SupplierComponent implements  OnInit{
     }
     this.supplierService.updateSupplier(supplierData).subscribe(resp=>{
       if(resp){
-        this.showAlert(resp.message, resp.success);
+        this.showAlert(resp.message, resp.seccess);
         this.console.log(resp)
         this.listSupplier();
         this.formSupplier.reset();
@@ -102,7 +102,7 @@ export class SupplierComponent implements  OnInit{
     this.formSupplier.controls['id_supplier'].setValue(item.id_supplier);
     this.formSupplier.controls['phone'].setValue(item.phone);
     this.formSupplier.controls['email'].setValue(item.email);
-    //this.disableId();
+    this.disableId();
   }
 
   search = (text$: Observable<string>) =>

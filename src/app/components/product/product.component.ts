@@ -1,31 +1,32 @@
-import {Component, OnInit} from '@angular/core';
-import {ProductService} from "../../service/product.service";
-import {ProductModel} from "../../model/ProductModel";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import { Component, OnInit } from '@angular/core';
+import { ProductService } from '../../service/product.service';
+import { ProductModel } from '../../model/ProductModel';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
-import { ViewChild } from '@angular/core';
 import { AlertService } from 'src/app/service/alert.service';
-import {SupplierModel} from "../../model/SupplierModel";
-import {SupplierService} from "../../service/supplier.service";
+import { SupplierModel } from '../../model/SupplierModel';
+import { SupplierService } from '../../service/supplier.service';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css']
+  styleUrls: ['./product.component.css'],
 })
-export class ProductComponent implements OnInit{
-
-  list:ProductModel[] = [];
-  listSuppliers:SupplierModel[] = [];
-  listComplet:ProductModel[] = [];
-  formProduct:FormGroup= new FormGroup({});
-  isUpdate:boolean = false;
+export class ProductComponent implements OnInit {
+  list: ProductModel[] = [];
+  listSuppliers: SupplierModel[] = [];
+  listComplet: ProductModel[] = [];
+  formProduct: FormGroup = new FormGroup({});
+  isUpdate: boolean = false;
   filteredProducts: ProductModel[] = [];
   selectedSupplierId: number = 0;
 
-  constructor(private producService:ProductService, private alertService: AlertService, private supplierService:SupplierService) {
-}
+  constructor(
+    private producService: ProductService,
+    private alertService: AlertService,
+    private supplierService: SupplierService
+  ) {}
   ngOnInit(): void {
     this.listProducts();
     this.listSupplier();
@@ -36,20 +37,20 @@ export class ProductComponent implements OnInit{
       price_buy: new FormControl(''),
       price_sale: new FormControl(''),
       id_supplier: new FormControl(''),
-      status: new FormControl('1')
+      status: new FormControl('1'),
     });
   }
 
-  disableId(){
+  disableId() {
     this.formProduct.get('id_product')?.disable();
   }
 
-  activeId(){
+  activeId() {
     this.formProduct.get('id_product')?.enable();
   }
 
-  listProducts(){
-    this.producService.getProducts().subscribe(resp=> {
+  listProducts() {
+    this.producService.getProducts().subscribe((resp) => {
       if (resp) {
         this.list = resp;
         this.listComplet = resp;
@@ -57,21 +58,21 @@ export class ProductComponent implements OnInit{
     });
   }
 
-  listSupplier(){
-    this.supplierService.getSupplier().subscribe(resp=> {
+  listSupplier() {
+    this.supplierService.getSupplier().subscribe((resp) => {
       if (resp) {
         this.listSuppliers = resp;
       }
     });
   }
 
-  newProduct(){
+  newProduct() {
     this.isUpdate = false;
     this.activeId();
     this.formProduct.reset();
   }
 
-  showAlert(message: string, okay: boolean){
+  showAlert(message: string, okay: boolean) {
     this.alertService.showAlert(message, okay);
   }
 
@@ -91,12 +92,12 @@ export class ProductComponent implements OnInit{
         id_supplier: supplierId,
         name: supplierName,
         phone: supplierPhone,
-        email: supplierEmail
+        email: supplierEmail,
       },
-      status: 1
+      status: 1,
     };
-    this.producService.saveProduct(productData).subscribe(resp=>{
-      if(resp){
+    this.producService.saveProduct(productData).subscribe((resp) => {
+      if (resp) {
         this.console.log(resp);
         this.showAlert(resp.message, resp.seccess);
         this.listProducts();
@@ -105,8 +106,7 @@ export class ProductComponent implements OnInit{
     });
   }
 
-  update(){
-    
+  update() {
     const supplierId = this.formProduct.controls['id_supplier'].value;
     const supplierName = ' ';
     const supplierPhone = ' ';
@@ -122,12 +122,12 @@ export class ProductComponent implements OnInit{
         id_supplier: supplierId,
         name: supplierName,
         phone: supplierPhone,
-        email: supplierEmail
+        email: supplierEmail,
       },
-      status: 1
+      status: 1,
     };
-    this.producService.updateProduct(productData).subscribe(resp=>{
-      if(resp){
+    this.producService.updateProduct(productData).subscribe((resp) => {
+      if (resp) {
         this.console.log(resp);
         this.showAlert(resp.message, resp.seccess);
         this.listProducts();
@@ -136,14 +136,14 @@ export class ProductComponent implements OnInit{
     });
   }
 
-  delete(id: any){
-    this.producService.deleteProduct(id).subscribe(resp=>{
-      if(resp){
+  delete(id: any) {
+    this.producService.deleteProduct(id).subscribe((resp) => {
+      if (resp) {
         this.listProducts();
       }
     });
   }
-  selectItem(item:any){
+  selectItem(item: any) {
     this.isUpdate = true;
     this.disableId();
     this.formProduct.controls['name'].setValue(item.name);
@@ -153,22 +153,35 @@ export class ProductComponent implements OnInit{
     this.formProduct.controls['price_sale'].setValue(item.price_sale);
     this.formProduct.controls['id_supplier'].setValue(item.id_supplier);
     this.formProduct.controls['status'].setValue(item.status);
+    const selectedSupplier = this.listSuppliers.find(
+      (supplier) => supplier.id_supplier === item.id_supplier
+    );
 
+    if (selectedSupplier) {
+      this.formProduct.controls['id_supplier'].setValue(
+        selectedSupplier.id_supplier
+      );
+    }
   }
 
   search = (text$: Observable<string>) =>
-  text$.pipe(
-    distinctUntilChanged(),
-    map(term => {
-      const lowercaseTerm = term.toLowerCase();
-      this.filteredProducts = lowercaseTerm.length < 1 ? this.filteredProducts = this.listComplet : this.listComplet.filter(product => {
-        const includesTerm = product.name.toLowerCase().includes(lowercaseTerm);
-        return includesTerm;
-      });
-      this.list = this.filteredProducts;
-      return [];
-    })
-  );
+    text$.pipe(
+      distinctUntilChanged(),
+      map((term) => {
+        const lowercaseTerm = term.toLowerCase();
+        this.filteredProducts =
+          lowercaseTerm.length < 1
+            ? (this.filteredProducts = this.listComplet)
+            : this.listComplet.filter((product) => {
+                const includesTerm = product.name
+                  .toLowerCase()
+                  .includes(lowercaseTerm);
+                return includesTerm;
+              });
+        this.list = this.filteredProducts;
+        return [];
+      })
+    );
 
   protected readonly console = console;
 }

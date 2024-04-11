@@ -8,11 +8,9 @@ import {HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import { NavComponent } from './share/nav/nav.component';
 import { LoginComponent } from './components/login/login.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule} from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SupplierComponent } from './components/supplier/supplier.component';
-
-
 
 @NgModule({
   declarations: [
@@ -29,6 +27,7 @@ import { SupplierComponent } from './components/supplier/supplier.component';
     ReactiveFormsModule,
     FormsModule,
     NgbModule,
+   
   ],
   providers: [],
   bootstrap: [AppComponent]

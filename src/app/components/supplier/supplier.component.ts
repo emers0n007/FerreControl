@@ -90,11 +90,11 @@ export class SupplierComponent implements  OnInit{
   }
   selectItem(item:any){
     this.isUpdate = true;
-    this.disableId();
     this.formSupplier.controls['name'].setValue(item.name);
     this.formSupplier.controls['id_supplier'].setValue(item.id_supplier);
     this.formSupplier.controls['phone'].setValue(item.phone);
     this.formSupplier.controls['email'].setValue(item.email);
+    //this.disableId();
   }
 
   search = (text$: Observable<string>) =>

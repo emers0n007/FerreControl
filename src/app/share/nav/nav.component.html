@@ -20,7 +20,7 @@
         </svg>
         <h4>{{ usuario }}</h4>
       </div>
-  
+
       <button
         type="button"
         class="nav-link btn btn-primary mb-4  text-color-custom"
@@ -47,7 +47,7 @@
         </svg>
         Gestionar Productos
       </button>
-  
+
       <button
         type="button"
         class="nav-link btn btn-primary mb-4"
@@ -74,19 +74,19 @@
         </svg>
         Gestionar Proveedores
       </button>
-  
-      <button type="button" class="nav-link btn btn-primary mb-4" (click)="report(); activarBoton('Entrada')" [ngClass]="{'active': botonActivo === 'Entrada'}">
+
+      <button type="button" class="nav-link btn btn-primary mb-4" (click)="manageBuy(); activarBoton('Entrada')" [ngClass]="{'active': botonActivo === 'Entrada'}">
         <svg xmlns="http://www.w3.org/2000/svg" width="38"
         height="38" viewBox="0 0 32 32"><defs><style>.cls-1{fill:none;stroke:#ffffff;stroke-linejoin:round;stroke-width:2px}</style></defs><g id="_303-Box_Arrow_Right" data-name="303-Box Arrow Right"><path d="M16 31H1V1h30v15" class="cls-1"/><path d="M11 1h10v10H11zM11 7h10M24 18l5 5-5 5M29 23H17" class="cls-1"/></g></svg>
         Entrada
       </button>
-  
-      <button type="button" class="nav-link btn btn-primary mb-4" (click)="report(); activarBoton('Salida')" [ngClass]="{'active': botonActivo === 'Salida'}">
+
+      <button type="button" class="nav-link btn btn-primary mb-4" (click)="manageSale(); activarBoton('Salida')" [ngClass]="{'active': botonActivo === 'Salida'}">
         <svg width="38"
         height="38" viewBox="0 0 32 32"><defs><style>.cls-1{fill:none;stroke:#ffffff;stroke-linejoin:round;stroke-width:2px}</style></defs><g id="_304-Box_Arrow_left" data-name="304-Box Arrow left"><path d="M16 31H1V1h30v15" class="cls-1"/><path d="M11 1h10v10H11zM11 7h10M23 28l-5-5 5-5M18 23h12" class="cls-1"/></g></svg>
         Salida
       </button>
-  
+
       <button type="button" class="nav-link btn btn-primary mb-4" (click)="report(); activarBoton('Reportes')" [ngClass]="{'active': botonActivo === 'Reportes'}">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -113,7 +113,7 @@
         </svg>
         Reportes
       </button>
-  
+
       <button type="button" class="nav-link btn btn-primary" (click)="exit(); activarBoton('Cerrar Sesión')" [ngClass]="{'active': botonActivo === 'Cerrar Sesión'}">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -137,5 +137,5 @@
       </button>
     </ul>
   </nav>
-  
+
 </div>

@@ -28,7 +28,8 @@ export class SupplierComponent implements  OnInit{
       name: new FormControl(''),
       id_supplier: new FormControl('', Validators.required),
       phone: new FormControl(''),
-      email: new FormControl('')
+      email: new FormControl(''),
+      status: new FormControl('')
     });
   }
 
@@ -71,9 +72,16 @@ export class SupplierComponent implements  OnInit{
   }
 
   update(){
-    this.supplierService.updateSupplier(this.formSupplier.value).subscribe(resp=>{
+    const supplierData = {
+      id_supplier: this.formSupplier.controls['id_supplier'].value,
+      name: this.formSupplier.controls['name'].value,
+      phone: this.formSupplier.controls['phone'].value,
+      email: this.formSupplier.controls['email'].value,
+      status:1
+    }
+    this.supplierService.updateSupplier(supplierData).subscribe(resp=>{
       if(resp){
-        this.showAlert(resp.message, resp.seccess);
+        this.showAlert(resp.message, resp.success);
         this.console.log(resp)
         this.listSupplier();
         this.formSupplier.reset();

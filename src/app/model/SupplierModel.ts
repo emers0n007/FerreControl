@@ -3,4 +3,5 @@ export class SupplierModel{
   name:String=' ';
   phone:String=' ';
   email:String=' ';
+  status:number=0;
 }

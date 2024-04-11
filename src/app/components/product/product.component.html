@@ -3,33 +3,31 @@
 </div>
 
 <div class="col-md-12 p-5">
-  <div class="container">
-    <div class="row">
-      <div class="col-auto">
-        <i class="fa fa-search fa-lg fa text-primary text-center" aria-hidden="true"></i>
-      </div>
-      <div class="col">
-        <input
-          type="text"
-          class="form-control"
-          [ngbTypeahead]="search"
-          placeholder="Buscar productos..."
-        />
-      </div>
-      <div class="col-sm-2">
-        <button
-        type="button"
-        class="btn btn-primary btn-sm"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-      >
-        <i class="fa fa-save"></i>
-        Nuevo Producto
+  <div class="input-group row-auto">
+    <div class="input-group-prepend">
+      <button type="button" class="btn btn-primary me-2" data-mdb-ripple-init>
+        <i class="fas fa-search"></i>
       </button>
-      </div>
-
     </div>
+    <div class="form-outline flex-grow-1 me-4" data-mdb-input-init>
+      <input
+        type="text"
+        class="form-control"
+        [ngbTypeahead]="search"
+        placeholder="Buscar productos..."
+      />
+    </div>
+    <button
+      type="button"
+      class="btn btn-primary btn-sm"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+    >
+      <i class="fa fa-save"></i>
+      Nuevo Producto
+    </button>
   </div>
+  
   <table class="table mt-2 table-bordered">
     <thead class="table-primary">
       <tr>

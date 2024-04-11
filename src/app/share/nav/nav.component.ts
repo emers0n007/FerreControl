@@ -11,7 +11,7 @@ export class NavComponent implements OnInit, OnDestroy {
   userLoginOn:boolean=false;
   usuario: string = this.authService.getUserActual();
   botonActivo: string = 'Gestionar Productos';
-  
+
   constructor( private router: Router, private authService: AuthenticationService) { }
 
 
@@ -20,16 +20,23 @@ export class NavComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-   
+
   }
 
   ngOnInit(): void {
-    
+
   }
 
 
   manageInventory(){
     this.router.navigateByUrl('product')
+  }
+  manageBuy(){
+    this.router.navigateByUrl('buy')
+  }
+
+  manageSale(){
+    this.router.navigateByUrl('sale')
   }
 
   manageSupplier(){

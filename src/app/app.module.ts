@@ -11,6 +11,8 @@ import { LoginComponent } from './components/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SupplierComponent } from './components/supplier/supplier.component';
+import { BuyComponent } from './components/buy/buy.component';
+import { SaleComponent } from './components/sale/sale.component';
 
 
 
@@ -20,7 +22,9 @@ import { SupplierComponent } from './components/supplier/supplier.component';
     ProductComponent,
     NavComponent,
     LoginComponent,
-    SupplierComponent
+    SupplierComponent,
+    BuyComponent,
+    SaleComponent
   ],
   imports: [
     BrowserModule,

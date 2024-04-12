@@ -21,6 +21,7 @@ export class ProductComponent implements OnInit {
   isUpdate: boolean = false;
   filteredProducts: ProductModel[] = [];
   selectedSupplierId: number = 0;
+  selectedSupplier: string = "hola";
 
   constructor(
     private producService: ProductService,
@@ -153,15 +154,7 @@ export class ProductComponent implements OnInit {
     this.formProduct.controls['price_sale'].setValue(item.price_sale);
     this.formProduct.controls['id_supplier'].setValue(item.id_supplier);
     this.formProduct.controls['status'].setValue(item.status);
-    const selectedSupplier = this.listSuppliers.find(
-      (supplier) => supplier.id_supplier === item.id_supplier
-    );
-
-    if (selectedSupplier) {
-      this.formProduct.controls['id_supplier'].setValue(
-        selectedSupplier.id_supplier
-      );
-    }
+    this.selectedSupplier = item; 
   }
 
   search = (text$: Observable<string>) =>

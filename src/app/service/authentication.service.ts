@@ -13,11 +13,14 @@ export class AuthenticationService {
   userActual = "NN"
   private readonly AUTH_KEY = 'true';
   private readonly AUTH_USER = 'No debe estar aqui';
+  private readonly AUTH_USERNAME = 'Desconocido';
 
   setUserAdmin(){
     this.userActual = "Administrador"
     localStorage.setItem(this.AUTH_USER, 'Administrador');
+    localStorage.setItem(this.AUTH_USERNAME, 'Absalon');
     console.log(localStorage.getItem(this.AUTH_USER));
+
   }
 
   listUsers(): Observable<any>{
@@ -27,6 +30,7 @@ export class AuthenticationService {
   setUserGerent(){
     this.userActual = "Gerente Financiero"
     localStorage.setItem(this.AUTH_USER, 'Gerente Financiero');
+    localStorage.setItem(this.AUTH_USERNAME, 'Juanito');
   }
 
     getUserActual(): string{

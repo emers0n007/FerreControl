@@ -17,6 +17,7 @@ export class NavComponent implements OnInit, OnDestroy {
 
   activarBoton(boton: string) {
     this.botonActivo = boton;
+    localStorage.setItem('activeButton', boton);
   }
 
   ngOnDestroy(): void {
@@ -24,7 +25,10 @@ export class NavComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
+    const storedButton = localStorage.getItem('activeButton');
+    if (storedButton) {
+      this.botonActivo = storedButton;
+    }
   }
 
 

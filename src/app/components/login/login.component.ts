@@ -56,6 +56,7 @@ export class LoginComponent implements OnInit{
       this.mensaje = 'Inicio Correcto';
       this.authService.autenticarUsuario();
       this.router.navigateByUrl('/product');
+      localStorage.setItem('activeButton', 'Gestionar Productos')
     } else {
       // Usuario no válido, mostrar un mensaje de error o realizar otras acciones
       this.mensaje = 'Usuario o contraseña incorrectos';

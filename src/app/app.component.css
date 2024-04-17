@@ -17,6 +17,22 @@ html, body {
   bottom: 50%; /* Puedes ajustar esta propiedad según sea necesario */
 }
 /* Estilos adicionales para el botón */
+/* styles.css o tu archivo CSS */
+.navbar-transition {
+  transition: margin-left 0.5s ease; /* Define la propiedad que deseas animar y su duración y tipo de animación */
+}
+
+/* styles.css o tu archivo CSS */
+.button-transition {
+  transition: transform 0.5s ease; /* Transición para la propiedad transform */
+}
+
+/* styles.css o tu archivo CSS */
+.content-transition {
+  transition: padding-left 0.5s ease; /* Define la propiedad que deseas animar y su duración y tipo de animación */
+}
+
+
 
 
 .content {

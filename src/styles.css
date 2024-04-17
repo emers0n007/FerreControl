@@ -6,4 +6,6 @@
 /* styles.scss */
 body {
     font-family: 'Roboto Mono Variable', monospace;
+    background-color: rgba(165, 203, 203, 0.489);
   }
+

@@ -1,12 +1,12 @@
-<div class="container p-3">
-  <div class="title container-fluid d-flex justify-content-center mt-3">
-    <h4>Factura #{{ uuid }}</h4>
-    
-  </div>
+<div class="title container-fluid d-flex justify-content-center">
+  <h4>Factura #{{ uuid }}</h4>
   
-  <div class="title container-fluid d-flex justify-content-center mt-3">
-    <h5>Fecha de Facturacion: {{ currentDate | date:'medium' }}</h5>
-  </div>
+</div>
+<div class="title container-fluid d-flex justify-content-center">
+  <h5>Fecha de Facturacion: {{ currentDate | date:'medium' }}</h5>
+</div>
+<div class="col-md-12 p-5">
+  
 
   <div class="d-flex align-items-center">
     <h4 class="me-3">Proveedor</h4>
@@ -21,7 +21,7 @@
     <div class="ms-auto p-2">
       <h5>Usuario Actual: {{username}}</h5>
     </div>
-</div>
+</div >
 
   <div class="row">
 

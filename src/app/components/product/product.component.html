@@ -128,7 +128,8 @@
             <div class="col-sm-10">
               <select class="form-select" formControlName="id_supplier">
                 <option *ngFor="let supplier of listSuppliers" [value]="supplier.id_supplier"
-                >{{ supplier.name }}</option>
+                [selected]="supplier.id_supplier === selectedSupplierId">
+                {{ supplier.name }}</option>
               </select>
             </div>
           </div>

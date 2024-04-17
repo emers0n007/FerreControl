@@ -2,16 +2,22 @@ html, body {
   height: 100%;
 }
 
+/* styles.css o tu archivo de estilos */
 .contenedor-router {
-  display: flex;
-  height: 100vh;
-  background-color: #D6EAF8 ;
-  overflow: auto;
+  position: relative; /* Asegúrate de que el contenido dentro del contenedor se posicione correctamente */
 }
 
-app-nav {
-  width: 270px;
+.app-nav {
+  z-index: 1000; /* Asegúrate de que el navbar tenga un valor de z-index menor que el del contenido principal */
 }
+
+/* styles.css o tu archivo CSS */
+.centered-button {
+  position: fixed;
+  bottom: 50%; /* Puedes ajustar esta propiedad según sea necesario */
+}
+/* Estilos adicionales para el botón */
+
 
 .content {
   flex: 1;
@@ -25,6 +31,18 @@ app-nav {
   right: 24px;
   animation: fadeIn 0.5s ease;
 }
+
+button {
+  height: 45px;
+  width: 45px;
+}
+
+/* styles.css o tu archivo CSS */
+.half-circle {
+  position: relative;
+  clip-path: polygon(40% 0, 40% 100%, 100% 100%, 100% 50%, 100% 0);
+}
+
 
 @keyframes fadeIn {
   0% {

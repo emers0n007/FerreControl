@@ -13,13 +13,18 @@ export class AppComponent {
   okay: boolean = false;
   mesage = '';
   shakeAlert: boolean = false;
-
+  navbarVisible: boolean = true;
 
   constructor(private authService: AuthenticationService, private alertService: AlertService) {}
 
   get userOn(): boolean {
     return this.authService.usuarioAutenticado;
   }
+
+  toggleNavbar() {
+    this.navbarVisible = !this.navbarVisible;
+  }
+
 
   ngOnInit(): void {
     this.alertService.alert$.subscribe((res: any) => {

@@ -1,12 +1,27 @@
-
+<!-- app.component.html -->
 
 <div class="contenedor-router">
-    <div class="alert alerta" [ngClass]="{'alert-success': okay, 'alert-danger': !okay}" role="alert" *ngIf="showAlert" >
-        {{mesage}}
-    </div>
-    <app-nav *ngIf="userOn"></app-nav>
-    <div class="content">
-        <router-outlet></router-outlet>
-    </div>
-</div>
+  <div
+    class="alert alerta"
+    [ngClass]="{ 'alert-success': okay, 'alert-danger': !okay }"
+    role="alert"
+    *ngIf="showAlert"
+  >
+    {{ mesage }}
+  </div>
+  <!-- Asegúrate de que el navbar tenga un espacio superior suficiente -->
+  <app-nav *ngIf="userOn" class="fixed-top" [style.marginLeft.px]="navbarVisible ? 0 : -260"></app-nav>
 
+  <div class="content" [style.padding-left.px]="userOn && navbarVisible ? 260 : 0">
+   
+    <router-outlet></router-outlet>
+
+<div *ngIf="userOn" class="centered-button">
+    <button type="button" class="btn btn-primary rounded-circle half-circle" (click)="toggleNavbar()">
+      <i class="fa fa-arrow-right" [style.transform]="navbarVisible ? 'translateX(60%)' : 'rotate(180deg) translateX(-60%)'"></i>
+    </button>
+  </div>
+  
+  
+  </div>
+</div>

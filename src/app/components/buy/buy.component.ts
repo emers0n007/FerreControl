@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   Observable,
   Subscription,
@@ -9,6 +9,7 @@ import {
 } from 'rxjs';
 import { ProductModel } from 'src/app/model/ProductModel';
 import { SupplierModel } from 'src/app/model/SupplierModel';
+import { AlertService } from 'src/app/service/alert.service';
 import { ProductService } from 'src/app/service/product.service';
 import { SupplierService } from 'src/app/service/supplier.service';
 
@@ -24,6 +25,7 @@ export class BuyComponent implements OnInit, OnDestroy {
   formProduct: FormGroup = new FormGroup({});
   listComplet: ProductModel[] = [];
   filteredProducts: ProductModel[] = [];
+  formSupplier:FormGroup= new FormGroup({});
   filteredPro: ProductModel[] = [];
   productsFact: ProductModel[] = [];
   listSuppliers: SupplierModel[] = [];
@@ -35,7 +37,8 @@ export class BuyComponent implements OnInit, OnDestroy {
 
   constructor(
     private producService: ProductService,
-    private supplierService: SupplierService
+    private supplierService: SupplierService,
+    private alertService: AlertService
   ) {
     this.subscription = interval(1000).subscribe(() => {
       this.currentDate = new Date();
@@ -47,6 +50,33 @@ export class BuyComponent implements OnInit, OnDestroy {
     this.listProducts();
     this.listSupplier();
     this.currentDate = new Date();
+    this.formProduct = new FormGroup({
+      name: new FormControl(''),
+      id_product: new FormControl(''),
+      stock: new FormControl(''),
+      price_buy: new FormControl(''),
+      price_sale: new FormControl(''),
+      id_supplier: new FormControl(''),
+      status: new FormControl('1'),
+    });
+    this.formSupplier = new FormGroup({
+      name: new FormControl(''),
+      id_supplier: new FormControl(''),
+      phone: new FormControl(''),
+      email: new FormControl(''),
+      status: new FormControl('')
+    });
+  }
+
+  saveSupplier() {
+    this.formSupplier.controls['status'].setValue('1');
+    this.supplierService.saveSupplier(this.formSupplier.value).subscribe(resp=>{
+      if(resp){
+        this.showAlert(resp.message, resp.seccess);
+        this.listSupplier();
+        this.formSupplier.reset();
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -145,4 +175,47 @@ export class BuyComponent implements OnInit, OnDestroy {
       }
     }
   }
+
+  save() {
+    const supplierId = this.formProduct.controls['id_supplier'].value;
+    const supplierName = ' ';
+    const supplierPhone = ' ';
+    const supplierEmail = ' ';
+
+    const productData = {
+      id_product: this.formProduct.controls['id_product'].value,
+      name: this.formProduct.controls['name'].value,
+      stock: this.formProduct.controls['stock'].value,
+      price_buy: this.formProduct.controls['price_buy'].value,
+      price_sale: this.formProduct.controls['price_sale'].value,
+      supplier: {
+        id_supplier: supplierId,
+        name: supplierName,
+        phone: supplierPhone,
+        email: supplierEmail,
+      },
+      status: 1,
+    };
+    this.producService.saveProduct(productData).subscribe((resp) => {
+      if (resp) {
+        this.console.log(resp);
+        this.showAlert(resp.message, resp.seccess);
+        this.listProducts();
+        this.formProduct.reset();
+      }
+    });
+  }
+
+  showAlert(message: string, okay: boolean) {
+    this.alertService.showAlert(message, okay);
+  }
+
+  newSupplier(){
+    this.formSupplier.reset();
+  }
+
+  newProduct() {
+    this.formProduct.reset();
+  }
+  protected readonly console = console;
 }

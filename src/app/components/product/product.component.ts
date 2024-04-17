@@ -162,7 +162,7 @@ export class ProductComponent implements OnInit {
     this.formProduct.controls['stock'].setValue(item.stock);
     this.formProduct.controls['price_buy'].setValue(item.price_buy);
     this.formProduct.controls['price_sale'].setValue(item.price_sale);
-    this.formProduct.controls['id_supplier'].setValue(item.id_supplier);
+    this.formProduct.controls['id_supplier'].setValue(item.supplier.id_supplier);
     this.formProduct.controls['status'].setValue(item.status);
     this.selectedSupplierId = item.supplier.id_supplier;
    

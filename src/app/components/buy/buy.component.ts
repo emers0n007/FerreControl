@@ -34,6 +34,7 @@ export class BuyComponent implements OnInit, OnDestroy {
   username: string | null = '';
   private subscription: Subscription;
   stockToAdd: number = 0;
+  mensaje: string = ''
 
   constructor(
     private producService: ProductService,
@@ -51,13 +52,13 @@ export class BuyComponent implements OnInit, OnDestroy {
     this.listSupplier();
     this.currentDate = new Date();
     this.formProduct = new FormGroup({
-      name: new FormControl(''),
-      id_product: new FormControl(''),
-      stock: new FormControl(''),
-      price_buy: new FormControl(''),
-      price_sale: new FormControl(''),
-      id_supplier: new FormControl(''),
-      status: new FormControl('1'),
+      name: new FormControl('', Validators.required), 
+      id_product: new FormControl('', Validators.required), 
+      stock: new FormControl('', Validators.required),
+      price_buy: new FormControl('', Validators.required),
+      price_sale: new FormControl('', Validators.required), 
+      id_supplier: new FormControl('', Validators.required),
+      status: new FormControl('1') 
     });
     this.formSupplier = new FormGroup({
       name: new FormControl(''),
@@ -177,33 +178,38 @@ export class BuyComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    const supplierId = this.formProduct.controls['id_supplier'].value;
-    const supplierName = ' ';
-    const supplierPhone = ' ';
-    const supplierEmail = ' ';
-
-    const productData = {
-      id_product: this.formProduct.controls['id_product'].value,
-      name: this.formProduct.controls['name'].value,
-      stock: this.formProduct.controls['stock'].value,
-      price_buy: this.formProduct.controls['price_buy'].value,
-      price_sale: this.formProduct.controls['price_sale'].value,
-      supplier: {
-        id_supplier: supplierId,
-        name: supplierName,
-        phone: supplierPhone,
-        email: supplierEmail,
-      },
-      status: 1,
-    };
-    this.producService.saveProduct(productData).subscribe((resp) => {
-      if (resp) {
-        this.console.log(resp);
-        this.showAlert(resp.message, resp.seccess);
-        this.listProducts();
-        this.formProduct.reset();
-      }
-    });
+    if (this.formProduct.valid) {
+      this.mensaje = ''
+      const supplierId = this.formProduct.controls['id_supplier'].value;
+      const supplierName = ' ';
+      const supplierPhone = ' ';
+      const supplierEmail = ' ';
+  
+      const productData = {
+        id_product: this.formProduct.controls['id_product'].value,
+        name: this.formProduct.controls['name'].value,
+        stock: this.formProduct.controls['stock'].value,
+        price_buy: this.formProduct.controls['price_buy'].value,
+        price_sale: this.formProduct.controls['price_sale'].value,
+        supplier: {
+          id_supplier: supplierId,
+          name: supplierName,
+          phone: supplierPhone,
+          email: supplierEmail,
+        },
+        status: 1,
+      };
+      this.producService.saveProduct(productData).subscribe((resp) => {
+        if (resp) {
+          this.console.log(resp);
+          this.showAlert(resp.message, resp.seccess);
+          this.listProducts();
+          this.formProduct.reset();
+        }
+      });
+    } else {
+      this.mensaje = "Ingresa todos los campos correctamente";
+    }
   }
 
   showAlert(message: string, okay: boolean) {

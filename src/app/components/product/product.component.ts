@@ -21,6 +21,7 @@ export class ProductComponent implements OnInit {
   isUpdate: boolean = false;
   filteredProducts: ProductModel[] = [];
   selectedSupplierId: number = 0;
+  mensaje: String = '';
 
   constructor(
     private producService: ProductService,
@@ -31,13 +32,13 @@ export class ProductComponent implements OnInit {
     this.listProducts();
     this.listSupplier();
     this.formProduct = new FormGroup({
-      name: new FormControl(''),
-      id_product: new FormControl('', Validators.required),
-      stock: new FormControl(''),
-      price_buy: new FormControl(''),
-      price_sale: new FormControl(''),
-      id_supplier: new FormControl(''),
-      status: new FormControl('1'),
+      name: new FormControl('', Validators.required), 
+      id_product: new FormControl('', Validators.required), 
+      stock: new FormControl('', Validators.required),
+      price_buy: new FormControl('', Validators.required),
+      price_sale: new FormControl('', Validators.required), 
+      id_supplier: new FormControl('', Validators.required),
+      status: new FormControl('1') 
     });
   }
 
@@ -77,33 +78,43 @@ export class ProductComponent implements OnInit {
   }
 
   save() {
-    const supplierId = this.formProduct.controls['id_supplier'].value;
-    const supplierName = ' ';
-    const supplierPhone = ' ';
-    const supplierEmail = ' ';
+    if (this.formProduct.valid) {
+      this.mensaje = ''
+      const supplierId = this.formProduct.controls['id_supplier'].value;
+      const supplierName = ' ';
+      const supplierPhone = ' ';
+      const supplierEmail = ' ';
+  
+      const productData = {
+        id_product: this.formProduct.controls['id_product'].value,
+        name: this.formProduct.controls['name'].value,
+        stock: this.formProduct.controls['stock'].value,
+        price_buy: this.formProduct.controls['price_buy'].value,
+        price_sale: this.formProduct.controls['price_sale'].value,
+        supplier: {
+          id_supplier: supplierId,
+          name: supplierName,
+          phone: supplierPhone,
+          email: supplierEmail,
+        },
+        status: 1,
+      };
+      this.producService.saveProduct(productData).subscribe((resp) => {
+        if (resp) {
+          this.console.log(resp);
+          this.showAlert(resp.message, resp.seccess);
+          this.listProducts();
+          this.formProduct.reset();
+        }
+      });
+    } else {
+      this.mensaje = "Ingresa todos los campos correctamente";
+    }
+   
+  }
 
-    const productData = {
-      id_product: this.formProduct.controls['id_product'].value,
-      name: this.formProduct.controls['name'].value,
-      stock: this.formProduct.controls['stock'].value,
-      price_buy: this.formProduct.controls['price_buy'].value,
-      price_sale: this.formProduct.controls['price_sale'].value,
-      supplier: {
-        id_supplier: supplierId,
-        name: supplierName,
-        phone: supplierPhone,
-        email: supplierEmail,
-      },
-      status: 1,
-    };
-    this.producService.saveProduct(productData).subscribe((resp) => {
-      if (resp) {
-        this.console.log(resp);
-        this.showAlert(resp.message, resp.seccess);
-        this.listProducts();
-        this.formProduct.reset();
-      }
-    });
+  resetMessage(){
+    this.mensaje = '';
   }
 
   update() {

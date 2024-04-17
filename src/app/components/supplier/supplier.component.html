@@ -52,7 +52,7 @@
           class="btn btn-warning btn-sm"
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
-          (click)="selectItem(item)"
+          (click)="selectItem(item); resetMesssage()"
         >
           <i class="fa fa-pencil"></i>
         </button>
@@ -112,18 +112,19 @@
           <div class="mb-3 row">
             <label class="col-sm-2 col-form-label">Correo</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" formControlName="email">
+              <input type="email" class="form-control" formControlName="email">
             </div>
           </div>
         </form>
+        <div *ngIf="mensaje" class="mensaje">{{ mensaje }}</div>
+     
       </div>
       <div class="modal-footer">
         <button
           *ngIf="!isUpdate"
           type="button"
           class="btn btn-success btn-sm"
-          data-bs-dismiss="modal"
-          aria-label="close"
+          
           (click)="save(); newProduct()"
         >
           Guardar

@@ -1,48 +1,51 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {SupplierModel} from "../../model/SupplierModel";
-import {SupplierService} from "../../service/supplier.service";
-import {Observable} from "rxjs";
-import {distinctUntilChanged, map} from "rxjs/operators";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { SupplierModel } from '../../model/SupplierModel';
+import { SupplierService } from '../../service/supplier.service';
+import { Observable } from 'rxjs';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 import { AlertService } from 'src/app/service/alert.service';
 
 @Component({
   selector: 'app-supplier',
   templateUrl: './supplier.component.html',
-  styleUrls: ['./supplier.component.css']
+  styleUrls: ['./supplier.component.css'],
 })
-export class SupplierComponent implements  OnInit{
+export class SupplierComponent implements OnInit {
   @ViewChild('toast') toast: any;
-  list:SupplierModel[] = [];
-  listComplet:SupplierModel[] = [];
-  formSupplier:FormGroup= new FormGroup({});
-  isUpdate:boolean = false;
+  list: SupplierModel[] = [];
+  listComplet: SupplierModel[] = [];
+  formSupplier: FormGroup = new FormGroup({});
+  isUpdate: boolean = false;
   filteredSupplier: SupplierModel[] = [];
+  mensaje:String = '';
 
-  constructor(private supplierService:SupplierService, private alertService: AlertService) {
-  }
+  constructor(
+    private supplierService: SupplierService,
+    private alertService: AlertService
+  ) {}
 
   ngOnInit(): void {
     this.listSupplier();
     this.formSupplier = new FormGroup({
-      name: new FormControl(''),
-      id_supplier: new FormControl('', Validators.required),
-      phone: new FormControl(''),
-      email: new FormControl(''),
-      status: new FormControl('')
+      name: new FormControl('', Validators.required), // Campo obligatorio
+      id_supplier: new FormControl('', Validators.required), // Campo obligatorio
+      phone: new FormControl('', Validators.required), // Campo obligatorio
+      email: new FormControl('', [Validators.required, Validators.email]), // Campo obligatorio y validador de correo electrónico
+      status: new FormControl('', Validators.required),
     });
   }
 
-  disableId(){
+  disableId() {
     this.formSupplier.get('id_supplier')?.disable();
   }
 
-  activeId(){
+  activeId() {
     this.formSupplier.get('id_supplier')?.enable();
   }
 
-  listSupplier(){
-    this.supplierService.getSupplier().subscribe(resp=> {
+  listSupplier() {
+    this.supplierService.getSupplier().subscribe((resp) => {
       if (resp) {
         this.list = resp;
         this.listComplet = resp;
@@ -50,53 +53,64 @@ export class SupplierComponent implements  OnInit{
     });
   }
 
-  showAlert(message: string, okay: boolean){
+  showAlert(message: string, okay: boolean) {
     this.alertService.showAlert(message, okay);
   }
 
-  newProduct(){
+  newProduct() {
     this.isUpdate = false;
     this.activeId();
     this.formSupplier.reset();
   }
 
   save() {
-    this.formSupplier.controls['status'].setValue('1');
-    this.supplierService.saveSupplier(this.formSupplier.value).subscribe(resp=>{
-      if(resp){
-        this.showAlert(resp.message, resp.seccess);
-        this.listSupplier();
-        this.formSupplier.reset();
-      }
-    });
+    if (this.formSupplier.valid) {
+      this.formSupplier.controls['status'].setValue('1');
+      this.supplierService
+        .saveSupplier(this.formSupplier.value)
+        .subscribe((resp) => {
+          if (resp) {
+            this.showAlert(resp.message, resp.seccess);
+            this.listSupplier();
+            this.formSupplier.reset();
+          }
+        });
+    } else {
+     this.mensaje = "Ingresa todos los campos correctamente";
+    }
   }
 
-  update(){
+  resetMesssage(){
+    this.mensaje = '';
+  }
+
+  update() {
+    
     const supplierData = {
       id_supplier: this.formSupplier.controls['id_supplier'].value,
       name: this.formSupplier.controls['name'].value,
       phone: this.formSupplier.controls['phone'].value,
       email: this.formSupplier.controls['email'].value,
-      status:1
-    }
-    this.supplierService.updateSupplier(supplierData).subscribe(resp=>{
-      if(resp){
+      status: 1,
+    };
+    this.supplierService.updateSupplier(supplierData).subscribe((resp) => {
+      if (resp) {
         this.showAlert(resp.message, resp.seccess);
-        this.console.log(resp)
+        this.console.log(resp);
         this.listSupplier();
         this.formSupplier.reset();
       }
     });
   }
 
-  delete(id: any){
-    this.supplierService.deleteSupplier(id).subscribe(resp=>{
-      if(resp){
+  delete(id: any) {
+    this.supplierService.deleteSupplier(id).subscribe((resp) => {
+      if (resp) {
         this.listSupplier();
       }
     });
   }
-  selectItem(item:any){
+  selectItem(item: any) {
     this.isUpdate = true;
     this.formSupplier.controls['name'].setValue(item.name);
     this.formSupplier.controls['id_supplier'].setValue(item.id_supplier);
@@ -108,12 +122,17 @@ export class SupplierComponent implements  OnInit{
   search = (text$: Observable<string>) =>
     text$.pipe(
       distinctUntilChanged(),
-      map(term => {
+      map((term) => {
         const lowercaseTerm = term.toLowerCase();
-        this.filteredSupplier = lowercaseTerm.length < 1 ? this.filteredSupplier = this.listComplet : this.listComplet.filter(product => {
-          const includesTerm = product.name.toLowerCase().includes(lowercaseTerm);
-          return includesTerm;
-        });
+        this.filteredSupplier =
+          lowercaseTerm.length < 1
+            ? (this.filteredSupplier = this.listComplet)
+            : this.listComplet.filter((product) => {
+                const includesTerm = product.name
+                  .toLowerCase()
+                  .includes(lowercaseTerm);
+                return includesTerm;
+              });
         this.list = this.filteredSupplier;
         return [];
       })

@@ -54,7 +54,7 @@
             class="btn btn-warning btn-sm"
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
-            (click)="selectItem(item)"
+            (click)="selectItem(item); resetMessage()"
           >
             <i class="fa fa-pencil"></i>
           </button>
@@ -93,39 +93,44 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="formProduct">
-          <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">Nombre</label>
-            <div class="col-sm-10">
+          <div class="mb-3 col">
+            <label class="col-2 col-form-label">Nombre</label>
+            <div class="">
               <input type="text" class="form-control" formControlName="name">
             </div>
           </div>
-          <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">ID</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" formControlName="id_product">
+         
+          <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                <label class="col-form-label text-center">ID</label>
+                <input type="text" class="form-control" formControlName="id_product">
+              </div>
+            </div>
+            <div class="col">
+              <div class="mb-3">
+                <label class="col-form-label text-center">Cantidad</label>
+                <input type="text" class="form-control" formControlName="stock">
+              </div>
             </div>
           </div>
-          <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">Cantidad</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" formControlName="stock">
-            </div>
-          </div>
-          <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">Precio de compra</label>
-            <div class="col-sm-10">
+          
+          
+          <div class="mb-3 col">
+            <label class="col-form-label">Precio de compra</label>
+            <div class="">
               <input type="text" class="form-control" formControlName="price_buy">
             </div>
           </div>
-          <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">Precio de Venta</label>
-            <div class="col-sm-10">
+          <div class="mb-3 col">
+            <label class="col-form-label">Precio de Venta</label>
+            <div class="">
               <input type="text" class="form-control" formControlName="price_sale">
             </div>
           </div>
-          <div class="mb-3 row">
+          <div class="mb-3 col">
             <label class="col-sm-2 col-form-label">Proveedor</label>
-            <div class="col-sm-10">
+            <div class="">
               <select class="form-select" formControlName="id_supplier">
                 <option *ngFor="let supplier of listSuppliers" [value]="supplier.id_supplier"
                 [selected]="supplier.id_supplier === selectedSupplierId">
@@ -134,14 +139,13 @@
             </div>
           </div>
         </form>
+        <div *ngIf="mensaje" class="mensaje">{{ mensaje }}</div>
       </div>
       <div class="modal-footer">
         <button
           *ngIf="!isUpdate"
           type="button"
           class="btn btn-success btn-sm"
-          data-bs-dismiss="modal"
-          aria-label="close"
           (click)="save(); newProduct()"
         >
           Guardar

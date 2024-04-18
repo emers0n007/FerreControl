@@ -1,12 +1,12 @@
 <div class="title container-fluid d-flex justify-content-center">
   <h4>Factura #{{ uuid }}</h4>
-  
+
 </div>
 <div class="title container-fluid d-flex justify-content-center">
   <h5>Fecha de Facturacion: {{ currentDate | date:'medium' }}</h5>
 </div>
 <div class="col-md-12 p-5">
-  
+
 
   <div class="d-flex align-items-center">
     <h4 class="me-3">Proveedor</h4>
@@ -36,7 +36,7 @@
             class="form-control"
             [ngbTypeahead]="search"
             placeholder="Buscar productos..."
-           
+
           />
         </div>
         <button
@@ -115,6 +115,14 @@
           </tr>
         </tbody>
       </table>
+      <button
+
+        type="button"
+        class="btn btn-success btn-sm"
+        (click)= "saveBuy()"
+      >
+        Guardar
+      </button>
     </div>
   </div>
 </div>
@@ -152,7 +160,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5">Nuevo Producto</h1>
-        
+
         <button
           type="button"
           class="btn-close"
@@ -169,7 +177,7 @@
               <input type="text" class="form-control" formControlName="name">
             </div>
           </div>
-         
+
           <div class="row">
             <div class="col">
               <div class="mb-3">
@@ -184,8 +192,8 @@
               </div>
             </div>
           </div>
-          
-          
+
+
           <div class="mb-3 col">
             <label class="col-form-label">Precio de compra</label>
             <div class="">
@@ -209,19 +217,19 @@
             </div>
           </div>
         </form>
-        
+
         <div *ngIf="mensaje" class="mensaje">{{ mensaje }}</div>
       </div>
       <div class="modal-footer">
         <button
-         
+
           type="button"
           class="btn btn-success btn-sm"
           (click)="save(); newProduct()"
         >
           Guardar
         </button>
-       
+
       </div>
     </div>
   </div>
@@ -285,7 +293,7 @@
         >
           Guardar
         </button>
-       
+
       </div>
     </div>
   </div>

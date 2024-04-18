@@ -12,6 +12,8 @@ import { SupplierModel } from 'src/app/model/SupplierModel';
 import { AlertService } from 'src/app/service/alert.service';
 import { ProductService } from 'src/app/service/product.service';
 import { SupplierService } from 'src/app/service/supplier.service';
+import {BuyModel} from "../../model/BuyModel";
+import {BuyService} from "../../service/buy.service";
 
 @Component({
   selector: 'app-buy',
@@ -39,7 +41,8 @@ export class BuyComponent implements OnInit, OnDestroy {
   constructor(
     private producService: ProductService,
     private supplierService: SupplierService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private buyService: BuyService
   ) {
     this.subscription = interval(1000).subscribe(() => {
       this.currentDate = new Date();
@@ -47,18 +50,18 @@ export class BuyComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.username = localStorage.getItem(this.AUTH_USERNAME);
-    this.uuid = this.generateShortUUID();
+    this.uuid = 2626;
     this.listProducts();
     this.listSupplier();
     this.currentDate = new Date();
     this.formProduct = new FormGroup({
-      name: new FormControl('', Validators.required), 
-      id_product: new FormControl('', Validators.required), 
+      name: new FormControl('', Validators.required),
+      id_product: new FormControl('', Validators.required),
       stock: new FormControl('', Validators.required),
       price_buy: new FormControl('', Validators.required),
-      price_sale: new FormControl('', Validators.required), 
+      price_sale: new FormControl('', Validators.required),
       id_supplier: new FormControl('', Validators.required),
-      status: new FormControl('1') 
+      status: new FormControl('1')
     });
     this.formSupplier = new FormGroup({
       name: new FormControl(''),
@@ -102,7 +105,7 @@ export class BuyComponent implements OnInit, OnDestroy {
     });
   }
 
-  uuid: string = '';
+  uuid: number = 0;
   generateShortUUID(): string {
     const chars =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
@@ -184,7 +187,7 @@ export class BuyComponent implements OnInit, OnDestroy {
       const supplierName = ' ';
       const supplierPhone = ' ';
       const supplierEmail = ' ';
-  
+
       const productData = {
         id_product: this.formProduct.controls['id_product'].value,
         name: this.formProduct.controls['name'].value,
@@ -222,6 +225,24 @@ export class BuyComponent implements OnInit, OnDestroy {
 
   newProduct() {
     this.formProduct.reset();
+  }
+
+  saveBuy(){
+    const buyData = {
+      id_buy:this.uuid,
+      id_supplier:this.selectedSupplier?.id_supplier,
+      purchase_date:this.currentDate,
+      total_price:0,
+      buyDetail:this.productsFact
+    };
+    console.log(buyData);
+    this.buyService.saveBuy(buyData).subscribe((resp) => {
+      if (resp) {
+        this.console.log(resp);
+        this.showAlert(resp.message, resp.success);
+        this.listProducts();
+      }
+    });
   }
   protected readonly console = console;
 }

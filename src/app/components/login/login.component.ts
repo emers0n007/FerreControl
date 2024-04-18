@@ -22,7 +22,6 @@ export class LoginComponent implements OnInit{
 
 
   ngOnInit(): void {
-    this.listUsers();
     this.authService.cerrarSesion();
     this.formLogin = new FormGroup({
     user: new FormControl(''),
@@ -30,36 +29,31 @@ export class LoginComponent implements OnInit{
   });
   }
 
-  listUsers(){
-    this.authService.listUsers().subscribe(resp=> {
-      if (resp) {
-        this.userOkay = resp;
-        }
-    });
-  }
 
   login() {
-    console.log('Usuarios obtenidos:', this.userOkay); // Aquí imprimes userOkay
     const userName = this.formLogin.controls['user'].value;
     const password = this.formLogin.controls['password'].value;
+    console.log("Ingresdo", userName, password)
+    this.authService.login(userName, password).subscribe({
+      next: (usuarioValido: UserModel) => {
+        console.log('Usuario válido:', usuarioValido);
+        if (usuarioValido.name!=null) {
 
-    const usuarioValido = this.userOkay.find(
-      (u) => u.name_user === userName && u.password === password
-    );
-
-    if (usuarioValido) {
-      if (this.formLogin.controls['user'].value === 'admin'){
-        this.authService.setUserAdmin();
-      }else{
-        this.authService.setUserGerent();
+          this.mensaje = 'Inicio Correcto';
+          this.authService.autenticarUsuario();
+          this.router.navigateByUrl('/product');
+          localStorage.setItem('activeButton', 'Gestionar Productos');
+        } else {
+          // Usuario no válido, mostrar un mensaje de error o realizar otras acciones
+          this.mensaje = 'Usuario o contraseña incorrectos';
+        }
+      },
+      error: (error: any) => {
+        console.error('Error al autenticar:', error);
+        // Manejar errores, mostrar un mensaje de error, etc.
       }
-      this.mensaje = 'Inicio Correcto';
-      this.authService.autenticarUsuario();
-      this.router.navigateByUrl('/product');
-      localStorage.setItem('activeButton', 'Gestionar Productos')
-    } else {
-      // Usuario no válido, mostrar un mensaje de error o realizar otras acciones
-      this.mensaje = 'Usuario o contraseña incorrectos';
-    }
+    });
+
   }
+
 }

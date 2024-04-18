@@ -1,7 +1,8 @@
 // authentication.service.ts
 import { Injectable } from '@angular/core';
-import {map, Observable} from "rxjs";
+import {map, Observable, tap} from "rxjs";
 import {HttpClient} from "@angular/common/http";
+import {UserModel} from "../model/Users";
 
 @Injectable({
   providedIn: 'root'
@@ -17,15 +18,18 @@ export class AuthenticationService {
 
   setUserAdmin(){
     this.userActual = "Administrador"
-    localStorage.setItem(this.AUTH_USER, 'Administrador');
-    localStorage.setItem(this.AUTH_USERNAME, 'Absalon');
-    console.log(localStorage.getItem(this.AUTH_USER));
-
   }
 
-  listUsers(): Observable<any>{
-    return this.httpClient.get<any>('http://localhost:9000/FerreControl' + '/login').pipe(map(resp => resp));
+  login(username: string, password: string): Observable<any> {
+    const body = { name_user: username, password: password };
+    return this.httpClient.post<any>('http://localhost:9000/FerreControl/login', body).pipe(
+      tap((resp: any) => {
+        localStorage.setItem(this.AUTH_USER, resp.role);
+        localStorage.setItem(this.AUTH_USERNAME, resp.name);
+        })
+    );
   }
+
 
   setUserGerent(){
     this.userActual = "Gerente Financiero"

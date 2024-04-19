@@ -13,6 +13,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SupplierComponent } from './components/supplier/supplier.component';
 import { BuyComponent } from './components/buy/buy.component';
 import { SaleComponent } from './components/sale/sale.component';
+import { TitleComponent } from './components/title/title.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { SaleComponent } from './components/sale/sale.component';
     LoginComponent,
     SupplierComponent,
     BuyComponent,
-    SaleComponent
+    SaleComponent,
+    TitleComponent
   ],
   imports: [
     BrowserModule,

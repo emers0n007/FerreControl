@@ -14,6 +14,8 @@ import { SupplierComponent } from './components/supplier/supplier.component';
 import { BuyComponent } from './components/buy/buy.component';
 import { SaleComponent } from './components/sale/sale.component';
 import { TitleComponent } from './components/title/title.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { TitleComponent } from './components/title/title.component';
     SupplierComponent,
     BuyComponent,
     SaleComponent,
-    TitleComponent
+    TitleComponent,
+    SearchBarComponent
   ],
   imports: [
     BrowserModule,

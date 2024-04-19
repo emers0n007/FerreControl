@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { AuthenticationService } from './service/authentication.service';
 import { AlertService } from './service/alert.service';
 
@@ -7,7 +7,7 @@ import { AlertService } from './service/alert.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'FerreControl (FC)';
   showAlert = false;
   okay: boolean = false;
@@ -25,7 +25,18 @@ export class AppComponent {
     this.navbarVisible = !this.navbarVisible;
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.checkWindowSize();
+  }
 
+  private checkWindowSize() {
+    if (window.innerWidth < 1180) {
+      this.navbarVisible = false;
+    } else {
+      this.navbarVisible = true;
+    }
+  }
   ngOnInit(): void {
     this.alertService.alert$.subscribe((res: any) => {
       console.log(res);

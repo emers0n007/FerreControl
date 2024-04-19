@@ -4,6 +4,13 @@
 ![30shots_so](https://github.com/emers0n007/FerreControl/assets/82956281/f8c67ff5-11cb-4032-b8cf-07f02118a63c)
 
 
+## Build localhost temporal
+
+https://kinsta.com/es/base-de-conocimiento/instalar-nginx/
+https://nssm.cc/download
+https://nginx.org/en/download.html
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.12.
 
 ## Development server

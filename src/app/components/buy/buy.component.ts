@@ -36,7 +36,8 @@ export class BuyComponent implements OnInit, OnDestroy {
   username: string | null = '';
   private subscription: Subscription;
   stockToAdd: number = 0;
-  mensaje: string = ''
+  mensaje: string = '';
+  uuid: string = ''; 
 
   constructor(
     private producService: ProductService,
@@ -50,7 +51,6 @@ export class BuyComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.username = localStorage.getItem(this.AUTH_USERNAME);
-    this.uuid = 2626;
     this.listProducts();
     this.listSupplier();
     this.currentDate = new Date();
@@ -103,18 +103,6 @@ export class BuyComponent implements OnInit, OnDestroy {
         this.listComplet = resp;
       }
     });
-  }
-
-  uuid: number = 0;
-  generateShortUUID(): string {
-    const chars =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
-    let uuid = '';
-    for (let i = 0; i < 22; i++) {
-      const randIndex = Math.floor(Math.random() * chars.length);
-      uuid += chars[randIndex];
-    }
-    return uuid;
   }
 
   onSupplierSelected(event: Event) {
@@ -228,8 +216,9 @@ export class BuyComponent implements OnInit, OnDestroy {
   }
 
   saveBuy(){
+   if (this.selectedSupplier != null && this.uuid != ''){
     const buyData = {
-      id_buy:this.uuid,
+      id_buy: this.uuid,
       id_supplier:this.selectedSupplier?.id_supplier,
       purchase_date:this.currentDate,
       total_price:0,
@@ -239,10 +228,13 @@ export class BuyComponent implements OnInit, OnDestroy {
     this.buyService.saveBuy(buyData).subscribe((resp) => {
       if (resp) {
         this.console.log(resp);
-        this.showAlert(resp.message, resp.success);
+        this.showAlert(resp.message, resp.seccess);
         this.listProducts();
       }
     });
+  }else {
+    this.showAlert("Completa todos los campos requeridos", false);
   }
+   }
   protected readonly console = console;
 }

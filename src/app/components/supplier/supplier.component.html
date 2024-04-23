@@ -1,33 +1,8 @@
-<div class="title container-fluid d-flex justify-content-center mt-3">
-  <h1>Gestionar Proveedores</h1>
-</div>
-
+<app-title [title]="'Gestionar Proveedores'"></app-title>
 
 <div class="col-md-12 p-5">
-  <div class="input-group row-auto">
-    <div class="input-group-prepend">
-      <button type="button" class="btn btn-primary me-2" data-mdb-ripple-init>
-        <i class="fas fa-search"></i>
-      </button>
-    </div>
-    <div class="form-outline flex-grow-1 me-4" data-mdb-input-init>
-      <input
-      type="text"
-      class="form-control"
-      [ngbTypeahead]="search"
-      placeholder="Buscar proveedores..."
-    />
-    </div>
-    <button
-    type="button"
-    class="btn btn-primary btn-sm"
-    data-bs-toggle="modal"
-    data-bs-target="#exampleModal"
-  >
-    <i class="fa fa-save"></i>
-    Nuevo Proveedor
-  </button>
-  </div>
+
+  <app-search-bar (searchTextChanged)="onSearchTextChanged($event)" [buttonText]="'Nuevo Proveedor'" [placeholder]="'Buscar proveedores ...'"></app-search-bar>
 
 
   <table class="table mt-2 table-bordered">

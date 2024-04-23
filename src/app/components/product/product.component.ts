@@ -45,6 +45,14 @@ export class ProductComponent implements OnInit {
     });
   }
 
+  onSearchTextChanged(term: string) {
+    this.filteredProducts = term.length < 1 ? this.listComplet : this.listComplet.filter((product) =>
+      product.name.toLowerCase().includes(term)
+    );
+    this.list = this.filteredProducts;
+  }
+  
+
   disableId() {
     this.formProduct.get('id_product')?.disable();
   }
@@ -176,25 +184,6 @@ export class ProductComponent implements OnInit {
     this.selectedSupplierId = item.supplier.id_supplier;
 
   }
-
-  search = (text$: Observable<string>) =>
-    text$.pipe(
-      distinctUntilChanged(),
-      map((term) => {
-        const lowercaseTerm = term.toLowerCase();
-        this.filteredProducts =
-          lowercaseTerm.length < 1
-            ? (this.filteredProducts = this.listComplet)
-            : this.listComplet.filter((product) => {
-                const includesTerm = product.name
-                  .toLowerCase()
-                  .includes(lowercaseTerm);
-                return includesTerm;
-              });
-        this.list = this.filteredProducts;
-        return [];
-      })
-    );
 
   protected readonly console = console;
 }

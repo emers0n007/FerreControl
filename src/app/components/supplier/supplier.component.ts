@@ -36,6 +36,13 @@ export class SupplierComponent implements OnInit {
     });
   }
 
+  onSearchTextChanged(term: string) {
+    this.filteredSupplier = term.length < 1 ? this.listComplet : this.listComplet.filter((product) =>
+      product.name.toLowerCase().includes(term)
+    );
+    this.list = this.filteredSupplier;
+  }
+
   disableId() {
     this.formSupplier.get('id_supplier')?.disable();
   }

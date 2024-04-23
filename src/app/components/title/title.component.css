@@ -1,0 +1,9 @@
+.title {
+    justify-content: center;
+    max-width: 70%;
+    background: rgba(185, 205, 226, 0.15);
+    border-radius: 2rem;
+    background-color: #86a7c067;
+    box-shadow: 3px 3px 3px #cbced1, 13px 13px 3px #ffffff89;
+    color: black;
+  }

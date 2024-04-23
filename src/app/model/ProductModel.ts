@@ -8,4 +8,7 @@ export class ProductModel{
   price_sale: number = 0;
   supplier: SupplierModel = new SupplierModel();
   status: number =0;
+  description_presentation:String=' ';
+  presentation=0;
+  id_mark=0;
 }

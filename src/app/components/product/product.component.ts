@@ -32,13 +32,16 @@ export class ProductComponent implements OnInit {
     this.listProducts();
     this.listSupplier();
     this.formProduct = new FormGroup({
-      name: new FormControl('', Validators.required), 
-      id_product: new FormControl('', Validators.required), 
+      name: new FormControl('', Validators.required),
+      id_product: new FormControl('', Validators.required),
       stock: new FormControl('', Validators.required),
       price_buy: new FormControl('', Validators.required),
-      price_sale: new FormControl('', Validators.required), 
+      price_sale: new FormControl('', Validators.required),
       id_supplier: new FormControl('', Validators.required),
-      status: new FormControl('1') 
+      status: new FormControl('1'),
+      presentation: new FormControl(' '),
+      description_presentation: new FormControl(' '),
+      id_mark: new FormControl(' '),
     });
   }
 
@@ -84,7 +87,7 @@ export class ProductComponent implements OnInit {
       const supplierName = ' ';
       const supplierPhone = ' ';
       const supplierEmail = ' ';
-  
+
       const productData = {
         id_product: this.formProduct.controls['id_product'].value,
         name: this.formProduct.controls['name'].value,
@@ -97,12 +100,18 @@ export class ProductComponent implements OnInit {
           phone: supplierPhone,
           email: supplierEmail,
         },
+        presentation:this.formProduct.controls['presentation'].value,
+        description_presentation:this.formProduct.controls['description_presentation'].value,
+        mark:{
+          id_mark: this.formProduct.controls['id_mark'].value,
+          name_mark:' '
+        },
         status: 1,
       };
       this.producService.saveProduct(productData).subscribe((resp) => {
         if (resp) {
           this.console.log(resp);
-          this.showAlert(resp.message, resp.seccess);
+          this.showAlert(resp.message, resp.success);
           this.listProducts();
           this.formProduct.reset();
         }
@@ -110,7 +119,7 @@ export class ProductComponent implements OnInit {
     } else {
       this.mensaje = "Ingresa todos los campos correctamente";
     }
-   
+
   }
 
   resetMessage(){
@@ -165,7 +174,7 @@ export class ProductComponent implements OnInit {
     this.formProduct.controls['id_supplier'].setValue(item.supplier.id_supplier);
     this.formProduct.controls['status'].setValue(item.status);
     this.selectedSupplierId = item.supplier.id_supplier;
-   
+
   }
 
   search = (text$: Observable<string>) =>

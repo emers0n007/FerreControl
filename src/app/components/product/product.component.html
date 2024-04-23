@@ -99,7 +99,7 @@
               <input type="text" class="form-control" formControlName="name">
             </div>
           </div>
-         
+
           <div class="row">
             <div class="col">
               <div class="mb-3">
@@ -114,8 +114,8 @@
               </div>
             </div>
           </div>
-          
-          
+
+
           <div class="mb-3 col">
             <label class="col-form-label">Precio de compra</label>
             <div class="">
@@ -136,6 +136,24 @@
                 [selected]="supplier.id_supplier === selectedSupplierId">
                 {{ supplier.name }}</option>
               </select>
+            </div>
+          </div>
+          <div class="mb-3 col">
+            <label class="col-form-label">Presentacion</label>
+            <div class="">
+              <input type="text" class="form-control" formControlName="presentation">
+            </div>
+          </div>
+          <div class="mb-3 col">
+            <label class="col-form-label">Unidades De La Presentación</label>
+            <div class="">
+              <input type="text" class="form-control" formControlName="description_presentation">
+            </div>
+          </div>
+          <div class="mb-3 col">
+            <label class="col-form-label">MARCA</label>
+            <div class="">
+              <input type="text" class="form-control" formControlName="id_mark">
             </div>
           </div>
         </form>

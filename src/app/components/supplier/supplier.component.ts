@@ -32,7 +32,7 @@ export class SupplierComponent implements OnInit {
       id_supplier: new FormControl('', Validators.required), // Campo obligatorio
       phone: new FormControl('', Validators.required), // Campo obligatorio
       email: new FormControl('', [Validators.required, Validators.email]), // Campo obligatorio y validador de correo electrónico
-      status: new FormControl('', Validators.required),
+      status: new FormControl(''),
     });
   }
 
@@ -73,8 +73,7 @@ export class SupplierComponent implements OnInit {
   save() {
     if (this.formSupplier.valid) {
       this.formSupplier.controls['status'].setValue('1');
-      this.supplierService
-        .saveSupplier(this.formSupplier.value)
+      this.supplierService.saveSupplier(this.formSupplier.value)
         .subscribe((resp) => {
           if (resp) {
             this.showAlert(resp.message, resp.seccess);
@@ -92,7 +91,7 @@ export class SupplierComponent implements OnInit {
   }
 
   update() {
-    
+
     const supplierData = {
       id_supplier: this.formSupplier.controls['id_supplier'].value,
       name: this.formSupplier.controls['name'].value,

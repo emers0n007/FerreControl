@@ -126,7 +126,7 @@ export class ProductComponent implements OnInit {
   save() {
     if (this.formProduct.valid) {
       this.mensaje = '';
-      const supplierId = this.formProduct.controls['id_supplier'].value;
+      const supplierId = this.formProduct.controls['id_supplier'].value.id_supplier;
       const supplierName = ' ';
       const supplierPhone = ' ';
       const supplierEmail = ' ';
@@ -156,7 +156,7 @@ export class ProductComponent implements OnInit {
         description_presentation:
           this.formProduct.controls['description_presentation'].value,
         mark: {
-          id_mark: this.formProduct.controls['id_mark'].value,
+          id_mark: this.formProduct.controls['id_mark'].value.id_mark,
           name_mark: ' ',
         },
         status: 1,
@@ -169,6 +169,7 @@ export class ProductComponent implements OnInit {
           this.formProduct.reset();
         }
       });
+      console.log(productData);
     } else {
       this.mensaje = 'Ingresa todos los campos correctamente';
     }
@@ -243,7 +244,7 @@ export class ProductComponent implements OnInit {
       item.description_presentation
     );
   }
-  
+
 
   selectedSupplier: SupplierModel | undefined;
 

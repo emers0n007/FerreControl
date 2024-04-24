@@ -30,7 +30,7 @@ export class ProductComponent implements OnInit {
   filteredProducts: ProductModel[] = [];
   selectedSupplierId: number = 0;
   mensaje: String = '';
-  checklistForm: FormGroup;
+
 
   selectedPresentation: string = '';
 
@@ -38,7 +38,6 @@ export class ProductComponent implements OnInit {
     { id: '1', label: 'Bulto', value: 'Bulto' },
     { id: '2', label: 'Caja', value: 'Caja' },
     { id: '3', label: 'Metro', value: 'Metro' },
-    { id: '4', label: 'Otro', value: 'Otro' },
   ];
 
   constructor(
@@ -47,9 +46,7 @@ export class ProductComponent implements OnInit {
     private supplierService: SupplierService,
     private formBuilder: FormBuilder
   ) {
-    this.checklistForm = this.formBuilder.group({
-      presentation: [],
-    });
+   
   }
 
   ngOnInit(): void {
@@ -64,9 +61,9 @@ export class ProductComponent implements OnInit {
       price_sale: new FormControl('', Validators.required),
       id_supplier: new FormControl('', Validators.required),
       status: new FormControl('1'),
-      presentation: new FormControl(' '),
-      description_presentation: new FormControl(' '),
-      id_mark: new FormControl(' '),
+      presentation: new FormControl(''),
+      description_presentation: new FormControl('', Validators.required),
+      id_mark: new FormControl(''),
     });
   }
 
@@ -82,6 +79,8 @@ export class ProductComponent implements OnInit {
 
   disableId() {
     this.formProduct.get('id_product')?.disable();
+    this.formProduct.get('stock')?.disable();
+    this.formProduct.get('description_presentation')?.disable();
   }
 
   activeId() {
@@ -123,22 +122,13 @@ export class ProductComponent implements OnInit {
     this.alertService.showAlert(message, okay);
   }
 
-  save() {
+  /*save() {
     if (this.formProduct.valid) {
       this.mensaje = '';
       const supplierId = this.formProduct.controls['id_supplier'].value.id_supplier;
       const supplierName = ' ';
       const supplierPhone = ' ';
       const supplierEmail = ' ';
-
-      const selectedPresentation = this.formProduct.controls['presentation'].value;
-
-      let presentation;
-      if (selectedPresentation === 'Otro') {
-        presentation = this.formProduct.controls['otherpresentation'].value;
-      } else {
-        presentation = selectedPresentation;
-      }
 
       const productData = {
         id_product: this.formProduct.controls['id_product'].value,
@@ -152,7 +142,7 @@ export class ProductComponent implements OnInit {
           phone: supplierPhone,
           email: supplierEmail,
         },
-        presentation: presentation,
+        presentation: this.formProduct.controls['presentation'].value,
         description_presentation:
           this.formProduct.controls['description_presentation'].value,
         mark: {
@@ -169,11 +159,10 @@ export class ProductComponent implements OnInit {
           this.formProduct.reset();
         }
       });
-      console.log(productData);
     } else {
       this.mensaje = 'Ingresa todos los campos correctamente';
     }
-  }
+  }*/
 
   resetMessage() {
     this.mensaje = '';

@@ -38,7 +38,7 @@ export class BuyComponent implements OnInit, OnDestroy {
   selectedSupplier: SupplierModel | undefined;
   private readonly AUTH_USERNAME = 'Desconocido';
   private readonly AUTH_USER = 'No debe estar aqui';
-  username:String|null = ' ';
+  username: String | null = ' ';
   private subscription: Subscription;
   stockToAdd: number = 0;
   mensaje: string = '';
@@ -49,7 +49,6 @@ export class BuyComponent implements OnInit, OnDestroy {
     { id: '1', label: 'Bulto', value: 'Bulto' },
     { id: '2', label: 'Caja', value: 'Caja' },
     { id: '3', label: 'Metro', value: 'Metro' },
-    { id: '4', label: 'Otro', value: 'Otro' },
   ];
 
   constructor(
@@ -63,6 +62,9 @@ export class BuyComponent implements OnInit, OnDestroy {
     });
   }
   ngOnInit(): void {
+    setTimeout(() => {
+      this.showAlert("Selecciona el proveedor", true);
+    }, 0);
     this.username = localStorage.getItem(this.AUTH_USERNAME);
     this.listProducts();
     this.listSupplier();
@@ -79,6 +81,7 @@ export class BuyComponent implements OnInit, OnDestroy {
       presentation: new FormControl(' '),
       description_presentation: new FormControl(' '),
       id_mark: new FormControl(' '),
+      OtherMark: new FormControl(' '),
     });
     this.formSupplier = new FormGroup({
       name: new FormControl(''),
@@ -127,6 +130,9 @@ export class BuyComponent implements OnInit, OnDestroy {
     this.producService.getMarks().subscribe((resp) => {
       if (resp) {
         this.listMarks = resp;
+        const newMark = { id_mark: 9999, name_mark: 'Otro' };
+
+        this.listMarks.push(newMark);
       }
     });
   }
@@ -195,22 +201,41 @@ export class BuyComponent implements OnInit, OnDestroy {
       }
     }
   }
+   generateUniqueId(): string {
+    // Obtener la marca de tiempo actual en milisegundos
+    const timestamp = new Date().getTime();
+  
+    // Generar un número aleatorio entre 0 y 9999
+    const randomNumber = Math.floor(Math.random() * 10000);
+  
+    // Concatenar la marca de tiempo y el número aleatorio para crear el ID único
+    const uniqueId = timestamp.toString() + randomNumber.toString();
+  
+    return uniqueId;
+  }
+  
 
   save() {
     if (this.formProduct.valid) {
       this.mensaje = '';
-      const supplierId = this.formProduct.controls['id_supplier'].value.id_supplier;
+      const supplierId =
+        this.formProduct.controls['id_supplier'].value.id_supplier;
       const supplierName = ' ';
       const supplierPhone = ' ';
       const supplierEmail = ' ';
 
-      const selectedPresentation = this.formProduct.controls['presentation'].value;
+      const markControl = this.formProduct.controls['id_mark'];
+      let markName: string;
+      let markId: any;
 
-      let presentation;
-      if (selectedPresentation === 'Otro') {
-        presentation = this.formProduct.controls['otherpresentation'].value;
+      // Verificar si la marca es "Otro"
+      if (markControl.value === 'Otro') {
+        markName = this.formProduct.controls['OtherMark'].value;
+        markId = this.generateUniqueId(); // Asume que tienes una función que genera IDs únicos
       } else {
-        presentation = selectedPresentation;
+        // Si no es "Otro", mantener los valores existentes
+        markName = markControl.value.name_mark;
+        markId = markControl.value.id_mark;
       }
 
       const productData = {
@@ -225,11 +250,12 @@ export class BuyComponent implements OnInit, OnDestroy {
           phone: supplierPhone,
           email: supplierEmail,
         },
-        presentation: presentation,
-        description_presentation: this.formProduct.controls['description_presentation'].value,
+        presentation: this.formProduct.controls['presentation'].value,
+        description_presentation:
+          this.formProduct.controls['description_presentation'].value,
         mark: {
-          id_mark: this.formProduct.controls['id_mark'].value.id_mark,
-          name_mark: ' ',
+          id_mark: markId,
+          name_mark: markName,
         },
         status: 1,
       };
@@ -266,7 +292,7 @@ export class BuyComponent implements OnInit, OnDestroy {
         purchase_date: this.currentDate,
         total_price: 0,
         buyDetail: this.productsFact,
-        name_user: localStorage.getItem(this.AUTH_USER)
+        name_user: localStorage.getItem(this.AUTH_USER),
       };
       console.log(buyData);
       this.buyService.saveBuy(buyData).subscribe((resp) => {
@@ -314,7 +340,7 @@ export class BuyComponent implements OnInit, OnDestroy {
       debounceTime(200),
       distinctUntilChanged(),
       map((term) =>
-        term.length < 1
+        term.length < 2
           ? this.listMarks
           : this.listMarks
               .filter(
@@ -331,5 +357,4 @@ export class BuyComponent implements OnInit, OnDestroy {
   onMarkSelect(event: NgbTypeaheadSelectItemEvent) {
     this.selectedMark = event.item;
   }
-
 }

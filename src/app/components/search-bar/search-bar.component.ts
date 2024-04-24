@@ -8,7 +8,6 @@ import { Observable, distinctUntilChanged, map } from 'rxjs';
 })
 export class SearchBarComponent {
   @Output() searchTextChanged = new EventEmitter<string>();
-  @Input() buttonText: string = 'Sin texto';
   @Input() placeholder: string = 'Sin texto'
   
   search = (text$: Observable<string>) =>

@@ -3,7 +3,6 @@
 <div class="col-md-12 p-5">
   <app-search-bar
     (searchTextChanged)="onSearchTextChanged($event)"
-    [buttonText]="'Nuevo Producto'"
     [placeholder]="'Buscar productos ...'"
   ></app-search-bar>
 
@@ -11,7 +10,7 @@
     <thead class="table-primary">
       <tr>
         <th>Nombre</th>
-        <th>Marka</th>
+        <th>Marca</th>
         <th>Stock</th>
         <th>Precio de Compra</th>
         <th>Precio de Venta</th>
@@ -60,14 +59,12 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 *ngIf="!isUpdate" class="modal-title fs-5">Nuevo Producto</h1>
         <h1 *ngIf="isUpdate" class="modal-title fs-5">Actualizar Producto</h1>
         <button
           type="button"
           class="btn-close"
           data-bs-dismiss="modal"
           aria-label="close"
-          (click)="newProduct()"
         ></button>
       </div>
       <div class="modal-body">
@@ -137,14 +134,6 @@
                   {{ option.label }}
                 </option>
               </select>
-              <div *ngIf="selectedPresentation === 'Otro'" class="mb-3">
-                <input
-                  placeholder="Ingresa nueva presentacion"
-                  type="text"
-                  class="form-control"
-                  formControlName="otherpresentation"
-                />
-              </div>
             </div>
             <div class="col">
               <label class="col-form-label">Unidades De La Presentación</label>
@@ -173,20 +162,11 @@
       </div>
       <div class="modal-footer">
         <button
-          *ngIf="!isUpdate"
-          type="button"
-          class="btn btn-success btn-sm"
-          (click)="save(); newProduct()"
-        >
-          Guardar
-        </button>
-        <button
-          *ngIf="isUpdate"
           type="button"
           class="btn btn-warning btn-sm"
           data-bs-dismiss="modal"
           aria-label="close"
-          (click)="update(); newProduct()"
+          (click)="update();"
         >
           Actualizar
         </button>

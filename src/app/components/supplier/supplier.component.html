@@ -1,46 +1,62 @@
 <app-title [title]="'Gestionar Proveedores'"></app-title>
 
 <div class="col-md-12 p-5">
-
-  <app-search-bar (searchTextChanged)="onSearchTextChanged($event)" [buttonText]="'Nuevo Proveedor'" [placeholder]="'Buscar proveedores ...'"></app-search-bar>
-
+  <div class="row">
+    <div class="col">
+      <app-search-bar
+      (searchTextChanged)="onSearchTextChanged($event)"
+      [placeholder]="'Buscar proveedores ...'"
+    ></app-search-bar>
+    </div>
+    <div class="col-auto">
+      <button
+        type="button"
+        class="btn btn-primary btn"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+      >
+        <i class="fa fa-save"></i>
+        Nuevo Proveedor
+      </button>
+    </div>
+  </div>
 
   <table class="table mt-2 table-bordered">
     <thead class="table-primary">
-    <tr>
-      <th>Nombre</th>
-      <th>ID</th>
-      <th>Telefono</th>
-      <th>Correo</th>
-      <th>Acciones</th>
-    </tr>
+      <tr>
+        <th>Nombre</th>
+        <th>ID</th>
+        <th>Telefono</th>
+        <th>Correo</th>
+        <th>Acciones</th>
+      </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let item of list">
-      <td>{{item.name}}</td>
-      <td>{{item.id_supplier}}</td>
-      <td>{{item.phone}}</td>
-      <td>{{item.email}}</td>
-      <td>
-        <button
-          type="button"
-          class="btn btn-warning btn-sm"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-          (click)="selectItem(item); resetMesssage()"
-        >
-          <i class="fa fa-pencil"></i>
-        </button>
-        &nbsp;&nbsp;
-        <button
-          type="button"
-          class="btn btn-danger btn-sm"
-          (click)="delete(item.id_supplier)"
-        >
-          <i class="fa fa-trash"></i>
-        </button>
-      </td>
-    </tr>
+      <tr *ngFor="let item of list">
+        <td>{{ item.name }}</td>
+        <td>{{ item.id_supplier }}</td>
+        <td>{{ item.phone }}</td>
+        <td>{{ item.email }}</td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-warning btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            (click)="selectItem(item); resetMesssage()"
+          >
+            <i class="fa fa-pencil"></i>
+          </button>
+          &nbsp;&nbsp;
+          <button
+            type="button"
+            class="btn btn-danger btn-sm"
+            (click)="delete(item.id_supplier)"
+          >
+            <i class="fa fa-trash"></i>
+          </button>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>
@@ -69,37 +85,43 @@
           <div class="mb-3 row">
             <label class="col-sm-2 col-form-label">Nombre</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" formControlName="name">
+              <input type="text" class="form-control" formControlName="name" />
             </div>
           </div>
           <div class="mb-3 row">
             <label class="col-sm-2 col-form-label">ID</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" formControlName="id_supplier">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="id_supplier"
+              />
             </div>
           </div>
           <div class="mb-3 row">
             <label class="col-sm-2 col-form-label">Telefono</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" formControlName="phone">
+              <input type="text" class="form-control" formControlName="phone" />
             </div>
           </div>
           <div class="mb-3 row">
             <label class="col-sm-2 col-form-label">Correo</label>
             <div class="col-sm-10">
-              <input type="email" class="form-control" formControlName="email">
+              <input
+                type="email"
+                class="form-control"
+                formControlName="email"
+              />
             </div>
           </div>
         </form>
         <div *ngIf="mensaje" class="mensaje">{{ mensaje }}</div>
-
       </div>
       <div class="modal-footer">
         <button
           *ngIf="!isUpdate"
           type="button"
           class="btn btn-success btn-sm"
-
           (click)="save(); newProduct()"
         >
           Guardar

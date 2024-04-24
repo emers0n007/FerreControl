@@ -6,4 +6,5 @@ export class BuyModel{
   purchase_date:Date= new Date();
   total_price:number=0;
   buyDetail:Array<ProductModel>= new Array<ProductModel>();
+  name_user:String = ' ';
 }

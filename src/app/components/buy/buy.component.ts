@@ -37,7 +37,8 @@ export class BuyComponent implements OnInit, OnDestroy {
   listMarks: MarkModel[] = [];
   selectedSupplier: SupplierModel | undefined;
   private readonly AUTH_USERNAME = 'Desconocido';
-  username: string | null = '';
+  private readonly AUTH_USER = 'No debe estar aqui';
+  username:String|null = ' ';
   private subscription: Subscription;
   stockToAdd: number = 0;
   mensaje: string = '';
@@ -203,8 +204,7 @@ export class BuyComponent implements OnInit, OnDestroy {
       const supplierPhone = ' ';
       const supplierEmail = ' ';
 
-      const selectedPresentation =
-        this.formProduct.controls['presentation'].value;
+      const selectedPresentation = this.formProduct.controls['presentation'].value;
 
       let presentation;
       if (selectedPresentation === 'Otro') {
@@ -226,10 +226,9 @@ export class BuyComponent implements OnInit, OnDestroy {
           email: supplierEmail,
         },
         presentation: presentation,
-        description_presentation:
-          this.formProduct.controls['description_presentation'].value,
+        description_presentation: this.formProduct.controls['description_presentation'].value,
         mark: {
-          id_mark: this.formProduct.controls['id_mark'].value,
+          id_mark: this.formProduct.controls['id_mark'].value.id_mark,
           name_mark: ' ',
         },
         status: 1,
@@ -267,12 +266,13 @@ export class BuyComponent implements OnInit, OnDestroy {
         purchase_date: this.currentDate,
         total_price: 0,
         buyDetail: this.productsFact,
+        name_user: localStorage.getItem(this.AUTH_USER)
       };
       console.log(buyData);
       this.buyService.saveBuy(buyData).subscribe((resp) => {
         if (resp) {
           this.console.log(resp);
-          this.showAlert(resp.message, resp.seccess);
+          this.showAlert(resp.message, resp.success);
           this.listProducts();
         }
       });

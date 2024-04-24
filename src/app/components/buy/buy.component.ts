@@ -199,7 +199,7 @@ export class BuyComponent implements OnInit, OnDestroy {
   save() {
     if (this.formProduct.valid) {
       this.mensaje = '';
-      const supplierId = this.formProduct.controls['id_supplier'].value;
+      const supplierId = this.formProduct.controls['id_supplier'].value.id_supplier;
       const supplierName = ' ';
       const supplierPhone = ' ';
       const supplierEmail = ' ';

@@ -35,6 +35,10 @@ export class AuthenticationService {
       return this.isUser();
     }
 
+  getRoleActual(): string{
+    return this.isRole();
+  }
+
 
 
   private isAuthenticated(): boolean {
@@ -43,6 +47,10 @@ export class AuthenticationService {
 
   private isUser(): string {
     return localStorage.getItem(this.AUTH_USER) ?? "No debe estar aqui";
+  }
+
+  private isRole(): string {
+    return localStorage.getItem(this.AUTH_ROLE) ?? "Rol Invalido";
   }
 
   usuarioAutenticado = this.isAuthenticated();
@@ -54,6 +62,7 @@ export class AuthenticationService {
   cerrarSesion() {
     localStorage.setItem(this.AUTH_KEY, 'false');
     localStorage.setItem(this.AUTH_USER,"No debe estar aqui");
+    localStorage.setItem(this.AUTH_ROLE,"Rol Invalido");
     this.usuarioAutenticado = false;
   }
 

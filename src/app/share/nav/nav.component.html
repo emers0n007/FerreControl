@@ -49,7 +49,7 @@
         Gestionar Productos
       </button>
 
-      <button
+      <button *ngIf="role === 'Admin'"
         type="button"
         class="nav-link btn btn-primary mb-4"
         (click)="manageSupplier(); activarBoton('Gestionar Proveedores')"

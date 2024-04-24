@@ -180,7 +180,7 @@ export class ProductComponent implements OnInit {
   }
 
   update() {
-    const supplierId = this.formProduct.controls['id_supplier'].value;
+    const supplierId = this.formProduct.controls['id_supplier'].value.id_supplier;
     const supplierName = ' ';
     const supplierPhone = ' ';
     const supplierEmail = ' ';
@@ -198,10 +198,9 @@ export class ProductComponent implements OnInit {
         email: supplierEmail,
       },
       presentation: this.formProduct.controls['presentation'].value,
-      description_presentation:
-        this.formProduct.controls['description_presentation'].value,
+      description_presentation:this.formProduct.controls['description_presentation'].value,
       mark: {
-        id_mark: this.formProduct.controls['id_mark'].value,
+        id_mark: this.formProduct.controls['id_mark'].value.id_mark,
         name_mark: ' ',
       },
       status: 1,
@@ -209,7 +208,7 @@ export class ProductComponent implements OnInit {
     this.producService.updateProduct(productData).subscribe((resp) => {
       if (resp) {
         this.console.log(resp);
-        this.showAlert(resp.message, resp.seccess);
+        this.showAlert(resp.message, resp.success);
         this.listProducts();
         this.formProduct.reset();
       }

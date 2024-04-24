@@ -92,14 +92,14 @@
           </div>
         </form>
         <div *ngIf="mensaje" class="mensaje">{{ mensaje }}</div>
-     
+
       </div>
       <div class="modal-footer">
         <button
           *ngIf="!isUpdate"
           type="button"
           class="btn btn-success btn-sm"
-          
+
           (click)="save(); newProduct()"
         >
           Guardar

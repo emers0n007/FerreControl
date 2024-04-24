@@ -11,35 +11,28 @@ export class AuthenticationService {
 
   constructor(private httpClient:HttpClient) {
   }
-  userActual = "NN"
   private readonly AUTH_KEY = 'true';
   private readonly AUTH_USER = 'No debe estar aqui';
+  private readonly AUTH_ROLE = 'Rol Invalido';
   private readonly AUTH_USERNAME = 'Desconocido';
 
-  setUserAdmin(){
-    this.userActual = "Administrador"
-  }
+
 
   login(username: string, password: string): Observable<any> {
     const body = { name_user: username, password: password };
     return this.httpClient.post<any>('http://localhost:9000/FerreControl/login', body).pipe(
       tap((resp: any) => {
-        localStorage.setItem(this.AUTH_USER, resp.role);
+        console.log(resp.name_user)
+        localStorage.setItem(this.AUTH_USER, resp.name_user);
+        localStorage.setItem(this.AUTH_ROLE, resp.role);
         localStorage.setItem(this.AUTH_USERNAME, resp.name);
         })
     );
   }
 
 
-  setUserGerent(){
-    this.userActual = "Gerente Financiero"
-    localStorage.setItem(this.AUTH_USER, 'Gerente Financiero');
-    localStorage.setItem(this.AUTH_USERNAME, 'Juanito');
-  }
-
     getUserActual(): string{
       return this.isUser();
-
     }
 
 

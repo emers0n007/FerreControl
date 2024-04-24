@@ -10,7 +10,7 @@
     <thead class="table-primary">
       <tr>
         <th>Nombre</th>
-        <th>ID</th>
+        <th>Marka</th>
         <th>Stock</th>
         <th>Precio de Compra</th>
         <th>Precio de Venta</th>
@@ -21,7 +21,7 @@
     <tbody>
       <tr *ngFor="let item of list">
         <td>{{item.name}}</td>
-        <td>{{item.id_product}}</td>
+        <td>{{item.mark.name_mark}}</td>
         <td>{{item.stock}}</td>
         <td>{{item.price_buy}}</td>
         <td>{{item.price_sale}}</td>
@@ -118,10 +118,14 @@
           </div>
           <div class="mb-3 col">
             <label class="col-form-label">Presentacion</label>
-            <div class="">
-              <input type="text" class="form-control" formControlName="presentation">
+            <div>
+              <div class="form-check" *ngFor="let option of presentationOptions">
+                <input type="checkbox" class="form-check-input" [id]="option.id" [value]="option.value" formControlName="presentation">
+                <label class="form-check-label" [for]="option.id">{{ option.label }}</label>
+              </div>
             </div>
           </div>
+
           <div class="mb-3 col">
             <label class="col-form-label">Unidades De La Presentación</label>
             <div class="">
@@ -131,7 +135,11 @@
           <div class="mb-3 col">
             <label class="col-form-label">MARCA</label>
             <div class="">
-              <input type="text" class="form-control" formControlName="id_mark">
+              <select class="form-select" formControlName="id_mark">
+                <option *ngFor="let mark of listMarks" [value]="mark.id_mark"
+                        [selected]="mark.id_mark === selectedSupplierId">
+                  {{ mark.name_mark }}</option>
+              </select>
             </div>
           </div>
         </form>

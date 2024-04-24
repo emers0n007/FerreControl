@@ -33,10 +33,8 @@ export class LoginComponent implements OnInit{
   login() {
     const userName = this.formLogin.controls['user'].value;
     const password = this.formLogin.controls['password'].value;
-    console.log("Ingresdo", userName, password)
     this.authService.login(userName, password).subscribe({
       next: (usuarioValido: UserModel) => {
-        console.log('Usuario válido:', usuarioValido);
         if (usuarioValido.name!=null) {
 
           this.mensaje = 'Inicio Correcto';

@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../service/product.service';
 import { ProductModel } from '../../model/ProductModel';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { AlertService } from 'src/app/service/alert.service';
 import { SupplierModel } from '../../model/SupplierModel';
 import { SupplierService } from '../../service/supplier.service';
+import {MarkModel} from "../../model/MarkModel";
 
 @Component({
   selector: 'app-product',
@@ -17,20 +18,34 @@ export class ProductComponent implements OnInit {
   list: ProductModel[] = [];
   listSuppliers: SupplierModel[] = [];
   listComplet: ProductModel[] = [];
+  listMarks: MarkModel[]=[];
   formProduct: FormGroup = new FormGroup({});
   isUpdate: boolean = false;
   filteredProducts: ProductModel[] = [];
   selectedSupplierId: number = 0;
   mensaje: String = '';
+  checklistForm: FormGroup;
+
+  presentationOptions = [
+    { id: 'option1', label: 'Option 1', value: 'option1Value' },
+    { id: 'option2', label: 'Option 2', value: 'option2Value' },
+    { id: 'option3', label: 'Option 3', value: 'option3Value' }
+  ];
 
   constructor(
     private producService: ProductService,
     private alertService: AlertService,
-    private supplierService: SupplierService
-  ) {}
+    private supplierService: SupplierService,
+    private formBuilder: FormBuilder
+  ) {this.checklistForm = this.formBuilder.group({
+    presentation: []
+  });}
+
+
   ngOnInit(): void {
     this.listProducts();
     this.listSupplier();
+    this.getListMarks();
     this.formProduct = new FormGroup({
       name: new FormControl('', Validators.required),
       id_product: new FormControl('', Validators.required),
@@ -51,7 +66,7 @@ export class ProductComponent implements OnInit {
     );
     this.list = this.filteredProducts;
   }
-  
+
 
   disableId() {
     this.formProduct.get('id_product')?.disable();
@@ -66,6 +81,14 @@ export class ProductComponent implements OnInit {
       if (resp) {
         this.list = resp;
         this.listComplet = resp;
+      }
+    });
+  }
+
+  getListMarks() {
+    this.producService.getMarks().subscribe((resp) => {
+      if (resp) {
+        this.listMarks = resp;
       }
     });
   }
@@ -152,6 +175,12 @@ export class ProductComponent implements OnInit {
         phone: supplierPhone,
         email: supplierEmail,
       },
+      presentation:this.formProduct.controls['presentation'].value,
+      description_presentation:this.formProduct.controls['description_presentation'].value,
+      mark:{
+        id_mark: this.formProduct.controls['id_mark'].value,
+        name_mark:' '
+      },
       status: 1,
     };
     this.producService.updateProduct(productData).subscribe((resp) => {
@@ -181,7 +210,10 @@ export class ProductComponent implements OnInit {
     this.formProduct.controls['price_sale'].setValue(item.price_sale);
     this.formProduct.controls['id_supplier'].setValue(item.supplier.id_supplier);
     this.formProduct.controls['status'].setValue(item.status);
-    this.selectedSupplierId = item.supplier.id_supplier;
+    this.formProduct.controls['id_mark'].setValue(item.mark.id_mark);
+    // @ts-ignore
+    this.formProduct.controls['presentation'].setValue(this.checklistForm.get('presentation').value);
+    this.formProduct.controls['description_presentation'].setValue(item.description_presentation);
 
   }
 

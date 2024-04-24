@@ -1,25 +1,73 @@
-<div class="container">
-  <div class="row">
-    <!-- Tabla de productos -->
-    <div class="col-md-6">
-      <h3>Productos Disponibles</h3>
-      <table class="table">
-        <!-- Cabecera de la tabla -->
-        <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Precio</th>
-          <th>Cantidad Disponible</th>
-          <!-- Agrega más columnas si es necesario -->
-        </tr>
-        </thead>
-        <!-- Cuerpo de la tabla -->
-        <tbody>
-        <!-- Itera sobre los productos disponibles -->
-        <tr>
+<div class="col-md-12 px-5 pt-4">
+  <div class="title container-fluid d-flex justify-content-center">
+    <h5>Fecha de Facturacion: {{ currentDate | date : "medium" }}</h5>
+  </div>
+  <div class="title container-fluid d-flex justify-content-center">
+    <div class="input-group mb-2">
+      <span class="input-group-text" id="basic-addon1">Factura #</span>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Ingresa el numero de la factura"
+        aria-label="uuid"
+        aria-describedby="basic-addon1"
+        [(ngModel)]="uuid"
+      />
+      <button type="button" class="btn btn-success btn-sm" (click)="saveSale()">
+        Generar Salida
+      </button>
+    </div>
+  </div>
 
-          <!-- Agrega más columnas si es necesario -->
-        </tr>
+  <div class="d-flex align-items-center">
+    
+      <h5>Usuario Actual: {{ username }}</h5>
+   
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <h4>Productos Disponibles</h4>
+      <div class="input-group row-auto">
+        <div class="input-group-prepend"></div>
+        <div class="form-outline flex-grow-1 me-4" data-mdb-input-init>
+          <input
+            type="text"
+            class="form-control"
+            [ngbTypeahead]="search"
+            placeholder="Buscar productos..."
+          />
+        </div>
+      </div>
+      <!-- Tabla de productos -->
+      <table class="table mt-2 table-bordered">
+        <thead class="table-primary">
+          <tr>
+            <th>Nombre</th>
+            <th>ID</th>
+            <th>Stock</th>
+            <th>Proveedor</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of list">
+            <td>{{ item.name }}</td>
+            <td>{{ item.id_product }}</td>
+            <td>{{ item.stock }}</td>
+            <td>{{ item.supplier.name }}</td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-success btn-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                (click)="selectItem(item)"
+              >
+                <i class="fa-sharp fa-solid fa-plus"></i> Salida
+              </button>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -27,25 +75,85 @@
     <!-- Tabla de productos en la factura -->
     <div class="col-md-6">
       <h3>Productos en la Factura</h3>
-      <table class="table">
-        <!-- Cabecera de la tabla -->
-        <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Precio</th>
-          <th>Cantidad Comprada</th>
-          <!-- Agrega más columnas si es necesario -->
-        </tr>
+      <table class="table mt-2 table-bordered">
+        <thead class="table-primary">
+          <tr>
+            <th>Nombre</th>
+            <th>ID</th>
+            <th>Cantidad</th>
+            <th>Acciones</th>
+          </tr>
         </thead>
-        <!-- Cuerpo de la tabla -->
         <tbody>
-        <!-- Itera sobre los productos en la factura -->
-        <tr >
-
-          <!-- Agrega más columnas si es necesario -->
-        </tr>
+          <tr *ngFor="let item of productsFact">
+            <td>{{ item.name }}</td>
+            <td>{{ item.id_product }}</td>
+            <td>{{ item.stock }}</td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-danger btn-sm"
+                (click)="addAll(item)"
+              >
+                <i class="fa-solid fa-trash"></i>
+                Eliminar
+              </button>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
   </div>
 </div>
+
+
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ingresar Cantidad</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <!-- Formulario para ingresar el stock -->
+        <form>
+          <div class="mb-3">
+            <input
+              type="number"
+              class="form-control"
+              id="stockInput"
+              name="stockToAdd"
+              [ngModel]="stockToAdd"
+              (ngModelChange)="stockToAdd = $event"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          data-bs-dismiss="modal"
+          class="btn btn-primary"
+          (click)="addProduct()"
+        >
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

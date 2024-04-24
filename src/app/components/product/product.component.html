@@ -1,10 +1,11 @@
 <app-title [title]="'Gestionar Productos'"></app-title>
 
-
 <div class="col-md-12 p-5">
-
-  <app-search-bar (searchTextChanged)="onSearchTextChanged($event)" [buttonText]="'Nuevo Producto'" [placeholder]="'Buscar productos ...'"></app-search-bar>
-
+  <app-search-bar
+    (searchTextChanged)="onSearchTextChanged($event)"
+    [buttonText]="'Nuevo Producto'"
+    [placeholder]="'Buscar productos ...'"
+  ></app-search-bar>
 
   <table class="table mt-2 table-bordered">
     <thead class="table-primary">
@@ -20,12 +21,12 @@
     </thead>
     <tbody>
       <tr *ngFor="let item of list">
-        <td>{{item.name}}</td>
-        <td>{{item.mark.name_mark}}</td>
-        <td>{{item.stock}}</td>
-        <td>{{item.price_buy}}</td>
-        <td>{{item.price_sale}}</td>
-        <td>{{item.supplier.name}}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.mark.name_mark }}</td>
+        <td>{{ item.stock }}</td>
+        <td>{{ item.price_buy }}</td>
+        <td>{{ item.price_sale }}</td>
+        <td>{{ item.supplier.name }}</td>
         <td>
           <button
             type="button"
@@ -50,7 +51,7 @@
   </table>
 </div>
 <div
-  class="modal fade custom-modal"
+  class="modal fade custom-modal modal-lg"
   id="exampleModal"
   tabindex="-1"
   aria-labelledby="exampleModalLabel"
@@ -71,76 +72,101 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="formProduct">
-          <div class="mb-3 col">
-            <label class="col-2 col-form-label">Nombre</label>
-            <div class="">
-              <input type="text" class="form-control" formControlName="name">
-            </div>
-          </div>
-
-          <div class="row">
+          <div class="row row-cols-2 mb-3">
             <div class="col">
-              <div class="mb-3">
-                <label class="col-form-label text-center">ID</label>
-                <input type="text" class="form-control" formControlName="id_product">
-              </div>
+              <label class="col-2 col-form-label">Nombre</label>
+
+              <input type="text" class="form-control" formControlName="name" />
             </div>
             <div class="col">
-              <div class="mb-3">
-                <label class="col-form-label text-center">Cantidad</label>
-                <input type="text" class="form-control" formControlName="stock">
-              </div>
+              <label class="col-form-label text-center">ID</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="id_product"
+              />
             </div>
           </div>
-
-
-          <div class="mb-3 col">
-            <label class="col-form-label">Precio de compra</label>
-            <div class="">
-              <input type="text" class="form-control" formControlName="price_buy">
+          <div class="row row-cols-2 mb-3">
+            <div class="col">
+              <label class="col-form-label">Precio de compra</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="price_buy"
+              />
+            </div>
+            <div class="col">
+              <label class="col-form-label">Precio de Venta</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="price_sale"
+              />
             </div>
           </div>
-          <div class="mb-3 col">
-            <label class="col-form-label">Precio de Venta</label>
-            <div class="">
-              <input type="text" class="form-control" formControlName="price_sale">
+          <div class="row row-cols-2 mb-3">
+            <div class="col">
+              <label class="col-sm-2 col-form-label">Proveedor</label>
+              <input type="text" class="form-control"
+              formControlName="id_supplier"
+              [ngbTypeahead]="search"
+              [resultFormatter]="formatSupplier"
+              [inputFormatter]="formatSupplier"
+              (selectItem)="onSupplierSelect($event)"
+              [(ngModel)]="selectedSupplier"
+              placeholder="Buscar proveedores...">
+            </div>
+            <div class="col">
+              <label class="col-form-label text-center">Cantidad</label>
+              <input type="text" class="form-control" formControlName="stock" />
             </div>
           </div>
-          <div class="mb-3 col">
-            <label class="col-sm-2 col-form-label">Proveedor</label>
-            <div class="">
-              <select class="form-select" formControlName="id_supplier">
-                <option *ngFor="let supplier of listSuppliers" [value]="supplier.id_supplier"
-                [selected]="supplier.id_supplier === selectedSupplierId">
-                {{ supplier.name }}</option>
+          <div class="row row-cols-2 mb-3">
+            <div class="col">
+              <label class="col-form-label">Presentacion</label>
+              <select
+                class="form-select mb-3"
+                formControlName="presentation"
+                [(ngModel)]="selectedPresentation"
+              >
+                <option
+                  *ngFor="let option of presentationOptions"
+                  [value]="option.value"
+                >
+                  {{ option.label }}
+                </option>
               </select>
+              <div *ngIf="selectedPresentation === 'Otro'" class="mb-3">
+                <input
+                  placeholder="Ingresa nueva presentacion"
+                  type="text"
+                  class="form-control"
+                  formControlName="otherpresentation"
+                />
+              </div>
             </div>
-          </div>
-          <div class="mb-3 col">
-            <label class="col-form-label">Presentacion</label>
-            <div>
-              <div class="form-check" *ngFor="let option of presentationOptions">
-                <input type="checkbox" class="form-check-input" [id]="option.id" [value]="option.value" formControlName="presentation">
-                <label class="form-check-label" [for]="option.id">{{ option.label }}</label>
+            <div class="col">
+              <label class="col-form-label">Unidades De La Presentación</label>
+              <div class="">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="description_presentation"
+                />
               </div>
             </div>
           </div>
-
-          <div class="mb-3 col">
-            <label class="col-form-label">Unidades De La Presentación</label>
-            <div class="">
-              <input type="text" class="form-control" formControlName="description_presentation">
-            </div>
-          </div>
-          <div class="mb-3 col">
+          <div class="col">
             <label class="col-form-label">MARCA</label>
-            <div class="">
-              <select class="form-select" formControlName="id_mark">
-                <option *ngFor="let mark of listMarks" [value]="mark.id_mark"
-                        [selected]="mark.id_mark === selectedSupplierId">
-                  {{ mark.name_mark }}</option>
-              </select>
-            </div>
+            <input type="text" class="form-control"
+              formControlName="id_mark"
+              [ngbTypeahead]="searchMark"
+              [resultFormatter]="formatMark"
+              [inputFormatter]="formatMark"
+              (selectItem)="onMarkSelect($event)"
+              [(ngModel)]="selectedMark"
+              placeholder="Buscar marcas...">
           </div>
         </form>
         <div *ngIf="mensaje" class="mensaje">{{ mensaje }}</div>

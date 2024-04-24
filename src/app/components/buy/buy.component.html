@@ -1,54 +1,55 @@
-
 <div class="col-md-12 px-5 pt-4">
   <div class="title container-fluid d-flex justify-content-center">
-    <h5>Fecha de Facturacion: {{ currentDate | date:'medium' }}</h5>
+    <h5>Fecha de Facturacion: {{ currentDate | date : "medium" }}</h5>
   </div>
   <div class="title container-fluid d-flex justify-content-center">
     <div class="input-group mb-2">
       <span class="input-group-text" id="basic-addon1">Factura #</span>
-      <input type="text" class="form-control" placeholder="Ingresa el numero de la factura" aria-label="uuid" aria-describedby="basic-addon1" [(ngModel)]="uuid">
-      <button
-
-        type="button"
-        class="btn btn-success btn-sm"
-        (click)= "saveBuy()"
-      >
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Ingresa el numero de la factura"
+        aria-label="uuid"
+        aria-describedby="basic-addon1"
+        [(ngModel)]="uuid"
+      />
+      <button type="button" class="btn btn-success btn-sm" (click)="saveBuy()">
         Generar Entrada
       </button>
     </div>
-  
   </div>
-
 
   <div class="d-flex align-items-center">
     <h4 class="me-3">Proveedor</h4>
     <div>
       <select class="form-select" (change)="onSupplierSelected($event)">
-        <option value="" disabled selected hidden>Selecciona un proveedor</option>
-        <option *ngFor="let supplier of listSuppliers" [value]="supplier.id_supplier">
+        <option value="" disabled selected hidden>
+          Selecciona un proveedor
+        </option>
+        <option
+          *ngFor="let supplier of listSuppliers"
+          [value]="supplier.id_supplier"
+        >
           {{ supplier.name }}
         </option>
       </select>
     </div>
     <div class="ms-auto p-2">
-      <h5>Usuario Actual: {{username}}</h5>
+      <h5>Usuario Actual: {{ username }}</h5>
     </div>
-</div >
+  </div>
 
   <div class="row">
-
     <div class="col-md-6">
       <h4>Productos Disponibles</h4>
       <div class="input-group row-auto">
-        <div class="input-group-prepend">
-        </div>
+        <div class="input-group-prepend"></div>
         <div class="form-outline flex-grow-1 me-4" data-mdb-input-init>
           <input
             type="text"
             class="form-control"
             [ngbTypeahead]="search"
             placeholder="Buscar productos..."
-
           />
         </div>
         <button
@@ -83,14 +84,20 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of list">
-            <td>{{item.name}}</td>
-            <td>{{item.id_product}}</td>
-            <td>{{item.stock}}</td>
-            <td>{{item.supplier.name}}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.id_product }}</td>
+            <td>{{ item.stock }}</td>
+            <td>{{ item.supplier.name }}</td>
             <td>
-              <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="selectItem(item)">
+              <button
+                type="button"
+                class="btn btn-success btn-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                (click)="selectItem(item)"
+              >
                 <i class="fa-sharp fa-solid fa-plus"></i> Ingresar
-            </button>
+              </button>
             </td>
           </tr>
         </tbody>
@@ -111,51 +118,74 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of productsFact">
-            <td>{{item.name}}</td>
-            <td>{{item.id_product}}</td>
-            <td>{{item.stock}}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.id_product }}</td>
+            <td>{{ item.stock }}</td>
             <td>
               <button
-          type="button"
-          class="btn btn-danger btn-sm"
-          (click)="addAll(item)"
-        >
-        <i class="fa-solid fa-trash"></i>
-          Eliminar
-        </button>
+                type="button"
+                class="btn btn-danger btn-sm"
+                (click)="addAll(item)"
+              >
+                <i class="fa-solid fa-trash"></i>
+                Eliminar
+              </button>
             </td>
           </tr>
         </tbody>
       </table>
-      
     </div>
   </div>
 </div>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Ingresar Cantidad</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-              <!-- Formulario para ingresar el stock -->
-              <form>
-                  <div class="mb-3">
-                    <input type="number" class="form-control" id="stockInput" name="stockToAdd" [ngModel]="stockToAdd" (ngModelChange)="stockToAdd = $event">
-
-                  </div>
-              </form>
-          </div>
-          <div class="modal-footer">
-              <button type="button" data-bs-dismiss="modal" class="btn btn-primary" (click)="addProduct()">Aceptar</button>
-          </div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ingresar Cantidad</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
+      <div class="modal-body">
+        <!-- Formulario para ingresar el stock -->
+        <form>
+          <div class="mb-3">
+            <input
+              type="number"
+              class="form-control"
+              id="stockInput"
+              name="stockToAdd"
+              [ngModel]="stockToAdd"
+              (ngModelChange)="stockToAdd = $event"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          data-bs-dismiss="modal"
+          class="btn btn-primary"
+          (click)="addProduct()"
+        >
+          Aceptar
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 <div
-  class="modal fade custom-modal"
+  class="modal fade custom-modal modal-lg"
   id="example-product"
   tabindex="-1"
   aria-labelledby="exampleModalLabel"
@@ -165,7 +195,6 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5">Nuevo Producto</h1>
-
         <button
           type="button"
           class="btn-close"
@@ -176,71 +205,118 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="formProduct">
-          <div class="mb-3 col">
-            <label class="col-2 col-form-label">Nombre</label>
-            <div class="">
-              <input type="text" class="form-control" formControlName="name">
-            </div>
-          </div>
-
-          <div class="row">
+          <div class="row row-cols-2 mb-3">
             <div class="col">
-              <div class="mb-3">
-                <label class="col-form-label text-center">ID</label>
-                <input type="text" class="form-control" formControlName="id_product">
-              </div>
+              <label class="col-2 col-form-label">Nombre</label>
+
+              <input type="text" class="form-control" formControlName="name" />
             </div>
             <div class="col">
-              <div class="mb-3">
-                <label class="col-form-label text-center">Cantidad</label>
-                <input type="text" class="form-control" formControlName="stock">
-              </div>
+              <label class="col-form-label text-center">ID</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="id_product"
+              />
             </div>
           </div>
-
-
-          <div class="mb-3 col">
-            <label class="col-form-label">Precio de compra</label>
-            <div class="">
-              <input type="text" class="form-control" formControlName="price_buy">
+          <div class="row row-cols-2 mb-3">
+            <div class="col">
+              <label class="col-form-label">Precio de compra</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="price_buy"
+              />
+            </div>
+            <div class="col">
+              <label class="col-form-label">Precio de Venta</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="price_sale"
+              />
             </div>
           </div>
-          <div class="mb-3 col">
-            <label class="col-form-label">Precio de Venta</label>
-            <div class="">
-              <input type="text" class="form-control" formControlName="price_sale">
+          <div class="row row-cols-2 mb-3">
+            <div class="col">
+              <label class="col-sm-2 col-form-label">Proveedor</label>
+              <input type="text" class="form-control"
+              formControlName="id_supplier"
+              [ngbTypeahead]="searchSupplier"
+              [resultFormatter]="formatSupplier"
+              [inputFormatter]="formatSupplier"
+              (selectItem)="onSupplierSelect($event)"
+              [(ngModel)]="selectedSupplier"
+              placeholder="Buscar proveedores...">
+            
+            </div>
+            <div class="col">
+              <label class="col-form-label text-center">Cantidad</label>
+              <input type="text" class="form-control" formControlName="stock" />
             </div>
           </div>
-          <div class="mb-3 col">
-            <label class="col-sm-2 col-form-label">Proveedor</label>
-            <div class="">
-              <select class="form-select" formControlName="id_supplier">
-                <option *ngFor="let supplier of listSuppliers" [value]="supplier.id_supplier"
+          <div class="row row-cols-2 mb-3">
+            <div class="col">
+              <label class="col-form-label">Presentacion</label>
+              <select
+                class="form-select mb-3"
+                formControlName="presentation"
+                [(ngModel)]="selectedPresentation"
+              >
+                <option
+                  *ngFor="let option of presentationOptions"
+                  [value]="option.value"
                 >
-                {{ supplier.name }}</option>
+                  {{ option.label }}
+                </option>
               </select>
+              <div *ngIf="selectedPresentation === 'Otro'" class="mb-3">
+                <input
+                  placeholder="Ingresa nueva presentacion"
+                  type="text"
+                  class="form-control"
+                  formControlName="otherpresentation"
+                />
+              </div>
             </div>
+            <div class="col">
+              <label class="col-form-label">Unidades De La Presentación</label>
+              <div class="">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="description_presentation"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <label class="col-form-label">MARCA</label>
+            <input type="text" class="form-control"
+              formControlName="id_mark"
+              [ngbTypeahead]="searchMark"
+              [resultFormatter]="formatMark"
+              [inputFormatter]="formatMark"
+              (selectItem)="onMarkSelect($event)"
+              [(ngModel)]="selectedMark"
+              placeholder="Buscar marcas...">
           </div>
         </form>
-
         <div *ngIf="mensaje" class="mensaje">{{ mensaje }}</div>
       </div>
       <div class="modal-footer">
         <button
-
           type="button"
           class="btn btn-success btn-sm"
           (click)="save(); newProduct()"
         >
           Guardar
         </button>
-
       </div>
     </div>
   </div>
 </div>
-
-
 <div
   class="modal fade"
   id="example-supplier"
@@ -265,25 +341,29 @@
           <div class="mb-3 row">
             <label class="col-sm-2 col-form-label">Nombre</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" formControlName="name">
+              <input type="text" class="form-control" formControlName="name" />
             </div>
           </div>
           <div class="mb-3 row">
             <label class="col-sm-2 col-form-label">ID</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" formControlName="id_supplier">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="id_supplier"
+              />
             </div>
           </div>
           <div class="mb-3 row">
             <label class="col-sm-2 col-form-label">Telefono</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" formControlName="phone">
+              <input type="text" class="form-control" formControlName="phone" />
             </div>
           </div>
           <div class="mb-3 row">
             <label class="col-sm-2 col-form-label">Correo</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" formControlName="email">
+              <input type="text" class="form-control" formControlName="email" />
             </div>
           </div>
         </form>
@@ -298,7 +378,6 @@
         >
           Guardar
         </button>
-
       </div>
     </div>
   </div>

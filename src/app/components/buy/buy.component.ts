@@ -79,10 +79,11 @@ export class BuyComponent implements OnInit, OnDestroy {
       price_sale: new FormControl('', Validators.required),
       id_supplier: new FormControl('', Validators.required),
       status: new FormControl('1'),
-      presentation: new FormControl(' '),
-      description_presentation: new FormControl(' '),
-      id_mark: new FormControl(' '),
-      OtherMark: new FormControl(' '),
+      presentation: new FormControl(''),
+      description_presentation: new FormControl(''),
+      id_mark: new FormControl(''),
+      OtherMark: new FormControl(''),
+      units: new FormControl('')
     });
     this.formSupplier = new FormGroup({
       name: new FormControl(''),

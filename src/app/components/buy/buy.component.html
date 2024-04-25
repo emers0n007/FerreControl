@@ -84,7 +84,9 @@
         <tbody>
           <tr *ngFor="let item of list">
             <td>{{ item.name }}</td>
-            <td> {{item.description_presentation}} [{{ item.presentation }}s]</td>
+            <td>
+              {{ item.description_presentation }} [{{ item.presentation }}s]
+            </td>
             <td>{{ item.stock }}</td>
             <td>
               <button
@@ -96,7 +98,7 @@
                 *ngIf="selectedSupplier"
                 title="Agregar a la Factura"
               >
-                <i class="fa-sharp fa-solid fa-plus"></i> 
+                <i class="fa-sharp fa-solid fa-plus"></i>
               </button>
             </td>
           </tr>
@@ -107,7 +109,7 @@
     <!-- Tabla de productos en la factura -->
     <div class="col-md-6">
       <h3>Productos en la Factura</h3>
-      <table class="table mt-2 table-bordered table-hover" >
+      <table class="table mt-2 table-bordered table-hover">
         <thead class="table-primary">
           <tr>
             <th>Nombre</th>
@@ -119,7 +121,9 @@
         <tbody>
           <tr *ngFor="let item of productsFact">
             <td>{{ item.name }}</td>
-            <td> {{item.description_presentation}} [{{ item.presentation }}s]</td>
+            <td>
+              {{ item.description_presentation }} [{{ item.presentation }}s]
+            </td>
             <td>{{ item.stock }}</td>
             <td>
               <button
@@ -148,7 +152,11 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">{{selectedItem?.name}} - Presentacion [{{selectedItem?.presentation}}]</h5>
+        <h5 class="modal-title" id="exampleModalLabel">
+          {{ selectedItem?.name }} - Presentacion [{{
+            selectedItem?.presentation
+          }}]
+        </h5>
         <button
           type="button"
           class="btn-close"
@@ -160,7 +168,9 @@
         <!-- Formulario para ingresar el stock -->
         <form>
           <div class="mb-3">
-            <label for="stockInput">Cantidad de {{selectedItem?.presentation}}</label>
+            <label for="stockInput"
+              >Cantidad de {{ selectedItem?.presentation }}</label
+            >
             <input
               type="number"
               class="form-control"
@@ -250,29 +260,27 @@
               />
             </div>
           </div>
-          <div class="row row-cols-2 mb-3">
+          <div class="row mb-3">
             <div class="col">
               <label class="col-sm-2 col-form-label">Proveedor</label>
-              <input type="text" class="form-control"
-              formControlName="id_supplier"
-              [ngbTypeahead]="searchSupplier"
-              [resultFormatter]="formatSupplier"
-              [inputFormatter]="formatSupplier"
-              (selectItem)="onSupplierSelect($event)"
-              [(ngModel)]="selectedSupplier"
-              placeholder="Buscar proveedores...">
-            
-            </div>
-            <div class="col">
-              <label class="col-form-label text-center">Cantidad de {{selectedPresentation}}</label>
-              <input type="text" class="form-control" formControlName="stock" />
+              <input
+                type="text"
+                class="form-control"
+                formControlName="id_supplier"
+                [ngbTypeahead]="searchSupplier"
+                [resultFormatter]="formatSupplier"
+                [inputFormatter]="formatSupplier"
+                (selectItem)="onSupplierSelect($event)"
+                [(ngModel)]="selectedSupplier"
+                placeholder="Buscar proveedores..."
+              />
             </div>
           </div>
           <div class="row row-cols-2 mb-3">
             <div class="col">
               <label class="col-form-label">Presentacion</label>
               <select
-                class="form-select mb-3"
+                class="form-select"
                 formControlName="presentation"
                 [(ngModel)]="selectedPresentation"
               >
@@ -285,7 +293,9 @@
               </select>
             </div>
             <div class="col">
-              <label class="col-form-label">Unidades De La Presentación</label>
+              <label class="col-form-label"
+                >Unidades en {{ selectedPresentation }}</label
+              >
               <div class="">
                 <input
                   type="text"
@@ -295,20 +305,44 @@
               </div>
             </div>
           </div>
+          <div class="row row-cols-2 mb-3">
+            <div class="col">
+              <label class="col-form-label text-center"
+                >Cantidad de {{ selectedPresentation }}s</label
+              >
+              <input type="number" class="form-control" formControlName="stock" />
+            </div>
+            <div class="col">
+              <label class="col-form-label text-center"
+                >Unidades</label
+              >
+              <input type="number" class="form-control" formControlName="units" />
+            </div>
+          </div>
+         
           <div class="col mb-3">
             <label class="col-form-label">MARCA</label>
-            <input type="text" class="form-control"
+            <input
+              type="text"
+              class="form-control"
               formControlName="id_mark"
               [ngbTypeahead]="searchMark"
               [resultFormatter]="formatMark"
               [inputFormatter]="formatMark"
               (selectItem)="onMarkSelect($event)"
               [(ngModel)]="selectedMark"
-              placeholder="Buscar marcas...">
+              placeholder="Buscar marcas..."
+            />
           </div>
           <div *ngIf="selectedMark?.name_mark === 'Otro'">
-            <input type="text" class="form-control" formControlName="OtherMark" placeholder="Ingresa una nueva marca"/>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="OtherMark"
+              placeholder="Ingresa una nueva marca"
+            />
           </div>
+         
         </form>
         <div *ngIf="mensaje" class="mensaje">{{ mensaje }}</div>
       </div>

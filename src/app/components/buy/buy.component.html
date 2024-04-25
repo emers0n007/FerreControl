@@ -72,32 +72,31 @@
         </button>
       </div>
       <!-- Tabla de productos -->
-      <table class="table mt-2 table-bordered">
+      <table class="table mt-2 table-bordered table-hover">
         <thead class="table-primary">
           <tr>
             <th>Nombre</th>
-            <th>ID</th>
+            <th>Presentacion</th>
             <th>Stock</th>
-            <th>Proveedor</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of list">
             <td>{{ item.name }}</td>
-            <td>{{ item.id_product }}</td>
+            <td> {{item.description_presentation}} [{{ item.presentation }}s]</td>
             <td>{{ item.stock }}</td>
-            <td>{{ item.supplier.name }}</td>
             <td>
               <button
                 type="button"
-                class="btn btn-success btn-sm"
+                class="btn btn-success btn"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
                 (click)="selectItem(item)"
                 *ngIf="selectedSupplier"
+                title="Agregar a la Factura"
               >
-                <i class="fa-sharp fa-solid fa-plus"></i> Ingresar
+                <i class="fa-sharp fa-solid fa-plus"></i> 
               </button>
             </td>
           </tr>
@@ -108,28 +107,28 @@
     <!-- Tabla de productos en la factura -->
     <div class="col-md-6">
       <h3>Productos en la Factura</h3>
-      <table class="table mt-2 table-bordered">
+      <table class="table mt-2 table-bordered table-hover" >
         <thead class="table-primary">
           <tr>
             <th>Nombre</th>
-            <th>ID</th>
-            <th>Cantidad</th>
+            <th>Presentacion</th>
+            <th>Stock</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of productsFact">
             <td>{{ item.name }}</td>
-            <td>{{ item.id_product }}</td>
+            <td> {{item.description_presentation}} [{{ item.presentation }}s]</td>
             <td>{{ item.stock }}</td>
             <td>
               <button
                 type="button"
                 class="btn btn-danger btn-sm"
                 (click)="addAll(item)"
+                title="Eliminar de la Factura"
               >
                 <i class="fa-solid fa-trash"></i>
-                Eliminar
               </button>
             </td>
           </tr>
@@ -149,7 +148,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Ingresar Cantidad</h5>
+        <h5 class="modal-title" id="exampleModalLabel">{{selectedItem?.name}} - Presentacion [{{selectedItem?.presentation}}]</h5>
         <button
           type="button"
           class="btn-close"
@@ -161,13 +160,25 @@
         <!-- Formulario para ingresar el stock -->
         <form>
           <div class="mb-3">
+            <label for="stockInput">Cantidad de {{selectedItem?.presentation}}</label>
             <input
               type="number"
               class="form-control"
-              id="stockInput"
+              id="stockToAdd"
               name="stockToAdd"
               [ngModel]="stockToAdd"
               (ngModelChange)="stockToAdd = $event"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="stockCount">Cantidad</label>
+            <input
+              type="number"
+              class="form-control"
+              id="stockCount"
+              name="stockCount"
+              [ngModel]="stockCount"
+              (ngModelChange)="stockCount = $event"
             />
           </div>
         </form>

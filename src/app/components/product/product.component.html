@@ -6,7 +6,7 @@
     [placeholder]="'Buscar productos ...'"
   ></app-search-bar>
 
-  <table class="table mt-2 table-bordered">
+  <table class="table mt-2 table-bordered table-hover">
     <thead class="table-primary">
       <tr>
         <th>Nombre</th>
@@ -33,6 +33,7 @@
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
             (click)="selectItem(item); resetMessage()"
+            title="Modificar Producto"
           >
             <i class="fa fa-pencil"></i>
           </button>
@@ -41,6 +42,7 @@
             type="button"
             class="btn btn-danger btn-sm"
             (click)="delete(item.id_product)"
+            title="Modificar Producto"
           >
             <i class="fa fa-trash"></i>
           </button>

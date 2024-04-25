@@ -6,7 +6,8 @@ import { Subject } from 'rxjs';
 })
 export class AlertService {
 
-  private alertSource = new Subject();
+    
+  private alertSource = new Subject<{ message: string; okay: boolean; time: number }>();
   alert$ = this.alertSource.asObservable();
 
   

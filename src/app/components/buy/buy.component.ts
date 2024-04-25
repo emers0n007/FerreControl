@@ -41,6 +41,7 @@ export class BuyComponent implements OnInit, OnDestroy {
   username: String | null = ' ';
   private subscription: Subscription;
   stockToAdd: number = 0;
+  stockCount: number = 0;
   mensaje: string = '';
   uuid: string = '';
 
@@ -63,7 +64,7 @@ export class BuyComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     setTimeout(() => {
-      this.showAlert("Selecciona el proveedor", true);
+      this.showAlert("Selecciona el proveedor para agregar productos", false);
     }, 0);
     this.username = localStorage.getItem(this.AUTH_USERNAME);
     this.listProducts();
@@ -182,7 +183,8 @@ export class BuyComponent implements OnInit, OnDestroy {
       );
       if (index !== -1) {
         this.list.splice(index, 1);
-        this.selectedItem.stock = this.stockToAdd;
+        this.selectedItem.stock = this.stockCount;
+        this.selectedItem.description_presentation = this.stockToAdd;
         this.productsFact.push(this.selectedItem);
       }
       this.selectedItem = undefined; // Restablece el valor

@@ -74,7 +74,7 @@ export class BuyComponent implements OnInit, OnDestroy {
     this.formProduct = new FormGroup({
       name: new FormControl('', Validators.required),
       id_product: new FormControl('', Validators.required),
-      stock: new FormControl('', Validators.required),
+      stock: new FormControl('0'),
       price_buy: new FormControl('', Validators.required),
       price_sale: new FormControl('', Validators.required),
       id_supplier: new FormControl('', Validators.required),
@@ -184,8 +184,7 @@ export class BuyComponent implements OnInit, OnDestroy {
       );
       if (index !== -1) {
         this.list.splice(index, 1);
-        this.selectedItem.stock = this.stockCount;
-        this.selectedItem.description_presentation = this.stockToAdd;
+        this.selectedItem.stock = (this.stockToAdd*this.selectedItem.description_presentation) + this.stockCount;
         this.productsFact.push(this.selectedItem);
       }
       this.selectedItem = undefined; // Restablece el valor
@@ -204,25 +203,24 @@ export class BuyComponent implements OnInit, OnDestroy {
       }
     }
   }
-   generateUniqueId(): string {
+   generateUniqueId(): any {
     // Obtener la marca de tiempo actual en milisegundos
     const timestamp = new Date().getTime();
-  
+
     // Generar un número aleatorio entre 0 y 9999
     const randomNumber = Math.floor(Math.random() * 10000);
-  
+
     // Concatenar la marca de tiempo y el número aleatorio para crear el ID único
     const uniqueId = timestamp.toString() + randomNumber.toString();
-  
-    return uniqueId;
+
+    return randomNumber;
   }
-  
+
 
   save() {
     if (this.formProduct.valid) {
       this.mensaje = '';
-      const supplierId =
-        this.formProduct.controls['id_supplier'].value.id_supplier;
+      const supplierId = this.formProduct.controls['id_supplier'].value.id_supplier;
       const supplierName = ' ';
       const supplierPhone = ' ';
       const supplierEmail = ' ';

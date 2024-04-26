@@ -154,7 +154,7 @@
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">
           {{ selectedItem?.name }} - Presentacion [{{
-            selectedItem?.presentation
+            selectedItem?.presentation}} * {{selectedItem?.description_presentation
           }}]
         </h5>
         <button
@@ -305,7 +305,7 @@
               </div>
             </div>
           </div>
-          <div class="row row-cols-2 mb-3">
+          <!-- <div class="row row-cols-2 mb-3">
             <div class="col">
               <label class="col-form-label text-center"
                 >Cantidad de {{ selectedPresentation }}s</label
@@ -318,8 +318,8 @@
               >
               <input type="number" class="form-control" formControlName="units" />
             </div>
-          </div>
-         
+          </div>-->
+
           <div class="col mb-3">
             <label class="col-form-label">MARCA</label>
             <input
@@ -342,7 +342,7 @@
               placeholder="Ingresa una nueva marca"
             />
           </div>
-         
+
         </form>
         <div *ngIf="mensaje" class="mensaje">{{ mensaje }}</div>
       </div>

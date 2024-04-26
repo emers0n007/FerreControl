@@ -39,7 +39,6 @@ export class AppComponent implements OnInit{
   }
   ngOnInit(): void {
     this.alertService.alert$.subscribe((res: any) => {
-      console.log(res);
       this.mesage = res.message;
       this.okay = res.okay;
       this.showAlert = true;

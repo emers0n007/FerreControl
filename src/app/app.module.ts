@@ -15,6 +15,9 @@ import { BuyComponent } from './components/buy/buy.component';
 import { SaleComponent } from './components/sale/sale.component';
 import { TitleComponent } from './components/title/title.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { ReportComponent } from './components/report/report.component';
+import { ModalNewProductComponent } from './components/modal-new-product/modal-new-product.component';
+import { ModalNewSupplierComponent } from './components/modal-new-supplier/modal-new-supplier.component';
 
 
 @NgModule({
@@ -27,7 +30,10 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
     BuyComponent,
     SaleComponent,
     TitleComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    ReportComponent,
+    ModalNewProductComponent,
+    ModalNewSupplierComponent
   ],
   imports: [
     BrowserModule,

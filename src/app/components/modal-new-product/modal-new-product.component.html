@@ -1,0 +1,145 @@
+
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Nuevo Producto</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="close"
+          (click)="newProduct()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formProduct">
+          <div class="row row-cols-2 mb-3">
+            <div class="col">
+              <label class="col-2 col-form-label">Nombre</label>
+
+              <input type="text" class="form-control" formControlName="name" />
+            </div>
+            <div class="col">
+              <label class="col-form-label text-center">ID</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="id_product"
+              />
+            </div>
+          </div>
+          <div class="row row-cols-2 mb-3">
+            <div class="col">
+              <label class="col-form-label">Precio de compra</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="price_buy"
+              />
+            </div>
+            <div class="col">
+              <label class="col-form-label">Precio de Venta</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="price_sale"
+              />
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col">
+              <label class="col-sm-2 col-form-label">Proveedor</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="id_supplier"
+                [ngbTypeahead]="searchSupplier"
+                [resultFormatter]="formatSupplier"
+                [inputFormatter]="formatSupplier"
+                (selectItem)="onSupplierSelect($event)"
+                [(ngModel)]="selectedSupplier"
+                placeholder="Buscar proveedores..."
+              />
+            </div>
+          </div>
+          <div class="row row-cols-2 mb-3">
+            <div class="col">
+              <label class="col-form-label">Presentacion</label>
+              <select
+                class="form-select"
+                formControlName="presentation"
+                [(ngModel)]="selectedPresentation"
+              >
+                <option
+                  *ngFor="let option of presentationOptions"
+                  [value]="option.value"
+                >
+                  {{ option.label }}
+                </option>
+              </select>
+            </div>
+            <div class="col">
+              <label class="col-form-label"
+                >Unidades en {{ selectedPresentation }}</label
+              >
+              <div class="">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="description_presentation"
+                />
+              </div>
+            </div>
+          </div>
+          <!-- <div class="row row-cols-2 mb-3">
+            <div class="col">
+              <label class="col-form-label text-center"
+                >Cantidad de {{ selectedPresentation }}s</label
+              >
+              <input type="number" class="form-control" formControlName="stock" />
+            </div>
+            <div class="col">
+              <label class="col-form-label text-center"
+                >Unidades</label
+              >
+              <input type="number" class="form-control" formControlName="units" />
+            </div>
+          </div>-->
+
+          <div class="col mb-3">
+            <label class="col-form-label">MARCA</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="id_mark"
+              [ngbTypeahead]="searchMark"
+              [resultFormatter]="formatMark"
+              [inputFormatter]="formatMark"
+              (selectItem)="onMarkSelect($event)"
+              [(ngModel)]="selectedMark"
+              placeholder="Buscar marcas..."
+            />
+          </div>
+          <div *ngIf="selectedMark?.name_mark === 'Otro'">
+            <input
+              type="text"
+              class="form-control"
+              formControlName="OtherMark"
+              placeholder="Ingresa una nueva marca"
+            />
+          </div>
+
+        </form>
+        <div *ngIf="mensaje" class="mensaje">{{ mensaje }}</div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-success btn-sm"
+          (click)="save(); newProduct()"
+        >
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>

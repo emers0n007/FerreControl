@@ -19,6 +19,7 @@ import { ReportComponent } from './components/report/report.component';
 import { ModalNewProductComponent } from './components/modal-new-product/modal-new-product.component';
 import { ModalNewSupplierComponent } from './components/modal-new-supplier/modal-new-supplier.component';
 
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,7 @@ import { ModalNewSupplierComponent } from './components/modal-new-supplier/modal
     ReactiveFormsModule,
     FormsModule,
     NgbModule,
-   
+   NgxExtendedPdfViewerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

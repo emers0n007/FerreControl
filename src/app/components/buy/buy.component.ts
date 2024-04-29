@@ -18,6 +18,10 @@ import { BuyService } from '../../service/buy.service';
 import { MarkModel } from 'src/app/model/MarkModel';
 import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 
+
+
+
+
 @Component({
   selector: 'app-buy',
   templateUrl: './buy.component.html',
@@ -27,10 +31,10 @@ export class BuyComponent implements OnInit, OnDestroy {
   currentDate: Date = new Date();
   selectedItem: ProductModel | undefined;
   list: ProductModel[] = [];
- 
+
   listComplet: ProductModel[] = [];
   filteredProducts: ProductModel[] = [];
- 
+
   filteredPro: ProductModel[] = [];
   productsFact: ProductModel[] = [];
   listSuppliers: SupplierModel[] = [];
@@ -62,7 +66,7 @@ export class BuyComponent implements OnInit, OnDestroy {
     this.listProducts();
     this.listSupplier();
     this.currentDate = new Date();
-   
+
   }
 
   listSupplier() {
@@ -84,7 +88,7 @@ export class BuyComponent implements OnInit, OnDestroy {
     }
   }
 
- 
+
   listProducts() {
     this.producService.getProducts().subscribe((resp) => {
       if (resp) {
@@ -93,7 +97,7 @@ export class BuyComponent implements OnInit, OnDestroy {
       }
     });
   }
-  
+
 
   onSupplierSelected(event: Event) {
     const selectedSupplierId = (event.target as HTMLSelectElement).value;
@@ -182,7 +186,8 @@ export class BuyComponent implements OnInit, OnDestroy {
       this.showAlert('Completa todos los campos requeridos', false);
     }
   }
+
   protected readonly console = console;
 
-  
+
 }

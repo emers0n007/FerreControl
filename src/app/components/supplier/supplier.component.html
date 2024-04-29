@@ -44,6 +44,7 @@
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
             (click)="selectItem(item); resetMesssage()"
+            title="Editar Proveedor"
           >
             <i class="fa fa-pencil"></i>
           </button>
@@ -52,6 +53,7 @@
             type="button"
             class="btn btn-danger btn-sm"
             (click)="delete(item.id_supplier)"
+            title="Eliminar proveedor"
           >
             <i class="fa fa-trash"></i>
           </button>

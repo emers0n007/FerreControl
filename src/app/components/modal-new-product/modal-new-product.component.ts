@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, debounceTime, distinctUntilChanged, map } from 'rxjs';
@@ -7,6 +7,8 @@ import { SupplierModel } from 'src/app/model/SupplierModel';
 import { AlertService } from 'src/app/service/alert.service';
 import { ProductService } from 'src/app/service/product.service';
 import { SupplierService } from 'src/app/service/supplier.service';
+/*import * as bootstrap from "bootstrap";
+import * as $ from 'jquery';*/
 
 @Component({
   selector: 'app-modal-new-product',
@@ -14,6 +16,7 @@ import { SupplierService } from 'src/app/service/supplier.service';
   styleUrls: ['./modal-new-product.component.css']
 })
 export class ModalNewProductComponent implements OnInit{
+  @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
 
   formProduct: FormGroup = new FormGroup({});
   listSuppliers: SupplierModel[] = [];
@@ -49,6 +52,10 @@ export class ModalNewProductComponent implements OnInit{
       units: new FormControl('')
     });
   }
+
+
+
+
 
   generateUniqueId(): any {
     // Obtener la marca de tiempo actual en milisegundos
@@ -109,6 +116,7 @@ export class ModalNewProductComponent implements OnInit{
       this.producService.saveProduct(productData).subscribe((resp) => {
         if (resp) {
           this.console.log(resp);
+          this.closeModal.emit();
           this.showAlert(resp.message, resp.success);
           //this.listProducts();
           this.formProduct.reset();
@@ -118,6 +126,12 @@ export class ModalNewProductComponent implements OnInit{
       this.mensaje = 'Ingresa todos los campos correctamente';
     }
   }
+
+  /*closeModalHidden(){
+    $("#example-product").modal("hide");
+  }*/
+
+
 
   showAlert(message: string, okay: boolean) {
     this.alertService.showAlert(message, okay);
@@ -142,7 +156,7 @@ export class ModalNewProductComponent implements OnInit{
 
     formatSupplier = (supplier: SupplierModel) =>
       supplier.name ? supplier.name.toString() : '';
-  
+
     onSupplierSelect(event: NgbTypeaheadSelectItemEvent) {
       this.selectedSupplier = event.item;
     }
@@ -160,7 +174,7 @@ export class ModalNewProductComponent implements OnInit{
         if (resp) {
           this.listMarks = resp;
           const newMark = { id_mark: 9999, name_mark: 'Otro' };
-  
+
           this.listMarks.push(newMark);
         }
       });
@@ -183,10 +197,10 @@ export class ModalNewProductComponent implements OnInit{
                 .slice(0, 10)
         )
       );
-  
+
     formatMark = (mark: MarkModel) =>
       mark.name_mark ? mark.name_mark.toString() : '';
-  
+
     onMarkSelect(event: NgbTypeaheadSelectItemEvent) {
       this.selectedMark = event.item;
     }

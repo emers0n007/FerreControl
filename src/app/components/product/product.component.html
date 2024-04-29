@@ -10,6 +10,7 @@
     <thead class="table-primary">
       <tr>
         <th>Nombre</th>
+        <th>Presentacion</th>
         <th>Marca</th>
         <th>Stock</th>
         <th>Precio de Compra</th>
@@ -21,6 +22,7 @@
     <tbody>
       <tr *ngFor="let item of list">
         <td>{{ item.name }}</td>
+        <td>{{ item.presentation }}</td>
         <td>{{ item.mark.name_mark }}</td>
         <td>{{ item.stock }}</td>
         <td>{{ item.price_buy }}</td>

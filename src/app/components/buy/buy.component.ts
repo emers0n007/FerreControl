@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   Observable,
@@ -185,6 +185,14 @@ export class BuyComponent implements OnInit, OnDestroy {
     } else {
       this.showAlert('Completa todos los campos requeridos', false);
     }
+  }
+
+
+  showProduct: boolean = false;
+
+  showNewProduct(){
+
+    //this.showProduct = !this.showProduct;
   }
 
   protected readonly console = console;

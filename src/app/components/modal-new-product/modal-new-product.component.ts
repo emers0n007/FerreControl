@@ -7,8 +7,6 @@ import { SupplierModel } from 'src/app/model/SupplierModel';
 import { AlertService } from 'src/app/service/alert.service';
 import { ProductService } from 'src/app/service/product.service';
 import { SupplierService } from 'src/app/service/supplier.service';
-/*import * as bootstrap from "bootstrap";
-import * as $ from 'jquery';*/
 
 @Component({
   selector: 'app-modal-new-product',
@@ -52,10 +50,6 @@ export class ModalNewProductComponent implements OnInit{
       units: new FormControl('')
     });
   }
-
-
-
-
 
   generateUniqueId(): any {
     // Obtener la marca de tiempo actual en milisegundos
@@ -127,9 +121,6 @@ export class ModalNewProductComponent implements OnInit{
     }
   }
 
-  /*closeModalHidden(){
-    $("#example-product").modal("hide");
-  }*/
 
 
 

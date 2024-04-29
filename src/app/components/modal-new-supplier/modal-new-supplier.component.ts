@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { SupplierModel } from 'src/app/model/SupplierModel';
 import { AlertService } from 'src/app/service/alert.service';
@@ -10,16 +10,17 @@ import { SupplierService } from 'src/app/service/supplier.service';
   styleUrls: ['./modal-new-supplier.component.css']
 })
 export class ModalNewSupplierComponent implements OnInit{
+  @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
 
   formSupplier: FormGroup = new FormGroup({});
   listSuppliers: SupplierModel[] = [];
-  
+
   constructor( private supplierService: SupplierService, private alertService: AlertService){
 
   }
 
   ngOnInit(): void {
-    
+
     this.formSupplier = new FormGroup({
       name: new FormControl(''),
       id_supplier: new FormControl(''),
@@ -35,6 +36,7 @@ export class ModalNewSupplierComponent implements OnInit{
       .saveSupplier(this.formSupplier.value)
       .subscribe((resp) => {
         if (resp) {
+          this.closeModal.emit();
           this.showAlert(resp.message, resp.seccess);
           this.listSupplier();
           this.formSupplier.reset();

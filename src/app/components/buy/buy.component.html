@@ -206,6 +206,7 @@
     </div>
   </div>
 </div>
+
 <div
   class="modal fade custom-modal modal-lg"
   id="example-product"
@@ -215,6 +216,8 @@
 >
   <app-modal-new-product (closeModal)="listProducts()" ></app-modal-new-product>
 </div>
+
+
 <div
   class="modal fade"
   id="example-supplier"
@@ -222,5 +225,5 @@
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
 >
-  <app-modal-new-supplier></app-modal-new-supplier>
+  <app-modal-new-supplier (closeModal)="listSupplier()"></app-modal-new-supplier>
 </div>

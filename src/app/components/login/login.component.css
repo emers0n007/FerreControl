@@ -11,7 +11,7 @@
 
 html,
 body {
-  background: #bcda52;
+  background: #d3e58f;
 }
 
 h1 {
@@ -30,7 +30,7 @@ h1 {
   background: rgba(255, 255, 255, 0.15);
   padding: 2rem 3rem;
   border-radius: 2rem;
-  background-color: #faef88;
+  background-color: #e6de9ccd;
   box-shadow: 13px 13px 20px #cbced1, -13px -13px 20px #ffffff;
   color: black;
 }
@@ -51,7 +51,7 @@ button {
   font-size: 0.875rem;
   color: #000000;
   font-weight: bold;
-  background-color: #F5DF19;
+  background-color: #fff065;
   width: 100%;
   display: block;
   padding: 0.875rem 1rem;

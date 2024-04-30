@@ -213,10 +213,258 @@
   tabindex="-1"
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
+  #product
 >
-  <app-modal-new-product (closeModal)="listProducts()" ></app-modal-new-product>
+
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title fs-5">Nuevo Producto</h1>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="close"
+        (click)="newProduct()"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="formProduct">
+        <div class="row row-cols-2 mb-3">
+          <div class="col">
+            <label class="col-2 col-form-label">Nombre</label>
+
+            <input type="text" class="form-control" formControlName="name" />
+
+            <div
+                class="text-danger"
+                *ngIf="
+                  formProduct.controls['name'].invalid &&
+                  (formProduct.controls['name'].touched ||
+                    isFormSubmittedProduct ||
+                    formProduct.controls['name'].dirty)
+                "
+              >
+                <span *ngIf="formProduct.controls['name'].errors?.['required']"
+                  >Este Campo es Obligatorio</span
+                >
+              </div>
+          </div>
+          <div class="col">
+            <label class="col-form-label text-center">ID</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="id_product"
+            />
+
+            <div
+                class="text-danger"
+                *ngIf="
+                  formProduct.controls['id_product'].invalid &&
+                  (formProduct.controls['id_product'].touched ||
+                    isFormSubmittedProduct ||
+                    formProduct.controls['id_product'].dirty)
+                "
+              >
+                <span *ngIf="formProduct.controls['id_product'].errors?.['required']"
+                  >Este Campo es Obligatorio</span
+                >
+              </div>
+          </div>
+        </div>
+        <div class="row row-cols-2 mb-3">
+          <div class="col">
+            <label class="col-form-label">Precio de compra</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="price_buy"
+            />
+            <div
+            class="text-danger"
+            *ngIf="
+              formProduct.controls['price_buy'].invalid &&
+              (formProduct.controls['price_buy'].touched ||
+                isFormSubmittedProduct ||
+                formProduct.controls['price_buy'].dirty)
+            "
+          >
+            <span
+              *ngIf="formProduct.controls['price_buy'].errors?.['required']"
+              >Este Campo es Obligatorio</span
+            >
+            <span
+              *ngIf="formProduct.controls['price_buy'].errors?.['notPositiveNumber']"
+              >Solo numeros positivos</span
+            >
+          </div>
+          </div>
+          <div class="col">
+            <label class="col-form-label">Precio de Venta</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="price_sale"
+            />
+            <div
+            class="text-danger"
+            *ngIf="
+              formProduct.controls['price_sale'].invalid &&
+              (formProduct.controls['price_sale'].touched ||
+                isFormSubmittedProduct ||
+                formProduct.controls['price_sale'].dirty)
+            "
+          >
+            <span
+              *ngIf="formProduct.controls['price_sale'].errors?.['required']"
+              >Este Campo es Obligatorio</span
+            >
+            <span
+              *ngIf="formProduct.controls['price_sale'].errors?.['notPositiveNumber']"
+              >Solo numeros positivos</span
+            >
+          </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col">
+            <label class="col-sm-2 col-form-label">Proveedor</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="id_supplier"
+              [ngbTypeahead]="searchSupplier"
+              [resultFormatter]="formatSupplier"
+              [inputFormatter]="formatSupplier"
+              (selectItem)="onSupplierSelect($event)"
+              [(ngModel)]="selectedSupplier"
+              placeholder="Buscar proveedores..."
+            />
+            <div class="text-danger" *ngIf="invalidSupplier">
+              <span>El proveedor seleccionado no es válido</span>
+            </div>
+          </div>
+        </div>
+        <div class="row row-cols-2 mb-3">
+          <div class="col">
+            <label class="col-form-label">Presentacion</label>
+            <select
+              class="form-select"
+              formControlName="presentation"
+              [(ngModel)]="selectedPresentation"
+            >
+              <option
+                *ngFor="let option of presentationOptions"
+                [value]="option.value"
+              >
+                {{ option.label }}
+              </option>
+            </select>
+            <div
+            class="text-danger"
+            *ngIf="
+              formProduct.controls['presentation'].invalid &&
+              (formProduct.controls['presentation'].touched ||
+                isFormSubmittedProduct ||
+                formProduct.controls['presentation'].dirty)
+            "
+          >
+            <span
+              *ngIf="formProduct.controls['presentation'].errors?.['required']"
+              >Este Campo es Obligatorio</span
+            >
+          </div>
+          </div>
+          <div class="col">
+            <label class="col-form-label"
+              >Unidades en {{ selectedPresentation }}</label
+            >
+            <div class="">
+              <input
+                type="number"
+                class="form-control"
+                formControlName="description_presentation"
+              />
+              <div
+              class="text-danger"
+              *ngIf="
+                formProduct.controls['description_presentation'].invalid &&
+                (formProduct.controls['description_presentation'].touched ||
+                  isFormSubmittedProduct ||
+                  formProduct.controls['description_presentation'].dirty)
+              "
+            >
+              <span
+                *ngIf="formProduct.controls['description_presentation'].errors?.['required']"
+                >Este Campo es Obligatorio</span
+              >
+            </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="row row-cols-2 mb-3">
+          <div class="col">
+            <label class="col-form-label text-center"
+              >Cantidad de {{ selectedPresentation }}s</label
+            >
+            <input type="number" class="form-control" formControlName="stock" />
+          </div>
+          <div class="col">
+            <label class="col-form-label text-center"
+              >Unidades</label
+            >
+            <input type="number" class="form-control" formControlName="units" />
+          </div>
+        </div>-->
+
+        <div class="col mb-3">
+          <label class="col-form-label">MARCA</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="id_mark"
+            [ngbTypeahead]="searchMark"
+            [resultFormatter]="formatMark"
+            [inputFormatter]="formatMark"
+            (selectItem)="onMarkSelect($event)"
+            [(ngModel)]="selectedMark"
+            placeholder="Buscar marcas..."
+          />
+          <div class="text-danger" *ngIf="invalidMark">
+            <span>La marca seleccionada no es válida</span>
+          </div>
+        </div>
+        <div *ngIf="selectedMark?.name_mark === 'Otro'">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="OtherMark"
+            placeholder="Ingresa una nueva marca"
+          />
+        </div>
+
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-success btn-sm"
+        (click)="save(); newProduct()"
+      >
+        Guardar
+      </button>
+      <button
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      class="visually-hidden"
+    ></button>
+    </div>
+  </div>
 </div>
 
+
+</div>
 
 <div
   class="modal fade"
@@ -224,6 +472,125 @@
   tabindex="-1"
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
+  #supplier
 >
-  <app-modal-new-supplier (closeModal)="listSupplier()"></app-modal-new-supplier>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title fs-5">Nuevo Proveedor</h1>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="close"
+        (click)="newSupplier()"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="formSupplier">
+        <div class="mb-3 row">
+          <label class="col-sm-2 col-form-label">Nombre</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" formControlName="name" />
+            <div
+            class="text-danger"
+            *ngIf="
+              formSupplier.controls['name'].invalid &&
+              (formSupplier.controls['name'].touched ||
+                isFormSubmittedSupplier ||
+                formSupplier.controls['name'].dirty)
+            "
+          >
+            <span *ngIf="formSupplier.controls['name'].errors?.['required']"
+              >Este Campo es Obligatorio</span
+            >
+            </div>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label class="col-sm-2 col-form-label">ID</label>
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control"
+              formControlName="id_supplier"
+            />
+            <div
+            class="text-danger"
+            *ngIf="
+              formSupplier.controls['id_supplier'].invalid &&
+              (formSupplier.controls['id_supplier'].touched ||
+                isFormSubmittedSupplier ||
+                formSupplier.controls['id_supplier'].dirty)
+            "
+          >
+            <span
+              *ngIf="formSupplier.controls['id_supplier'].errors?.['required']"
+              >Este Campo es Obligatorio</span
+            >
+          </div>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label class="col-sm-2 col-form-label">Telefono</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" formControlName="phone" />
+            <div
+                class="text-danger"
+                *ngIf="
+                  formSupplier.controls['phone'].invalid &&
+                  (formSupplier.controls['phone'].touched ||
+                    isFormSubmittedSupplier ||
+                    formSupplier.controls['phone'].dirty)
+                "
+              >
+                <span
+                  *ngIf="formSupplier.controls['phone'].errors?.['required']"
+                  >Este Campo es Obligatorio</span
+                >
+              </div>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label class="col-sm-2 col-form-label">Correo</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" formControlName="email" />
+            <div
+            class="text-danger"
+            *ngIf="
+              formSupplier.controls['email'].invalid &&
+              (formSupplier.controls['email'].touched ||
+                isFormSubmittedSupplier ||
+                formSupplier.controls['email'].dirty)
+            "
+          >
+            <span
+              *ngIf="formSupplier.controls['email'].errors?.['required']"
+              >Este Campo es Obligatorio</span
+            >
+            <span *ngIf="formSupplier.controls['email'].errors?.['email']"
+              >Ingrese un correo electrónico válido</span
+            >
+          </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-success btn-sm"
+        (click)="saveSupplier(); newSupplier()"
+      >
+        Guardar
+      </button>
+      <button
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      class="visually-hidden"
+    ></button>
+    </div>
+  </div>
+</div>
+
 </div>

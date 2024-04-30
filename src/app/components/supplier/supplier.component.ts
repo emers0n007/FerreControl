@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SupplierModel } from '../../model/SupplierModel';
 import { SupplierService } from '../../service/supplier.service';
@@ -18,7 +18,7 @@ export class SupplierComponent implements OnInit {
   formSupplier: FormGroup = new FormGroup({});
   isUpdate: boolean = false;
   filteredSupplier: SupplierModel[] = [];
-  mensaje:String = '';
+  @ViewChild('actu') modal: ElementRef | undefined;
 
   constructor(
     private supplierService: SupplierService,
@@ -70,8 +70,13 @@ export class SupplierComponent implements OnInit {
     this.formSupplier.reset();
   }
 
+  isFormSubmitted: boolean = false;
+
   save() {
+    const isFormValid = this.formSupplier.valid;
+    this.isFormSubmitted = !isFormValid;
     if (this.formSupplier.valid) {
+      this.closeModal();
       this.formSupplier.controls['status'].setValue('1');
       this.supplierService.saveSupplier(this.formSupplier.value)
         .subscribe((resp) => {
@@ -81,32 +86,30 @@ export class SupplierComponent implements OnInit {
             this.formSupplier.reset();
           }
         });
-    } else {
-     this.mensaje = "Ingresa todos los campos correctamente";
     }
   }
 
-  resetMesssage(){
-    this.mensaje = '';
-  }
-
   update() {
-
-    const supplierData = {
-      id_supplier: this.formSupplier.controls['id_supplier'].value,
-      name: this.formSupplier.controls['name'].value,
-      phone: this.formSupplier.controls['phone'].value,
-      email: this.formSupplier.controls['email'].value,
-      status: 1,
-    };
-    this.supplierService.updateSupplier(supplierData).subscribe((resp) => {
-      if (resp) {
-        this.showAlert(resp.message, resp.seccess);
-        this.console.log(resp);
-        this.listSupplier();
-        this.formSupplier.reset();
-      }
-    });
+     const isFormValid = this.formSupplier.valid;
+    this.isFormSubmitted = !isFormValid;
+    if(this.formSupplier.valid){
+      this.closeModal();
+      const supplierData = {
+        id_supplier: this.formSupplier.controls['id_supplier'].value,
+        name: this.formSupplier.controls['name'].value,
+        phone: this.formSupplier.controls['phone'].value,
+        email: this.formSupplier.controls['email'].value,
+        status: 1,
+      };
+      this.supplierService.updateSupplier(supplierData).subscribe((resp) => {
+        if (resp) {
+          this.showAlert(resp.message, resp.seccess);
+          this.console.log(resp);
+          this.listSupplier();
+          this.formSupplier.reset();
+        }
+      });
+    }
   }
 
   delete(id: any) {
@@ -143,6 +146,15 @@ export class SupplierComponent implements OnInit {
         return [];
       })
     );
+
+    private closeModal() {
+      if (this.modal) {
+        const closeButton = this.modal.nativeElement.querySelector('[data-bs-dismiss="modal"]');
+        if (closeButton) {
+          closeButton.click();
+        }
+      }
+    }
 
   protected readonly console = console;
 }

@@ -85,7 +85,7 @@
           <tr *ngFor="let item of list">
             <td>{{ item.name }}</td>
             <td>
-              {{ item.description_presentation }} [{{ item.presentation }}s]
+              {{ item.presentation.description_presentation }} [{{ item.presentation }}s]
             </td>
             <td>{{ item.stock }}</td>
             <td>
@@ -122,7 +122,7 @@
           <tr *ngFor="let item of productsFact">
             <td>{{ item.name }}</td>
             <td>
-              {{ item.description_presentation }} [{{ item.presentation }}s]
+              {{ item.presentation.description_presentation }} [{{ item.presentation }}s]
             </td>
             <td>{{ item.stock }}</td>
             <td>
@@ -149,13 +149,12 @@
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
 >
+
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">
-          {{ selectedItem?.name }} - Presentacion [{{
-            selectedItem?.presentation}} * {{selectedItem?.description_presentation
-          }}]
+          {{ selectedItem?.name }} - Presentacion [{{selectedItem?.presentation}}]
         </h5>
         <button
           type="button"

@@ -1,5 +1,6 @@
 import {SupplierModel} from "./SupplierModel";
 import {MarkModel} from "./MarkModel";
+import {PresentationModel} from "./PresentationModel";
 
 export class ProductModel{
   name: String = ' ';
@@ -9,7 +10,6 @@ export class ProductModel{
   price_sale: number = 0;
   supplier: SupplierModel = new SupplierModel();
   status: number =0;
-  description_presentation:number=0;
-  presentation:string=' ';
+  presentation:PresentationModel=new PresentationModel();
   mark:MarkModel= new MarkModel();
 }

@@ -180,7 +180,7 @@ export class BuyComponent implements OnInit, OnDestroy {
       );
       if (index !== -1) {
         this.list.splice(index, 1);
-        this.selectedItem.stock = (this.stockToAdd*this.selectedItem.description_presentation) + this.stockCount;
+        this.selectedItem.stock = (this.stockToAdd*this.selectedItem.presentation.description_presentation) + this.stockCount;
         this.productsFact.push(this.selectedItem);
       }
       this.selectedItem = undefined; // Restablece el valor
@@ -263,7 +263,6 @@ export class BuyComponent implements OnInit, OnDestroy {
     const isFormValid = this.formProduct.valid;
     this.isFormSubmittedProduct = !isFormValid;
     if (this.formProduct.valid) {
-      this.closeModalProduct();
       const supplierId = this.formProduct.controls['id_supplier'].value.id_supplier;
       const supplierName = ' ';
       const supplierPhone = ' ';
@@ -276,7 +275,7 @@ export class BuyComponent implements OnInit, OnDestroy {
       // Verificar si la marca es "Otro"
       if (markControl.value === 'Otro') {
         markName = this.formProduct.controls['OtherMark'].value;
-        markId = this.generateUniqueId(); // Asume que tienes una función que genera IDs únicos
+        markId = 0; // Asume que tienes una función que genera IDs únicos
       } else {
         // Si no es "Otro", mantener los valores existentes
         markName = markControl.value.name_mark;
@@ -295,15 +294,31 @@ export class BuyComponent implements OnInit, OnDestroy {
           phone: supplierPhone,
           email: supplierEmail,
         },
-        presentation: this.formProduct.controls['presentation'].value,
-        description_presentation:
-          this.formProduct.controls['description_presentation'].value,
+        presentation: {
+          id_presentation: 0,
+          name_presentation :this.formProduct.controls['presentation'].value,
+          description_presentation:this.formProduct.controls['description_presentation'].value},
         mark: {
           id_mark: markId,
           name_mark: markName,
         },
         status: 1,
       };
+
+
+      console.log("PRESENTACION", this.formProduct.controls['presentation'].value);
+      const mark = {
+        id_mark: markId,
+        name_mark: markName,
+      }
+      this.producService.saveMark(mark).subscribe((resp) => {
+        if (resp) {
+          this.console.log(resp);
+          //this.listProducts();
+          this.formProduct.reset();
+        }
+      });
+
       this.producService.saveProduct(productData).subscribe((resp) => {
         if (resp) {
           this.console.log(resp);
@@ -312,6 +327,9 @@ export class BuyComponent implements OnInit, OnDestroy {
           this.formProduct.reset();
         }
       });
+
+      console.log(productData);
+      this.closeModalProduct();
     }
   }
 
@@ -426,16 +444,17 @@ export class BuyComponent implements OnInit, OnDestroy {
     const isFormValid = this.formSupplier.valid;
     this.isFormSubmittedSupplier = !isFormValid;
     if (this.formSupplier.valid) {
-      this.closeModalSupplier();
       this.formSupplier.controls['status'].setValue('1');
       this.supplierService.saveSupplier(this.formSupplier.value)
         .subscribe((resp) => {
+
           if (resp) {
             this.showAlert(resp.message, resp.seccess);
             this.listSupplier();
             this.formSupplier.reset();
           }
         });
+      this.closeModalSupplier();
     }
   }
 

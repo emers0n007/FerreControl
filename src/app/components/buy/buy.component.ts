@@ -83,7 +83,7 @@ export class BuyComponent implements OnInit, OnDestroy {
     this.formProduct = new FormGroup({
       name: new FormControl('', Validators.required),
       id_product: new FormControl('', Validators.required),
-      stock: new FormControl('0'),
+      stock: new FormControl(''),
       price_buy: new FormControl('', [Validators.required, this.positiveNumberValidator]),
       price_sale: new FormControl('', [Validators.required, this.positiveNumberValidator]),
       id_supplier: new FormControl('', Validators.required),
@@ -282,12 +282,16 @@ export class BuyComponent implements OnInit, OnDestroy {
         markId = markControl.value.id_mark;
       }
 
+      console.log("MArca nuevaaaaa:", this.formProduct.controls['OtherMark'].value)
+
+
       const productData = {
         id_product: this.formProduct.controls['id_product'].value,
         name: this.formProduct.controls['name'].value,
         stock: this.formProduct.controls['stock'].value,
         price_buy: this.formProduct.controls['price_buy'].value,
         price_sale: this.formProduct.controls['price_sale'].value,
+        quantity: 0,
         supplier: {
           id_supplier: supplierId,
           name: supplierName,
@@ -311,13 +315,7 @@ export class BuyComponent implements OnInit, OnDestroy {
         id_mark: markId,
         name_mark: markName,
       }
-      this.producService.saveMark(mark).subscribe((resp) => {
-        if (resp) {
-          this.console.log(resp);
-          //this.listProducts();
-          this.formProduct.reset();
-        }
-      });
+
 
       this.producService.saveProduct(productData).subscribe((resp) => {
         if (resp) {
@@ -381,7 +379,7 @@ export class BuyComponent implements OnInit, OnDestroy {
       this.producService.getMarks().subscribe((resp) => {
         if (resp) {
           this.listMarks = resp;
-          const newMark = { id_mark: 9999, name_mark: 'Otro' };
+          const newMark = { id_mark: 0, name_mark: 'Otro' };
 
           this.listMarks.push(newMark);
         }

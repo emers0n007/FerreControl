@@ -11,5 +11,6 @@ export class ProductModel{
   supplier: SupplierModel = new SupplierModel();
   status: number =0;
   presentation:PresentationModel=new PresentationModel();
+  quantity: number = 0;
   mark:MarkModel= new MarkModel();
 }

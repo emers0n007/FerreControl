@@ -1,12 +1,11 @@
 <div id="container" class="p-3">
   <nav class="navbar navbar-expand-lg rounded-top rounded-bottom">
-    <ul class="navbar-nav flex-column mr-auto">
-      <div class="title mb-4">
+    <ul class="navbar-nav flex-column">
+      <div class="title mb-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="icon icon-tabler icon-tabler-user"
-          width="44"
-          height="44"
+          width="40"
+          height="40"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="#2c3e50"
@@ -23,15 +22,15 @@
 
       <button
         type="button"
-        class="nav-link btn btn-primary mb-4 text-color-custom"
+        class="nav-link btn btn-primary mb-2 text-color-custom"
         (click)="manageInventory(); activarBoton('Gestionar Productos')"
         [ngClass]="{ active: botonActivo === 'Gestionar Productos' }"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="icon icon-tabler icon-tabler-box-seam"
-          width="44"
-          height="44"
+
+          width="40"
+          height="40"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="#ffffff"
@@ -46,20 +45,20 @@
           <path d="M12 12v9" />
           <path d="M12 12l-8 -4.5" />
         </svg>
-        Gestionar Productos
+        <span>Gestionar Productos</span>
       </button>
 
       <button *ngIf="role === 'Admin'"
         type="button"
-        class="nav-link btn btn-primary mb-4"
+        class="nav-link btn btn-primary mb-2"
         (click)="manageSupplier(); activarBoton('Gestionar Proveedores')"
         [ngClass]="{ active: botonActivo === 'Gestionar Proveedores' }"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="icon icon-tabler icon-tabler-truck"
-          width="44"
-          height="44"
+
+          width="40"
+          height="40"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="#ffffff"
@@ -74,19 +73,19 @@
             d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5"
           />
         </svg>
-        Gestionar Proveedores
+        <span> Gestionar Proveedores</span>
       </button>
 
       <button
         type="button"
-        class="nav-link btn btn-primary mb-4"
+        class="nav-link btn btn-primary mb-2"
         (click)="manageBuy(); activarBoton('Entrada')"
         [ngClass]="{ active: botonActivo === 'Entrada' }"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="38"
-          height="38"
+          width="36"
+          height="36"
           viewBox="0 0 32 32"
         >
           <defs>
@@ -107,16 +106,16 @@
             />
           </g>
         </svg>
-        Entrada
+        <span> Entrada</span>
       </button>
 
       <button
         type="button"
-        class="nav-link btn btn-primary mb-4"
+        class="nav-link btn btn-primary mb-2"
         (click)="manageSale(); activarBoton('Salida')"
         [ngClass]="{ active: botonActivo === 'Salida' }"
       >
-        <svg width="38" height="38" viewBox="0 0 32 32">
+        <svg width="36" height="36" viewBox="0 0 32 32">
           <defs>
             <style>
               .cls-1 {
@@ -135,20 +134,19 @@
             />
           </g>
         </svg>
-        Salida
+        <span> Salida</span>
       </button>
 
       <button
         type="button"
-        class="nav-link btn btn-primary mb-4"
+        class="nav-link btn btn-primary mb-2"
         (click)="report(); activarBoton('Reportes')"
         [ngClass]="{ active: botonActivo === 'Reportes' }"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="icon icon-tabler icon-tabler-report-search"
-          width="44"
-          height="44"
+          width="40"
+          height="40"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="#ffffff"
@@ -167,7 +165,7 @@
           <path d="M16.5 17.5m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" />
           <path d="M18.5 19.5l2.5 2.5" />
         </svg>
-        Reportes
+        <span> Reportes</span>
       </button>
 
       <button
@@ -179,8 +177,8 @@
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="icon icon-tabler icon-tabler-door-exit"
-          width="44"
-          height="44"
+          width="40"
+          height="40"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="#ffffff"
@@ -194,7 +192,7 @@
           <path d="M5 21v-16a2 2 0 0 1 2 -2h7.5m2.5 10.5v7.5" />
           <path d="M14 7h7m-3 -3l3 3l-3 3" />
         </svg>
-        Cerrar Sesion
+        <span> Cerrar Sesion</span>
       </button>
     </ul>
   </nav>

@@ -3,11 +3,11 @@
 .navbar {
   background-color: rgba(123, 176, 203, 0.638);
   height: 95%;
-  width: 260px;
+  width: 240px;
   align-items: first baseline;
   position: fixed;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  
+
 }
 
 .title {

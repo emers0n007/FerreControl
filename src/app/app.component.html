@@ -10,10 +10,10 @@
     {{ mesage }}
   </div>
   <!-- Asegúrate de que el navbar tenga un espacio superior suficiente -->
-  <app-nav *ngIf="userOn" class="fixed-top navbar-transition" [style.marginLeft.px]="navbarVisible ? 0 : -260"></app-nav>
+  <app-nav *ngIf="userOn" class="fixed-top navbar-transition" [style.marginLeft.px]="navbarVisible ? 0 : -243"></app-nav>
 
-  <div class="content content-transition" [style.padding-left.px]="userOn && navbarVisible ? 260 : 0">
-   
+  <div class="content content-transition" [style.padding-left.px]="userOn && navbarVisible ? 240 : 0">
+
     <router-outlet></router-outlet>
 
     <div *ngIf="userOn" class="centered-button">
@@ -21,7 +21,7 @@
       <i class="fa fa-arrow-right" [style.transform]="navbarVisible ? 'translateX(60%) rotate(180deg)' : ' translateX(58%)'"></i>
     </button>
   </div>
-  
-  
+
+
   </div>
 </div>

@@ -182,6 +182,7 @@ export class ProductComponent implements OnInit {
   selectItem(item: any) {
     this.isUpdate = true;
     this.disableId();
+    this.console.log(item);
     this.formProduct.controls['name'].setValue(item.name);
     this.formProduct.controls['id_product'].setValue(item.id_product);
     this.formProduct.controls['stock'].setValue(item.stock);
@@ -195,8 +196,9 @@ export class ProductComponent implements OnInit {
     this.formProduct.controls['id_mark'].setValue(item.mark.id_mark);
     this.selectedMark = item.mark;
     this.formProduct.controls['presentation'].setValue(item.presentation);
+    this.selectedPresentation = item.presentation.name_presentation;
     this.formProduct.controls['description_presentation'].setValue(
-      item.description_presentation
+      item.presentation.description_presentation
     );
   }
 

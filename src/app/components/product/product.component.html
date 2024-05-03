@@ -22,11 +22,11 @@
     <tbody>
       <tr *ngFor="let item of list">
         <td>{{ item.name }}</td>
-        <td>{{ item.presentation }}</td>
+        <td>{{ item.presentation.name_presentation }}</td>
         <td>{{ item.mark.name_mark }}</td>
         <td>{{ item.stock }}</td>
-        <td>{{ item.price_buy }}</td>
-        <td>{{ item.price_sale }}</td>
+        <td>{{ item.price_buy | currency }}</td>
+        <td>{{ item.price_sale | currency }}</td>
         <td>{{ item.supplier.name }}</td>
         <td>
           <button

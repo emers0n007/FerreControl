@@ -83,7 +83,7 @@ export class BuyComponent implements OnInit, OnDestroy {
     this.formProduct = new FormGroup({
       name: new FormControl('', Validators.required),
       id_product: new FormControl('', Validators.required),
-      stock: new FormControl(''),
+      stock: new FormControl('', Validators.required),
       price_buy: new FormControl('', [Validators.required, this.positiveNumberValidator]),
       price_sale: new FormControl('', [Validators.required, this.positiveNumberValidator]),
       id_supplier: new FormControl('', Validators.required),
@@ -309,24 +309,22 @@ export class BuyComponent implements OnInit, OnDestroy {
         status: 1,
       };
 
-
       console.log("PRESENTACION", this.formProduct.controls['presentation'].value);
       const mark = {
         id_mark: markId,
         name_mark: markName,
       }
 
-
       this.producService.saveProduct(productData).subscribe((resp) => {
         if (resp) {
           this.console.log(resp);
           this.showAlert(resp.message, resp.success);
-          //this.listProducts();
+          this.listProducts();
           this.formProduct.reset();
         }
       });
 
-      console.log(productData);
+      this.console.log(productData);
       this.closeModalProduct();
     }
   }
@@ -347,7 +345,7 @@ export class BuyComponent implements OnInit, OnDestroy {
         } else {
           this.invalidSupplier = false;
         }
-        return term.length < 1
+        return term.length < 2
           ? this.listSuppliers
           : this.listSuppliers
               .filter(
@@ -402,7 +400,7 @@ export class BuyComponent implements OnInit, OnDestroy {
             this.invalidMark = false;
           }
 
-          return term.length < 1
+          return term.length < 2
             ? this.listMarks
             : this.listMarks
                 .filter(

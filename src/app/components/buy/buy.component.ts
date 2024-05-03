@@ -272,17 +272,15 @@ export class BuyComponent implements OnInit, OnDestroy {
       let markName: string;
       let markId: any;
 
-      // Verificar si la marca es "Otro"
-      if (markControl.value === 'Otro') {
+      if (markControl.value.name_mark === 'Otro') {
         markName = this.formProduct.controls['OtherMark'].value;
+        this.console.log("SI INGRESAAA", markName)
         markId = 0; // Asume que tienes una función que genera IDs únicos
       } else {
         // Si no es "Otro", mantener los valores existentes
         markName = markControl.value.name_mark;
         markId = markControl.value.id_mark;
       }
-
-      console.log("MArca nuevaaaaa:", this.formProduct.controls['OtherMark'].value)
 
 
       const productData = {
@@ -315,14 +313,16 @@ export class BuyComponent implements OnInit, OnDestroy {
         name_mark: markName,
       }
 
-      this.producService.saveProduct(productData).subscribe((resp) => {
-        if (resp) {
-          this.console.log(resp);
-          this.showAlert(resp.message, resp.success);
-          this.listProducts();
-          this.formProduct.reset();
-        }
-      });
+
+        this.producService.saveProduct(productData).subscribe((resp) => {
+          if (resp) {
+            this.showAlert(resp.message, resp.seccess);
+            this.listProducts();
+            this.getListMarks();
+            this.formProduct.reset();
+          }
+        });
+
 
       this.console.log(productData);
       this.closeModalProduct();
@@ -377,9 +377,9 @@ export class BuyComponent implements OnInit, OnDestroy {
       this.producService.getMarks().subscribe((resp) => {
         if (resp) {
           this.listMarks = resp;
-          const newMark = { id_mark: 0, name_mark: 'Otro' };
+          /*const newMark = { id_mark: 0, name_mark: 'Otro' };
 
-          this.listMarks.push(newMark);
+          this.listMarks.push(newMark);*/
         }
       });
     }

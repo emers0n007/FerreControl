@@ -22,7 +22,9 @@ export class ProductService {
     return this.httpClient.post<MarkModel[]>('http://localhost:9000/FerreControl' + '/save/mark', request).pipe(map(resp => resp));
   }
   saveProduct(request: any): Observable<any>{
+
     return this.httpClient.post<any>('http://localhost:9000/FerreControl' + '/save/product', request).pipe(map(resp => resp));
+
   }
 
   updateProduct(request: any): Observable<any>{

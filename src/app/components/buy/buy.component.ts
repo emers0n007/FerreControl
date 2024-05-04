@@ -214,8 +214,10 @@ export class BuyComponent implements OnInit, OnDestroy {
       this.buyService.saveBuy(buyData).subscribe((resp) => {
         if (resp) {
           this.console.log(resp);
-          this.showAlert(resp.message, resp.success);
+          this.showAlert(resp.message, resp.seccess);
           this.listProducts();
+          this.productsFact = [];
+          this.uuid = '';
         }
       });
     } else {

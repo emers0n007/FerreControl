@@ -130,6 +130,8 @@ export class SaleComponent {
           this.console.log(resp);
           this.showAlert(resp.message, resp.success);
           this.listProducts();
+          this.productsFact = [];
+          this.uuid = '';
         }
       });
     } else {

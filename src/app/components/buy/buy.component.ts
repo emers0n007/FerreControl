@@ -251,13 +251,6 @@ export class BuyComponent implements OnInit, OnDestroy {
     return isValid ? null : { notPositiveNumber: true };
   }
 
-  generateUniqueId(): any {
-    const timestamp = new Date().getTime();
-    const randomNumber = Math.floor(Math.random() * 10000);
-    const uniqueId = timestamp.toString() + randomNumber.toString();
-
-    return randomNumber;
-  }
 
   save() {
     const isFormValid = this.formProduct.valid;

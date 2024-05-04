@@ -180,7 +180,7 @@ export class BuyComponent implements OnInit, OnDestroy {
       );
       if (index !== -1) {
         this.list.splice(index, 1);
-        this.selectedItem.stock = (this.stockToAdd*this.selectedItem.presentation.description_presentation) + this.stockCount;
+        this.selectedItem.quantity = (this.stockToAdd*this.selectedItem.presentation.description_presentation) + this.stockCount;
         this.productsFact.push(this.selectedItem);
       }
       this.selectedItem = undefined; // Restablece el valor

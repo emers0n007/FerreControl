@@ -18,6 +18,7 @@ export class SaleComponent {
   filteredPro: ProductModel[] = [];
   productsFact: ProductModel[] = [];
   private readonly AUTH_USERNAME = 'Desconocido';
+  private readonly AUTH_USER = 'No debe estar aqui';
   username: string | null = '';
   private subscription: Subscription;
   stockToAdd: number = 0;
@@ -54,7 +55,7 @@ export class SaleComponent {
       }
     });
   }
-  
+
 
 
 
@@ -88,7 +89,7 @@ export class SaleComponent {
       );
       if (index !== -1) {
         this.list.splice(index, 1);
-        this.selectedItem.stock = this.stockToAdd;
+        this.selectedItem.quantity = this.stockToAdd;
         this.productsFact.push(this.selectedItem);
       }
       this.selectedItem = undefined; // Restablece el valor
@@ -96,7 +97,7 @@ export class SaleComponent {
   }
 
   addAll(item: any) {
-    
+
     const index = this.productsFact.indexOf(item);
     if (index !== -1) {
       this.productsFact.splice(index, 1);
@@ -105,7 +106,7 @@ export class SaleComponent {
       });
       if (productToAdd) {
         this.list.push(productToAdd);
-      } 
+      }
     }
   }
 
@@ -116,18 +117,18 @@ export class SaleComponent {
 
   saveSale() {
     if (this.uuid != '') {
-      const buyData = {
-        id_buy: this.uuid,
-        //id_supplier: this.selectedSupplier?.id_supplier,
-        purchase_date: this.currentDate,
+      const saleData = {
+        id_sale: this.uuid,
+        sale_date: this.currentDate,
         total_price: 0,
-        buyDetail: this.productsFact,
+        saleDetail: this.productsFact,
+        name_user: localStorage.getItem(this.AUTH_USER)
       };
-      console.log(buyData);
-      this.saleService.saveSupplier(buyData).subscribe((resp) => {
+      console.log("Salida", saleData);
+      this.saleService.saveSupplier(saleData).subscribe((resp) => {
         if (resp) {
           this.console.log(resp);
-          this.showAlert(resp.message, resp.seccess);
+          this.showAlert(resp.message, resp.success);
           this.listProducts();
         }
       });
@@ -139,6 +140,4 @@ export class SaleComponent {
 
   protected readonly console = console;
 
- 
-    
 }

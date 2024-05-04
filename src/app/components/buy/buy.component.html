@@ -58,7 +58,7 @@
           <tr>
             <th>Nombre</th>
             <th>Presentacion</th>
-            <th>Stock</th>
+            <th>Cantidad</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -66,11 +66,11 @@
           <tr *ngFor="let item of list">
             <td>{{ item.name }}</td>
             <td>
-              {{ item.presentation.description_presentation }} [{{
+              {{ item.presentation.description_presentation }} X {{
                 item.presentation.name_presentation
-              }}]
+              }}
             </td>
-            <td>{{ item.stock }}</td>
+            <td>{{ item.quantity }}</td>
             <td>
               <button
                 type="button"
@@ -121,7 +121,7 @@
           <tr>
             <th>Nombre</th>
             <th>Presentacion</th>
-            <th>Stock</th>
+            <th>Cantidad</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -129,11 +129,11 @@
           <tr *ngFor="let item of productsFact">
             <td>{{ item.name }}</td>
             <td>
-              {{ item.presentation.name_presentation }} [{{
+              {{ item.presentation.name_presentation }} "*" {{
                 item.presentation.description_presentation
-              }}s]
+              }}
             </td>
-            <td>{{ item.stock }}</td>
+            <td>{{ item.quantity }}</td>
             <td>
               <button
                 type="button"
@@ -417,7 +417,7 @@
           <div class="row mb-3">
             <div class="col">
               <label class="col-form-label text-center"
-                >Cantidad de {{ selectedPresentation }}s</label
+                >Stock Minimo Del Producto</label
               >
               <input
                 type="number"

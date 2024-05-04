@@ -21,46 +21,48 @@
     </div>
   </div>
 
-  <table class="table mt-2 table-bordered table-hover">
-    <thead class="table-primary">
-      <tr>
-        <th>Nombre</th>
-        <th>ID</th>
-        <th>Telefono</th>
-        <th>Correo</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of list">
-        <td>{{ item.name }}</td>
-        <td>{{ item.id_supplier }}</td>
-        <td>{{ item.phone }}</td>
-        <td>{{ item.email }}</td>
-        <td>
-          <button
-            type="button"
-            class="btn btn-warning btn-sm"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-            (click)="selectItem(item)"
-            title="Editar Proveedor"
-          >
-            <i class="fa fa-pencil"></i>
-          </button>
-          &nbsp;&nbsp;
-          <button
-            type="button"
-            class="btn btn-danger btn-sm"
-            (click)="delete(item.id_supplier)"
-            title="Eliminar proveedor"
-          >
-            <i class="fa fa-trash"></i>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table mt-2 table-bordered table-hover">
+      <thead class="table-primary">
+        <tr>
+          <th>Nombre</th>
+          <th>ID</th>
+          <th>Telefono</th>
+          <th>Correo</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of list">
+          <td>{{ item.name }}</td>
+          <td>{{ item.id_supplier }}</td>
+          <td>{{ item.phone }}</td>
+          <td>{{ item.email }}</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-warning btn-sm"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+              (click)="selectItem(item)"
+              title="Editar Proveedor"
+            >
+              <i class="fa fa-pencil"></i>
+            </button>
+            &nbsp;&nbsp;
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              (click)="delete(item.id_supplier)"
+              title="Eliminar proveedor"
+            >
+              <i class="fa fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 <div
   class="modal fade"

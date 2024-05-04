@@ -76,7 +76,7 @@ export class SupplierComponent implements OnInit {
     const isFormValid = this.formSupplier.valid;
     this.isFormSubmitted = !isFormValid;
     if (this.formSupplier.valid) {
-      this.closeModal();
+
       this.formSupplier.controls['status'].setValue('1');
       this.supplierService.saveSupplier(this.formSupplier.value)
         .subscribe((resp) => {
@@ -87,6 +87,7 @@ export class SupplierComponent implements OnInit {
           }
         });
     }
+    this.closeModal();
   }
 
   update() {

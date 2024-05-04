@@ -48,7 +48,6 @@ export class ProductComponent implements OnInit {
     private producService: ProductService,
     private alertService: AlertService,
     private supplierService: SupplierService,
-    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -123,6 +122,10 @@ export class ProductComponent implements OnInit {
   newProduct() {
     this.isUpdate = false;
     this.activeId();
+    this.resetFormatProduct();
+  }
+
+  resetFormatProduct(){
     this.formProduct.reset();
   }
 

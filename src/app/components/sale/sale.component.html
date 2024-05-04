@@ -1,4 +1,4 @@
-<div class="col-md-12 px-5 pt-4">
+<div class="px-5 pt-4">
   <div class="title container-fluid d-flex justify-content-center">
     <h5>Fecha de Facturacion: {{ currentDate | date : "medium" }}</h5>
   </div>
@@ -20,24 +20,22 @@
   </div>
 
   <div class="d-flex align-items-center">
-    
+
       <h5>Usuario Actual: {{ username }}</h5>
-   
+
   </div>
 
   <div class="row">
     <div class="col-md-6">
       <h4>Productos Disponibles</h4>
-      <div class="input-group row-auto">
-        <div class="input-group-prepend"></div>
-        <div class="form-outline flex-grow-1 me-4" data-mdb-input-init>
+      <div class="row-auto">
           <input
             type="text"
             class="form-control"
             [ngbTypeahead]="search"
             placeholder="Buscar productos..."
           />
-        </div>
+
       </div>
       <!-- Tabla de productos -->
       <table class="table mt-2 table-bordered">

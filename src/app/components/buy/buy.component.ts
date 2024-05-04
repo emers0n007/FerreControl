@@ -377,9 +377,9 @@ export class BuyComponent implements OnInit, OnDestroy {
       this.producService.getMarks().subscribe((resp) => {
         if (resp) {
           this.listMarks = resp;
-          /*const newMark = { id_mark: 0, name_mark: 'Otro' };
+          const newMark = { id_mark: 0, name_mark: 'Otro' };
 
-          this.listMarks.push(newMark);*/
+          this.listMarks.push(newMark);
         }
       });
     }

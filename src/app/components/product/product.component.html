@@ -13,7 +13,7 @@
         <th>Nombre</th>
         <th>Presentacion</th>
         <th>Marca</th>
-        <th>Stock</th>
+        <th>Cantidad</th>
         <th>Precio de Compra</th>
         <th>Precio de Venta</th>
         <th>Proveedor</th>
@@ -23,9 +23,9 @@
     <tbody>
       <tr *ngFor="let item of list">
         <td>{{ item.name }}</td>
-        <td>{{ item.presentation.name_presentation }}</td>
+        <td>{{ item.presentation.name_presentation }} X {{item.presentation.description_presentation}}</td>
         <td>{{ item.mark.name_mark }}</td>
-        <td>{{ item.stock }}</td>
+        <td>{{ item.quantity }}</td>
         <td>{{ item.price_buy | currency }}</td>
         <td>{{ item.price_sale | currency }}</td>
         <td>{{ item.supplier.name }}</td>

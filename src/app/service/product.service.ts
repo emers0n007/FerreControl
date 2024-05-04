@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {map, Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import {catchError, map, Observable, throwError} from "rxjs";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ProductModel} from "../model/ProductModel";
 import {MarkModel} from "../model/MarkModel";
 
@@ -27,7 +27,8 @@ export class ProductService {
   }
   saveProduct(request: any): Observable<any>{
 
-    return this.httpClient.post<any>('http://localhost:9000/FerreControl' + '/save/product', request).pipe(map(resp => resp));
+    return this.httpClient.post<any>('http://localhost:9000/FerreControl' + '/save/product', request).pipe(map(resp => resp,
+      catchError(this.handleError)));
 
   }
 
@@ -37,6 +38,20 @@ export class ProductService {
 
   deleteProduct(id: number): Observable<any>{
     return this.httpClient.get<any>('http://localhost:9000/FerreControl' + '/delete/product/'+ id).pipe(map(resp => resp));
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // Error del cliente
+      console.error('Ocurrió un error:', error.error.message);
+    } else {
+      // Error del servidor
+      console.error(
+        `Código de error: ${error.status}, ` +
+        `mensaje: ${error.error}`);
+    }
+    // Devuelve un observable con un mensaje de error legible para el usuario
+    return throwError('Ocurrió un error. Por favor, inténtelo de nuevo más tarde.');
   }
 }
 

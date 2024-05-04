@@ -14,6 +14,10 @@ export class ProductService {
     return this.httpClient.get<ProductModel[]>('http://localhost:9000/FerreControl' + '/list/product').pipe(map(res => res));
   }
 
+  getProductoLowStock(): Observable<ProductModel[]>{
+    return this.httpClient.get<ProductModel[]>('http://localhost:9000/FerreControl' + '/low/product').pipe(map(res => res));
+  }
+
   getMarks(): Observable<MarkModel[]>{
     return this.httpClient.get<MarkModel[]>('http://localhost:9000/FerreControl' + '/list/mark').pipe(map(res => res));
   }

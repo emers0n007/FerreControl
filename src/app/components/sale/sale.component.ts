@@ -147,6 +147,10 @@ export class SaleComponent {
     return total;
   }
 
+  subTotal(product: ProductModel): number {
+    return product.price_sale*product.quantity;
+  }
+
 
   protected readonly console = console;
 

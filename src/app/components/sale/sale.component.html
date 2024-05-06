@@ -42,18 +42,18 @@
         <thead class="table-primary">
           <tr>
             <th>Nombre</th>
-            <th>ID</th>
             <th>Cantidad</th>
             <th>Marca</th>
+            <th>Precio</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of list">
             <td>{{ item.name }}</td>
-            <td>{{ item.id_product }}</td>
             <td>{{ item.quantity }}</td>
             <td>{{ item.mark.name_mark }}</td>
+            <td>{{ item.price_sale }}</td>
 
             <td>
               <button
@@ -78,16 +78,16 @@
         <thead class="table-primary">
           <tr>
             <th>Nombre</th>
-            <th>ID</th>
             <th>Cantidad</th>
+            <th>Subtotal</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of productsFact">
             <td>{{ item.name }}</td>
-            <td>{{ item.id_product }}</td>
             <td>{{ item.quantity }}</td>
+            <td>{{ subTotal(item) }}</td>
             <td>
               <button
                 type="button"

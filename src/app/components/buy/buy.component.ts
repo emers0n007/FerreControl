@@ -470,6 +470,10 @@ export class BuyComponent implements OnInit, OnDestroy {
     return total;
   }
 
+  subTotal(product: ProductModel): number {
+    return product.price_buy*product.quantity;
+  }
+
 
   protected readonly console = console;
 

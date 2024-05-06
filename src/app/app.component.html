@@ -17,11 +17,46 @@
     <router-outlet></router-outlet>
 
     <div *ngIf="userOn" class="centered-button">
-    <button type="button" class="btn btn-primary rounded-circle half-circle button-transition" (click)="toggleNavbar()">
+    <button type="button" class="btn btn-primary rounded-circle half-circle button-transition button-size" (click)="toggleNavbar()">
       <i class="fa fa-arrow-right" [style.transform]="navbarVisible ? 'translateX(60%) rotate(180deg)' : ' translateX(58%)'"></i>
     </button>
   </div>
+  </div>
+</div>
 
 
+
+<!-- Modal -->
+<div class="modal modal-fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-md-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Productos Con Bajo <span class="text-danger">Stock</span></h1>
+        <button (click)="closeModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table  table-bordered table-responsive table-hover table-primary">
+          <thead>
+            <tr>
+              <th>Nombre del Producto</th>
+              <th>Proveedor</th>
+              <th>Teléfono del Proveedor</th>
+              <th>Email del Proveedor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of lowStockProducts">
+              <td>{{ product.name }}</td>
+              <td>{{ product.supplier.name }}</td>
+              <td>{{ product.supplier.phone }}</td>
+              <td>{{ product.supplier.email }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button (click)="closeModal()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
   </div>
 </div>

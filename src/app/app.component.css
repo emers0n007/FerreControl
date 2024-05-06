@@ -49,7 +49,7 @@ html, body {
   z-index: 1000;
 }
 
-button {
+.button-size {
   height: 45px;
   width: 45px;
 }

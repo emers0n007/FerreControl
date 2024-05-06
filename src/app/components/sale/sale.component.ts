@@ -120,7 +120,7 @@ export class SaleComponent {
       const saleData = {
         id_sale: this.uuid,
         sale_date: this.currentDate,
-        total_price: 0,
+        total_price: this.calculateTotal(this.productsFact),
         saleDetail: this.productsFact,
         name_user: localStorage.getItem(this.AUTH_USER)
       };
@@ -137,6 +137,14 @@ export class SaleComponent {
     } else {
       this.showAlert('Completa todos los campos requeridos', false);
     }
+  }
+
+  calculateTotal(productsFact: ProductModel[]): number {
+    let total: number = 0;
+    for (let i = 0; i < productsFact.length; i++) {
+      total += productsFact[i].quantity * productsFact[i].price_sale;
+    }
+    return total;
   }
 
 

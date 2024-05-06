@@ -206,7 +206,7 @@ export class BuyComponent implements OnInit, OnDestroy {
         id_buy: this.uuid,
         id_supplier: this.selectedSupplier?.id_supplier,
         purchase_date: this.currentDate,
-        total_price: 0,
+        total_price: this.calculateTotal(this.productsFact),
         buyDetail: this.productsFact,
         name_user: localStorage.getItem(this.AUTH_USER),
       };
@@ -460,6 +460,14 @@ export class BuyComponent implements OnInit, OnDestroy {
 
   newSupplier() {
     this.formSupplier.reset();
+  }
+
+  calculateTotal(productsFact: ProductModel[]): number {
+    let total: number = 0;
+    for (let i = 0; i < productsFact.length; i++) {
+      total += productsFact[i].quantity * productsFact[i].price_buy;
+    }
+    return total;
   }
 
 

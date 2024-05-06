@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from 'src/app/service/authentication.service';
 import {UserModel} from "../../model/Users";
+import { ModalProductsLowService } from 'src/app/service/modal-products-low.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,6 +17,7 @@ export class LoginComponent implements OnInit{
   constructor(
     private router: Router,
     private authService: AuthenticationService,
+    private modalService: ModalProductsLowService
   ) {}
 
   userOkay:UserModel[] = []
@@ -39,8 +41,10 @@ export class LoginComponent implements OnInit{
 
           this.mensaje = 'Inicio Correcto';
           this.authService.autenticarUsuario();
+          this.modalService.openModal();
           this.router.navigateByUrl('/product');
           localStorage.setItem('activeButton', 'Gestionar Productos');
+
         } else {
           // Usuario no válido, mostrar un mensaje de error o realizar otras acciones
           this.mensaje = 'Usuario o contraseña incorrectos';

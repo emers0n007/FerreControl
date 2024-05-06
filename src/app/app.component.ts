@@ -3,6 +3,7 @@ import { AuthenticationService } from './service/authentication.service';
 import { AlertService } from './service/alert.service';
 import { ProductService } from './service/product.service';
 import { ProductModel } from './model/ProductModel';
+import { ModalProductsLowService } from './service/modal-products-low.service';
 
 @Component({
   selector: 'app-root',
@@ -18,8 +19,8 @@ export class AppComponent implements OnInit{
   navbarVisible: boolean = true;
   lowStockProducts: ProductModel[] = [];
 
-  constructor(private authService: AuthenticationService, private alertService: AlertService, private productService: ProductService, private renderer: Renderer2) {
-    this.getProductLowStock();
+  constructor(private authService: AuthenticationService, private alertService: AlertService, private productService: ProductService, private renderer: Renderer2, private modalService: ModalProductsLowService) {
+
   }
 
 
@@ -52,25 +53,16 @@ export class AppComponent implements OnInit{
       this.triggerShake();
       setTimeout(() => {this.showAlert = false}, res.time);
     });
+    this.getProductLowStock();
 
   }
 
   openModal(){
-    const modal = document.getElementById('staticBackdrop');
-    if (modal) {
-      this.renderer.removeClass(modal, 'modal-fade');
-      modal.setAttribute('aria-hidden', 'false');
-      modal.style.display = 'block';
-    }
+    this.modalService.openModal();
   }
 
   closeModal() {
-    const modal = document.getElementById('staticBackdrop');
-    if (modal) {
-      this.renderer.addClass(modal, 'modal-fade');
-      modal.setAttribute('aria-hidden', 'true');
-      modal.style.display = 'none';
-    }
+   this.modalService.closeModal();
   }
 
   getProductLowStock() {

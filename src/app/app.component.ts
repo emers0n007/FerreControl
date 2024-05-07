@@ -26,6 +26,7 @@ export class AppComponent implements OnInit{
 
 
   get userOn(): boolean {
+    this.getProductLowStock();
     return this.authService.usuarioAutenticado;
   }
 
@@ -46,6 +47,7 @@ export class AppComponent implements OnInit{
     }
   }
   ngOnInit(): void {
+
     this.alertService.alert$.subscribe((res: any) => {
       this.mesage = res.message;
       this.okay = res.okay;
@@ -53,7 +55,7 @@ export class AppComponent implements OnInit{
       this.triggerShake();
       setTimeout(() => {this.showAlert = false}, res.time);
     });
-    this.getProductLowStock();
+
 
   }
 

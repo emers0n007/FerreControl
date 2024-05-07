@@ -16,7 +16,6 @@ import { SaleComponent } from './components/sale/sale.component';
 import { TitleComponent } from './components/title/title.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { ReportComponent } from './components/report/report.component';
-
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 @NgModule({
@@ -39,7 +38,8 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     ReactiveFormsModule,
     FormsModule,
     NgbModule,
-   NgxExtendedPdfViewerModule
+   NgxExtendedPdfViewerModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

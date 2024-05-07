@@ -1,23 +1,40 @@
 <div class="col-md-12 px-3 pt-4">
-    <div class="row">
-        <div class="col-auto px-5">
-            <div>
-               <h4>Reportes Entradas</h4>
-            </div>
-            <div>
-                <h4>Reportes Salidas</h4>
-            </div>
-            <div>
-              <h4>Contabilidad</h4>
-            </div>
-        </div>
-        <div class="col mx-auto" [ngStyle]="{ 'max-width.px': 860 }">
-          <h3 class="text-center">Reporte de ### del documento ###</h3>
-          <ngx-extended-pdf-viewer
-              [src]="'assets/test.pdf'"
-              [height]="'auto'"
-          ></ngx-extended-pdf-viewer>
+  <div class="row">
+    <div class="col-auto px-5">
+      <div class="mb-4">
+        <h4>Reportes Entradas</h4>
+        <select class="form-select" (change)="selectBuy($event)">
+          <option value="">Selecciona una entrada...</option>
+          <option *ngFor="let buy of buys" [value]="buy.id_buy">
+            {{ buy.id_buy }}
+          </option>
+        </select>
       </div>
-
+      <div class="mb-4">
+        <h4>Reportes Salidas</h4>
+        <select class="form-select" (change)="selectSale($event)">
+          <option value="">Selecciona una salida...</option>
+          <option *ngFor="let sale of sales" [value]="sale.id_sale">
+            {{ sale.id_sale }}
+          </option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <h4>Contabilidad</h4>
+        <select class="form-select" (change)="selectBuy($event)">
+          <option value="">Selecciona una compra...</option>
+          <option *ngFor="let buy of buys" [value]="buy.id_buy">
+            {{ buy.id_buy }}
+          </option>
+        </select>
+      </div>
     </div>
+    <div class="col mx-auto">
+      <h3 class="text-center">Reporte de {{reportName}} del documento {{reportId}}</h3>
+      <div class="d-flex justify-content-around">
+        <button type="button" class="btn btn-outline-success" (click)="showPdf()">Ver PDF</button>
+        <button type="button" class="btn btn-outline-success" (click)="downloadPdf()">Descargar PDF</button>
+      </div>
+    </div>
+  </div>
 </div>

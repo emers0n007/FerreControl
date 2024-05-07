@@ -1,59 +1,68 @@
 <app-title [title]="'Gestionar Productos'"></app-title>
 
 <div class="col-md-12 p-5">
-  <app-search-bar
-    (searchTextChanged)="onSearchTextChanged($event)"
-    [placeholder]="'Buscar productos ...'"
-  ></app-search-bar>
-<div class="table-responsive">
-
-  <table class="table mt-2 table-bordered table-hover">
-    <thead class="table-primary">
-      <tr>
-        <th>Nombre</th>
-        <th>Presentacion</th>
-        <th>Marca</th>
-        <th>Cantidad</th>
-        <th>Precio de Compra</th>
-        <th>Precio de Venta</th>
-        <th>Proveedor</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of list">
-        <td>{{ item.name }}</td>
-        <td>{{ item.presentation.name_presentation }} X {{item.presentation.description_presentation}}</td>
-        <td>{{ item.mark.name_mark }}</td>
-        <td>{{ item.quantity }}</td>
-        <td>{{ item.price_buy | currency }}</td>
-        <td>{{ item.price_sale | currency }}</td>
-        <td>{{ item.supplier.name }}</td>
-        <td>
-          <button
-            type="button"
-            class="btn btn-warning btn-sm"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-            (click)="selectItem(item)"
-            title="Modificar Producto"
-          >
-            <i class="fa fa-pencil"></i>
-          </button>
-          &nbsp;&nbsp;
-          <button
-            type="button"
-            class="btn btn-danger btn-sm"
-            (click)="delete(item.id_product)"
-            title="Eliminar Producto"
-          >
-            <i class="fa fa-trash"></i>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+  <div class="row">
+    <div class="col">
+      <app-search-bar
+        (searchTextChanged)="onSearchTextChanged($event)"
+        [placeholder]="'Buscar productos ...'"
+      ></app-search-bar>
+    </div>
+    <div class="col-auto">
+      <button (click)="showModalProductLow()" class="btn btn-primary">Productos con bajo stock</button>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="table mt-2 table-bordered table-hover">
+      <thead class="table-primary">
+        <tr>
+          <th>Nombre</th>
+          <th>Presentacion</th>
+          <th>Marca</th>
+          <th>Cantidad</th>
+          <th>Precio de Compra</th>
+          <th>Precio de Venta</th>
+          <th>Proveedor</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of list">
+          <td>{{ item.name }}</td>
+          <td>
+            {{ item.presentation.name_presentation }} X
+            {{ item.presentation.description_presentation }}
+          </td>
+          <td>{{ item.mark.name_mark }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.price_buy | currency }}</td>
+          <td>{{ item.price_sale | currency }}</td>
+          <td>{{ item.supplier.name }}</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-warning btn-sm"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+              (click)="selectItem(item)"
+              title="Modificar Producto"
+            >
+              <i class="fa fa-pencil"></i>
+            </button>
+            &nbsp;&nbsp;
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              (click)="delete(item.id_product)"
+              title="Eliminar Producto"
+            >
+              <i class="fa fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 <div
   class="modal fade custom-modal modal-lg"
@@ -225,7 +234,7 @@
               placeholder="Buscar marcas..."
             />
             <div class="text-danger" *ngIf="invalidMark">
-            <span>La marca seleccionada no es válida</span>
+              <span>La marca seleccionada no es válida</span>
             </div>
           </div>
         </form>

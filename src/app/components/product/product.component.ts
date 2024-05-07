@@ -16,6 +16,7 @@ import { SupplierService } from '../../service/supplier.service';
 import { MarkModel } from '../../model/MarkModel';
 import { Observable, debounceTime, distinctUntilChanged, map } from 'rxjs';
 import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+import { ModalProductsLowService } from 'src/app/service/modal-products-low.service';
 
 @Component({
   selector: 'app-product',
@@ -48,6 +49,7 @@ export class ProductComponent implements OnInit {
     private producService: ProductService,
     private alertService: AlertService,
     private supplierService: SupplierService,
+    private modalProduct: ModalProductsLowService
   ) {}
 
   ngOnInit(): void {
@@ -311,5 +313,9 @@ export class ProductComponent implements OnInit {
         closeButton.click();
       }
     }
+  }
+
+  showModalProductLow(){
+    this.modalProduct.openModal();
   }
 }

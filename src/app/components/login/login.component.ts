@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit{
 
           this.mensaje = 'Inicio Correcto';
           this.authService.autenticarUsuario();
-          this.modalService.openModal();
+          //this.modalService.openModal();
           this.router.navigateByUrl('/product');
           localStorage.setItem('activeButton', 'Gestionar Productos');
 

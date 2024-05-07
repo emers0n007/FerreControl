@@ -4,6 +4,7 @@ import { SaleModel } from 'src/app/model/SaleModel';
 import { BuyService } from 'src/app/service/buy.service';
 import { SaleService } from 'src/app/service/sale.service';
 import { PdfService } from 'src/app/service/pdf.service';
+import { AlertService } from 'src/app/service/alert.service';
 
 @Component({
   selector: 'app-report',
@@ -11,12 +12,11 @@ import { PdfService } from 'src/app/service/pdf.service';
   styleUrls: ['./report.component.css'],
 })
 export class ReportComponent implements OnInit {
-
   buys: BuyModel[] = [];
   sales: SaleModel[] = [];
 
-  reportName: string = "####";
-  reportId: string = "####";
+  reportName: string = '####';
+  reportId: string = '####';
 
   saleSelect: SaleModel;
   buySelect: BuyModel;
@@ -28,7 +28,8 @@ export class ReportComponent implements OnInit {
   constructor(
     private _buyService: BuyService,
     private _saleService: SaleService,
-    private _pdfService: PdfService
+    private _pdfService: PdfService,
+    private _alertService: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -36,26 +37,49 @@ export class ReportComponent implements OnInit {
     this.getSales();
   }
 
-  showPdfBuy(){
-    if(this.buySelect){
+  showPdfBuy() {
+    if (this.buySelect) {
       this._pdfService.showPdfBuy(this.buySelect);
     }
   }
 
-  downloadPdfBuy(){
-    if(this.buySelect){
+  showPdfSale() {
+    if (this.saleSelect) {
+      this._pdfService.showPdfSale(this.saleSelect);
+    }
+  }
+
+  downloadPdfBuy() {
+    if (this.buySelect) {
       this._pdfService.downloadPdfBuy(this.buySelect);
     }
   }
 
-  downloadPdf(){
+  downloadPdfSale() {
+    if (this.saleSelect) {
+      this._pdfService.downloadPdfSale(this.saleSelect);
+    }
+  }
 
+  downloadPdf() {
+    if (this.buySelect) {
+      this.downloadPdfBuy();
+    } else if (this.saleSelect) {
+      this.downloadPdfSale();
+    }else {
+      this.showAlert("No se ha seleccionado un reporte valido", false);
+    }
   }
 
   showPdf() {
-
+    if (this.buySelect) {
+      this.showPdfBuy();
+    } else if (this.saleSelect) {
+      this.showPdfSale();
+    }else {
+      this.showAlert("No se ha seleccionado un reporte valido", false);
+    }
   }
-
 
   getBuys(): void {
     this._buyService.getBuys().subscribe((buys) => {
@@ -64,17 +88,15 @@ export class ReportComponent implements OnInit {
     });
   }
 
-
-
   selectBuy(event: Event) {
     const target = event.target as HTMLSelectElement;
     const selectedId = target.value;
     this.buySelect = this.buys.find(
       (compra) => compra.id_buy + '' === selectedId
     );
-    if(this.buySelect){
-      this.reportName = "Entrada";
-      this.reportId = this.buySelect.id_buy+"";
+    if (this.buySelect) {
+      this.reportName = 'Entrada';
+      this.reportId = this.buySelect.id_buy + '';
       this.saleSelect = null;
     }
 
@@ -88,19 +110,21 @@ export class ReportComponent implements OnInit {
     });
   }
 
-
-
   selectSale(event: Event) {
     const target = event.target as HTMLSelectElement;
     const selectedId = target.value;
     this.saleSelect = this.sales.find(
       (compra) => compra.id_sale + '' === selectedId
     );
-    if(this.saleSelect){
-      this.reportName = "Salida";
-      this.reportId = this.saleSelect.id_sale+"";
+    if (this.saleSelect) {
+      this.reportName = 'Salida';
+      this.reportId = this.saleSelect.id_sale + '';
       this.buySelect = null;
     }
     console.log(this.saleSelect);
+  }
+
+  showAlert(message: string, okay: boolean) {
+    this._alertService.showAlert(message, okay);
   }
 }

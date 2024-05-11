@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BuyModel } from 'src/app/model/BuyModel';
 import { SaleModel } from 'src/app/model/SaleModel';
 import { BuyService } from 'src/app/service/buy.service';
@@ -12,14 +12,20 @@ import { AlertService } from 'src/app/service/alert.service';
   styleUrls: ['./report.component.css'],
 })
 export class ReportComponent implements OnInit {
+
   buys: BuyModel[] = [];
   sales: SaleModel[] = [];
 
   reportName: string = '####';
-  reportId: string = '####';
+  reportId: string = 'N#';
 
   saleSelect: SaleModel;
   buySelect: BuyModel;
+
+  clientName: string = "";
+  document: number = 0;
+  money: number = 0;
+
   //91010777-8
   /*
   y lo de las facturas: Nombre de la ferretería, NIT, factura de venta de caja, fecha y hora, articulo, código, descripción y valor, resumen de IVA (opcional), recibido (plata dada por el cliente), total a pagar, cambio, TOTAL (grande)
@@ -35,6 +41,10 @@ export class ReportComponent implements OnInit {
   ngOnInit(): void {
     this.getBuys();
     this.getSales();
+  }
+
+  setDetailsClient(){
+
   }
 
   showPdfBuy() {
@@ -65,6 +75,13 @@ export class ReportComponent implements OnInit {
     if (this.buySelect) {
       this.downloadPdfBuy();
     } else if (this.saleSelect) {
+      if(this.clientName === ""){
+        this.clientName = "Cliente Generico"
+      }
+      if(this.document == 0){
+        this.document = 7777777;
+      }
+      this._pdfService.setValues(this.clientName, this.document, this.money);
       this.downloadPdfSale();
     }else {
       this.showAlert("No se ha seleccionado un reporte valido", false);
@@ -75,6 +92,13 @@ export class ReportComponent implements OnInit {
     if (this.buySelect) {
       this.showPdfBuy();
     } else if (this.saleSelect) {
+      if(this.clientName === ""){
+        this.clientName = " Cliente Generico"
+      }
+      if(this.document == 0){
+        this.document = 7777777;
+      }
+      this._pdfService.setValues(this.clientName, this.document, this.money);
       this.showPdfSale();
     }else {
       this.showAlert("No se ha seleccionado un reporte valido", false);

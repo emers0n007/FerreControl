@@ -13,7 +13,19 @@ import { SaleModel } from '../model/SaleModel';
   providedIn: 'root',
 })
 export class PdfService {
+
+  clientName: string = "";
+  document: number = 0;
+  money: number = 0;
+
+
   constructor(private buyService: BuyService) {}
+
+  setValues(clientName: string, document: number, money: number): void {
+    this.clientName = clientName;
+    this.document = document;
+    this.money = money;
+  }
 
   showPdfBuy(buy: BuyModel) {
     const title = `Compra #${buy.id_buy}`;
@@ -165,6 +177,7 @@ export class PdfService {
     const nit = 'NIT 91010777-8';
     const currentDate = formatDate(new Date(), 'yyyy/MM/dd HH:mm:ss', 'en-US');
     const totalPrice = this.formatCurrency(this.calculateTotalSale(sale.saleDetail));
+    const totalPriceNumber = this.calculateTotalSale(sale.saleDetail);
     const products = sale.saleDetail.map((product: ProductModel) => {
       return [
         product.id_product,
@@ -213,13 +226,37 @@ export class PdfService {
           fontSize: 12,
           alignment: 'center',
           margin: [0, 0, 0, 10],
-        }, // Centra la fecha
+        },
+        {
+          text: `Cliente: ${this.clientName}`,
+          fontSize: 12,
+          alignment: 'center',
+          margin: [0, 0, 0, 10],
+        },
+        {
+          text: `Documento cliente: ${this.document}`,
+          fontSize: 12,
+          alignment: 'center',
+          margin: [0, 0, 0, 10],
+        },
         table,
         {
-          text: `Total de la venta: ${totalPrice}`,
-          fontSize: 18,
+          text: `Total: ${totalPrice}`,
+          fontSize: 15,
           alignment: 'right',
-          margin: [0, 30, 0, 10],
+          margin: [0, 20, 0, 10],
+        },
+        {
+          text: `Valor pagado: ${this.formatCurrency(this.money)}`,
+          fontSize: 15,
+          alignment: 'right',
+          margin: [0, 20, 0, 10],
+        },
+        {
+          text: `Cambio: ${this.formatCurrency(this.money - totalPriceNumber)}`,
+          fontSize: 14,
+          alignment: 'right',
+          margin: [0, 20, 0, 10],
         },
       ],
     };
@@ -237,6 +274,7 @@ export class PdfService {
     const nit = 'NIT 91010777-8';
     const currentDate = formatDate(new Date(), 'yyyy/MM/dd HH:mm:ss', 'en-US');
     const totalPrice = this.formatCurrency(this.calculateTotalSale(sale.saleDetail));
+    const totalPriceNumber = this.calculateTotalSale(sale.saleDetail);
     const products = sale.saleDetail.map((product: ProductModel) => {
       return [
         product.id_product,
@@ -288,10 +326,22 @@ export class PdfService {
         }, // Centra la fecha
         table,
         {
-          text: `Total de la venta: ${totalPrice}`,
-          fontSize: 18,
+          text: `Total: ${totalPrice}`,
+          fontSize: 15,
           alignment: 'right',
-          margin: [0, 30, 0, 10],
+          margin: [0, 20, 0, 10],
+        },
+        {
+          text: `Valor pagado: ${this.formatCurrency(this.money)}`,
+          fontSize: 15,
+          alignment: 'right',
+          margin: [0, 20, 0, 10],
+        },
+        {
+          text: `Cambio: ${this.formatCurrency(this.money - totalPriceNumber)}`,
+          fontSize: 14,
+          alignment: 'right',
+          margin: [0, 20, 0, 10],
         },
       ],
     };

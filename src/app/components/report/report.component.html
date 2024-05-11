@@ -30,10 +30,57 @@
       </div>
     </div>
     <div class="col mx-auto">
-      <h3 class="text-center">Reporte de {{reportName}} del documento {{reportId}}</h3>
-      <div class="d-flex justify-content-around">
+      <h3 class="text-center mb-4">Reporte de {{reportName}} del documento {{reportId}}</h3>
+      <div class="d-flex justify-content-around mb-4">
         <button type="button" class="btn btn-outline-success" (click)="showPdf()">Ver PDF</button>
         <button type="button" class="btn btn-outline-success" (click)="downloadPdf()">Descargar PDF</button>
+      </div>
+      <div *ngIf="saleSelect">
+        <div class="rounded p-4 bg-back">
+          <h4 class="text-center">Informacion opcional del cliente</h4>
+          <div class="mb-3">
+            <label for="nameClient">Nombre</label>
+            <input type="text" class="form-control" placeholder="Cliente generico" aria-describedby="basic-addon2" [(ngModel)]="clientName">
+          </div>
+           <div class="mb-3">
+            <label for="nameClient">Documento</label>
+            <input type="number" class="form-control" placeholder="Documento del cliente (opcional)" aria-describedby="basic-addon2" [(ngModel)]="document">
+          </div>
+          <div class="mb-3">
+            <label for="nameClient">Dinero Recibido</label>
+            <input type="number" class="form-control" placeholder="Dinero del cliente" aria-describedby="basic-addon2" [(ngModel)]="money">
+          </div>
+        </div>
+      </div>
+      <div *ngIf="buySelect">
+        <div class="card-header">
+          <h4>Detalles de la Compra #{{ buySelect.id_buy }}</h4>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID Producto</th>
+                <th>Nombre Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Total</th>
+                <!-- Agrega más columnas si es necesario -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let detail of buySelect.buyDetail">
+                <td>{{ detail.id_product}}</td>
+                <td>{{ detail.name }}</td>
+                <td>{{ detail.quantity }}</td>
+                <td>{{ detail.price_buy }}</td>
+                <td>{{ detail.quantity * detail.price_buy }}</td>
+                <!-- Agrega más columnas si es necesario -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
       </div>
     </div>
   </div>

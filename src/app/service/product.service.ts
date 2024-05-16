@@ -42,15 +42,12 @@ export class ProductService {
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
-      // Error del cliente
       console.error('Ocurrió un error:', error.error.message);
     } else {
-      // Error del servidor
       console.error(
         `Código de error: ${error.status}, ` +
         `mensaje: ${error.error}`);
     }
-    // Devuelve un observable con un mensaje de error legible para el usuario
     return throwError('Ocurrió un error. Por favor, inténtelo de nuevo más tarde.');
   }
 }

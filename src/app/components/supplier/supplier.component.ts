@@ -28,10 +28,10 @@ export class SupplierComponent implements OnInit {
   ngOnInit(): void {
     this.listSupplier();
     this.formSupplier = new FormGroup({
-      name: new FormControl('', Validators.required), // Campo obligatorio
-      id_supplier: new FormControl('', Validators.required), // Campo obligatorio
-      phone: new FormControl('', Validators.required), // Campo obligatorio
-      email: new FormControl('', [Validators.required, Validators.email]), // Campo obligatorio y validador de correo electrónico
+      name: new FormControl('', Validators.required),
+      id_supplier: new FormControl('', Validators.required),
+      phone: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email]),
       status: new FormControl(''),
     });
   }

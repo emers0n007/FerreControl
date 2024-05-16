@@ -13,7 +13,6 @@ import { SupplierModel } from 'src/app/model/SupplierModel';
 import { AlertService } from 'src/app/service/alert.service';
 import { ProductService } from 'src/app/service/product.service';
 import { SupplierService } from 'src/app/service/supplier.service';
-import { BuyModel } from '../../model/BuyModel';
 import { BuyService } from '../../service/buy.service';
 import { MarkModel } from 'src/app/model/MarkModel';
 import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
@@ -47,8 +46,6 @@ export class BuyComponent implements OnInit, OnDestroy {
   stockCount: number = 0;
   uuid: string = '';
 
-  //-----------------------------------//
-  //            Modal Product         //
 
   formProduct: FormGroup = new FormGroup({});
   selectedPresentation: string = '';
@@ -183,7 +180,7 @@ export class BuyComponent implements OnInit, OnDestroy {
         this.selectedItem.quantity = (this.stockToAdd*this.selectedItem.presentation.description_presentation) + this.stockCount;
         this.productsFact.push(this.selectedItem);
       }
-      this.selectedItem = undefined; // Restablece el valor
+      this.selectedItem = undefined;
     }
     this.stockToAdd = 0;
     this.stockCount = 0;
@@ -195,9 +192,9 @@ export class BuyComponent implements OnInit, OnDestroy {
       this.productsFact.splice(index, 1);
       const productToAdd = this.listComplet.find(
         (product) => product.id_product === item.id_product
-      ); // Busca el producto en listComplet por su ID
+      );
       if (productToAdd) {
-        this.list.push(productToAdd); // Agrega el producto a this.list
+        this.list.push(productToAdd);
       }
     }
   }
@@ -227,7 +224,6 @@ export class BuyComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Modal nuevo producto //
 
   invalidSupplier: boolean = false;
   isFormSubmittedProduct: boolean = false;
@@ -249,7 +245,7 @@ export class BuyComponent implements OnInit, OnDestroy {
   positiveNumberValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
     if (value === null || value === undefined || value === '') {
-      return null; // Permitir valores vacíos
+      return null;
     }
     const isValid = !isNaN(value) && parseFloat(value) >= 0;
     return isValid ? null : { notPositiveNumber: true };
@@ -272,9 +268,8 @@ export class BuyComponent implements OnInit, OnDestroy {
       if (markControl.value.name_mark === 'Otro') {
         markName = this.formProduct.controls['OtherMark'].value;
         this.console.log("SI INGRESAAA", markName)
-        markId = 0; // Asume que tienes una función que genera IDs únicos
+        markId = 0;
       } else {
-        // Si no es "Otro", mantener los valores existentes
         markName = markControl.value.name_mark;
         markId = markControl.value.id_mark;
       }
@@ -427,8 +422,6 @@ export class BuyComponent implements OnInit, OnDestroy {
   newProduct() {
     this.formProduct.reset();
   }
-
-  // modal supplier
 
   isFormSubmittedSupplier: boolean = false;
   @ViewChild('supplier') modal: ElementRef | undefined;

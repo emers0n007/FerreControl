@@ -3,7 +3,6 @@ import { ProductService } from '../../service/product.service';
 import { ProductModel } from '../../model/ProductModel';
 import {
   AbstractControl,
-  FormBuilder,
   FormControl,
   FormGroup,
   ValidationErrors,
@@ -298,7 +297,7 @@ export class ProductComponent implements OnInit {
   positiveNumberValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
     if (value === null || value === undefined || value === '') {
-      return null; // Permitir valores vacíos
+      return null;
     }
     const isValid = !isNaN(value) && parseFloat(value) >= 0;
     return isValid ? null : { notPositiveNumber: true };

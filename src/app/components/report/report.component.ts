@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BuyModel } from 'src/app/model/BuyModel';
 import { SaleModel } from 'src/app/model/SaleModel';
 import { BuyService } from 'src/app/service/buy.service';
 import { SaleService } from 'src/app/service/sale.service';
 import { PdfService } from 'src/app/service/pdf.service';
 import { AlertService } from 'src/app/service/alert.service';
+import { ProductModel } from 'src/app/model/ProductModel';
 
 @Component({
   selector: 'app-report',
@@ -25,11 +26,7 @@ export class ReportComponent implements OnInit {
   clientName: string = "";
   document: number = 0;
   money: number = 0;
-
-  //91010777-8
-  /*
-  y lo de las facturas: Nombre de la ferretería, NIT, factura de venta de caja, fecha y hora, articulo, código, descripción y valor, resumen de IVA (opcional), recibido (plata dada por el cliente), total a pagar, cambio, TOTAL (grande)
-  */
+  total: number = 0;
 
   constructor(
     private _buyService: BuyService,
@@ -108,7 +105,6 @@ export class ReportComponent implements OnInit {
   getBuys(): void {
     this._buyService.getBuys().subscribe((buys) => {
       this.buys = buys;
-      console.log('Buys:', this.buys);
     });
   }
 
@@ -130,7 +126,6 @@ export class ReportComponent implements OnInit {
   getSales(): void {
     this._saleService.getSales().subscribe((sales) => {
       this.sales = sales;
-      console.log('sales:', this.sales);
     });
   }
 
@@ -141,11 +136,21 @@ export class ReportComponent implements OnInit {
       (compra) => compra.id_sale + '' === selectedId
     );
     if (this.saleSelect) {
+      this.total = this.calculateTotalSale(this.saleSelect.saleDetail);
       this.reportName = 'Salida';
       this.reportId = this.saleSelect.id_sale + '';
       this.buySelect = null;
     }
     console.log(this.saleSelect);
+  }
+
+  calculateTotalSale(productsFact: ProductModel[]): number {
+    let total: number = 0;
+    for (let i = 0; i < productsFact.length; i++) {
+      console.log(productsFact[i].quantity, productsFact[i].price_sale);
+      total += productsFact[i].quantity * productsFact[i].price_sale;
+    }
+    return total;
   }
 
   showAlert(message: string, okay: boolean) {

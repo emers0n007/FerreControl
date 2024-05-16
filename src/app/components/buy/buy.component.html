@@ -67,8 +67,8 @@
           <tr *ngFor="let item of list">
             <td>{{ item.name }}</td>
             <td>
-              {{ item.presentation.description_presentation }} X {{
-                item.presentation.name_presentation
+              {{ item.presentation.name_presentation }} X {{
+                item.presentation.description_presentation
               }}
             </td>
             <td>{{ item.quantity }}</td>
@@ -178,7 +178,7 @@
             <label for="stockInput"
               >Cantidad de {{ selectedItem?.presentation?.name_presentation }} * {{selectedItem?.presentation?.description_presentation}} Unidades</label
             >
-            <input
+            <input *ngIf="selectedItem?.presentation?.name_presentation!=='Metro'"
               type="number"
               class="form-control"
               id="stockToAdd"
@@ -188,7 +188,7 @@
             />
           </div>
           <div class="mb-3">
-            <label for="stockCount">Cantidad de Unidades</label>
+            <label for="stockCount" *ngIf="selectedItem?.presentation?.name_presentation!=='Metro'">Cantidad de Unidades </label>
             <input
               type="number"
               class="form-control"

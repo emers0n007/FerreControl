@@ -30,7 +30,7 @@ export class ModalProductsLowService {
         modal.setAttribute('aria-hidden', 'false');
         modal.style.display = 'block';
       }
-    }, 1500); // 2000 milisegundos = 2 segundos
+    }, 1); // 2000 milisegundos = 2 segundos
   }
 
 

@@ -10,6 +10,7 @@ import { AuthenticationService } from 'src/app/service/authentication.service';
 export class NavComponent implements OnInit, OnDestroy {
   userLoginOn:boolean=false;
   usuario: string = this.authService.getUserActual();
+  name_usuario: string = this.authService.getNameUser();
   role : String = this.authService.getRoleActual();
   botonActivo: string = 'Gestionar Productos';
 

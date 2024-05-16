@@ -70,8 +70,8 @@ export class AppComponent implements OnInit{
     this.productService.getProductoLowStock().subscribe(
       (products: ProductModel[]) => {
         this.lowStockProducts = products;
-        /*console.log('Productos con bajo stock:', this.lowStockProducts);
-        if (this.lowStockProducts && this.lowStockProducts.length > 0) {
+        console.log('Productos con bajo stock:', this.lowStockProducts);
+        /*if (this.lowStockProducts && this.lowStockProducts.length > 0) {
           //this.openModal();
         }/*/
       },

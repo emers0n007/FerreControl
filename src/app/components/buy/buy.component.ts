@@ -182,6 +182,8 @@ export class BuyComponent implements OnInit, OnDestroy {
       }
       this.selectedItem = undefined;
     }
+    this.stockToAdd = 0;
+    this.stockCount = 0;
   }
 
   addAll(item: any) {

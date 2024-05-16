@@ -54,6 +54,7 @@ export class ModalProductsLowService {
 
 
 
+
   closeModal() {
     const modal = document.getElementById('staticBackdrop');
     if (modal) {

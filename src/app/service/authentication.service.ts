@@ -35,6 +35,10 @@ export class AuthenticationService {
       return this.isUser();
     }
 
+  getNameUser(): string{
+    return this.getNameuser();
+  }
+
   getRoleActual(): string{
     return this.isRole();
   }
@@ -51,6 +55,10 @@ export class AuthenticationService {
 
   private isRole(): string {
     return localStorage.getItem(this.AUTH_ROLE) ?? "Rol Invalido";
+  }
+
+  private getNameuser(): string {
+    return localStorage.getItem(this.AUTH_USERNAME) ?? "Nombre Invalido";
   }
 
   usuarioAutenticado = this.isAuthenticated();

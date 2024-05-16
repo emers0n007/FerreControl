@@ -17,4 +17,6 @@ export class BuyService {
   saveBuy(request: any): Observable<any>{
     return this.httpClient.post<any>('http://localhost:9000/FerreControl' + '/save/buy', request).pipe(map(resp => resp));
   }
+
+
 }

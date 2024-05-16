@@ -17,4 +17,7 @@ export class SaleService {
   saveSupplier(request: any): Observable<any>{
     return this.httpClient.post<any>('http://localhost:9000/FerreControl' + '/save/sale', request).pipe(map(resp => resp));
   }
+  getSale(id: String): Observable<any>{
+    return this.httpClient.get<any>('http://localhost:9000/FerreControl' + '/search/sale/'+ id).pipe(map(resp => resp));
+  }
 }

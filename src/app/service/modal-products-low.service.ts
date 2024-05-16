@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { AlertService } from './alert.service';
+import { ProductService } from './product.service';
+import { ProductModel } from '../model/ProductModel';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModalProductsLowService {
 
-  constructor(private alertService: AlertService) { }
+  lowStockProducts: ProductModel[] = [];
+
+  constructor(private alertService: AlertService, private productService: ProductService) { }
 
 
   showAlert(message: string, okay: boolean) {
@@ -14,6 +18,7 @@ export class ModalProductsLowService {
   }
 
   openModal() {
+    this.getProductLowStock();
     const modal = document.getElementById('staticBackdrop');
     if (modal) {
       modal.classList.remove('modal-fade');
@@ -22,16 +27,31 @@ export class ModalProductsLowService {
     }
   }
   openModalDelayed() {
-    this.showAlert("Existen Productos con Bajo Stock", false);
-    setTimeout(() => {
-      const modal = document.getElementById('staticBackdrop');
-      if (modal) {
-        modal.classList.remove('modal-fade');
-        modal.setAttribute('aria-hidden', 'false');
-        modal.style.display = 'block';
-      }
-    }, 1500); // 2000 milisegundos = 2 segundos
+    this.getProductLowStock();
   }
+
+  getProductLowStock() {
+    this.productService.getProductoLowStock().subscribe(
+      (products: ProductModel[]) => {
+        this.lowStockProducts = products;
+        if (this.lowStockProducts && this.lowStockProducts.length > 0) {
+          this.showAlert("Existen Productos con Bajo Stock", false);
+          setTimeout(() => {
+            const modal = document.getElementById('staticBackdrop');
+            if (modal) {
+              modal.classList.remove('modal-fade');
+              modal.setAttribute('aria-hidden', 'false');
+              modal.style.display = 'block';
+            }
+          }, 1500);
+        }
+      },
+      error => {
+        console.error('Error al obtener productos con bajo stock:', error);
+      }
+    );
+  }
+
 
 
   closeModal() {

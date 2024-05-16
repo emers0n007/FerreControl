@@ -11,6 +11,7 @@ import { SaleService } from 'src/app/service/sale.service';
   styleUrls: ['./sale.component.css']
 })
 export class SaleComponent {
+
   currentDate: Date = new Date();
   selectedItem: ProductModel | undefined;
   list: ProductModel[] = [];
@@ -24,6 +25,12 @@ export class SaleComponent {
   stockToAdd: number = 0;
   mensaje: string = '';
   uuid: string = '';
+
+
+  clientName: string = "";
+  document: number = 0;
+  money: number = 0;
+  total: number = 0;
 
 
   constructor(
@@ -50,8 +57,8 @@ export class SaleComponent {
   listProducts() {
     this.producService.getProducts().subscribe((resp) => {
       if (resp) {
-        this.list = [...resp]; // Clonar los datos para list
-        this.listComplet = [...resp]; // Clonar los datos para listComplet
+        this.list = [...resp];
+        this.listComplet = [...resp];
       }
     });
   }
@@ -92,7 +99,7 @@ export class SaleComponent {
         this.selectedItem.quantity = this.stockToAdd;
         this.productsFact.push(this.selectedItem);
       }
-      this.selectedItem = undefined; // Restablece el valor
+      this.selectedItem = undefined;
     }
   }
 
@@ -150,6 +157,13 @@ export class SaleComponent {
   subTotal(product: ProductModel): number {
     return product.price_sale*product.quantity;
   }
+
+  viewPdfClicked() {
+
+    }
+    continueClicked() {
+
+    }
 
 
   protected readonly console = console;

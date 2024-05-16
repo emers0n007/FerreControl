@@ -6,7 +6,6 @@ import { saveAs } from 'file-saver';
 import { BuyModel } from '../model/BuyModel';
 import { ProductModel } from '../model/ProductModel';
 import { formatDate } from '@angular/common';
-import { BuyService } from './buy.service';
 import { SaleModel } from '../model/SaleModel';
 
 @Injectable({
@@ -19,7 +18,7 @@ export class PdfService {
   money: number = 0;
 
 
-  constructor(private buyService: BuyService) {}
+  constructor() {}
 
   setValues(clientName: string, document: number, money: number): void {
     this.clientName = clientName;
@@ -60,13 +59,13 @@ export class PdfService {
           text: establishment,
           fontSize: 16,
           bold: true,
-          alignment: 'center', // Alinea el texto al centro
+          alignment: 'center',
           margin: [0, 0, 0, 10],
         },
         {
           text: nit,
           fontSize: 12,
-          alignment: 'center', // Alinea el texto al centro
+          alignment: 'center',
           margin: [0, 0, 0, 10],
         },
         {
@@ -75,13 +74,13 @@ export class PdfService {
           bold: true,
           alignment: 'center',
           margin: [0, 0, 0, 10],
-        }, // Centra el título
+        },
         {
           text: `Fecha generacion: ${currentDate}`,
           fontSize: 12,
           alignment: 'center',
           margin: [0, 0, 0, 10],
-        }, // Centra la fecha
+        },
         table,
         {
           text: `Total de la compra: ${totalPrice}`,
@@ -132,13 +131,13 @@ export class PdfService {
           text: establishment,
           fontSize: 16,
           bold: true,
-          alignment: 'center', // Alinea el texto al centro
+          alignment: 'center',
           margin: [0, 0, 0, 10],
         },
         {
           text: nit,
           fontSize: 12,
-          alignment: 'center', // Alinea el texto al centro
+          alignment: 'center',
           margin: [0, 0, 0, 10],
         },
         {
@@ -147,13 +146,13 @@ export class PdfService {
           bold: true,
           alignment: 'center',
           margin: [0, 0, 0, 10],
-        }, // Centra el título
+        },
         {
           text: `Fecha generacion: ${currentDate}`,
           fontSize: 12,
           alignment: 'center',
           margin: [0, 0, 0, 10],
-        }, // Centra la fecha
+        },
         table,
         {
           text: `Total de la compra: ${totalPrice}`,
@@ -169,9 +168,7 @@ export class PdfService {
       saveAs(blob, fileName);
     });
   }
-
-
-  showPdfSale(sale: SaleModel) {
+  showPdfSaleComponent(sale: SaleModel) {
     const title = `Venta #${sale.id_sale}`;
     const establishment = 'Ferrecasa';
     const nit = 'NIT 91010777-8';
@@ -205,13 +202,13 @@ export class PdfService {
           text: establishment,
           fontSize: 16,
           bold: true,
-          alignment: 'center', // Alinea el texto al centro
+          alignment: 'center',
           margin: [0, 0, 0, 10],
         },
         {
           text: nit,
           fontSize: 12,
-          alignment: 'center', // Alinea el texto al centro
+          alignment: 'center',
           margin: [0, 0, 0, 10],
         },
         {
@@ -268,6 +265,79 @@ export class PdfService {
     });
   }
 
+  showPdfSale(sale: SaleModel) {
+    const title = `Venta #${sale.id_sale}`;
+    const establishment = 'Ferrecasa';
+    const nit = 'NIT 91010777-8';
+    const currentDate = formatDate(new Date(), 'yyyy/MM/dd HH:mm:ss', 'en-US');
+    const totalPrice = this.formatCurrency(this.calculateTotalSale(sale.saleDetail));
+    const totalPriceNumber = this.calculateTotalSale(sale.saleDetail);
+    const products = sale.saleDetail.map((product: ProductModel) => {
+      return [
+        product.id_product,
+        product.name,
+        product.presentation.name_presentation,
+        product.quantity,
+        this.formatCurrency(product.price_sale),
+      ];
+    });
+
+    const table = {
+      table: {
+        headerRows: 1,
+        widths: ['auto', '*', 'auto', 'auto', 'auto'],
+        body: [
+          ['Id', 'Articulo', 'Presentacion', 'Cantidad', 'Valor'],
+          ...products,
+        ],
+      },
+    };
+
+    const pdfDefinition: any = {
+      content: [
+        {
+          text: establishment,
+          fontSize: 16,
+          bold: true,
+          alignment: 'center',
+          margin: [0, 0, 0, 10],
+        },
+        {
+          text: nit,
+          fontSize: 12,
+          alignment: 'center',
+          margin: [0, 0, 0, 10],
+        },
+        {
+          text: title,
+          fontSize: 14,
+          bold: true,
+          alignment: 'center',
+          margin: [0, 0, 0, 10],
+        }, // Centra el título
+        {
+          text: `Fecha generacion: ${currentDate}`,
+          fontSize: 12,
+          alignment: 'center',
+          margin: [0, 0, 0, 10],
+        },
+        table,
+        {
+          text: `Total: ${totalPrice}`,
+          fontSize: 16,
+          alignment: 'right',
+          margin: [0, 20, 0, 10],
+        },
+      ],
+    };
+
+    pdfMake.createPdf(pdfDefinition).getBlob((blob: any) => {
+      const url = URL.createObjectURL(blob);
+      window.open(url, '_blank');
+      URL.revokeObjectURL(url);
+    });
+  }
+
   downloadPdfSale(sale: SaleModel) {
     const title = `Venta #${sale.id_sale}`;
     const establishment = 'Ferrecasa';
@@ -302,13 +372,13 @@ export class PdfService {
           text: establishment,
           fontSize: 16,
           bold: true,
-          alignment: 'center', // Alinea el texto al centro
+          alignment: 'center',
           margin: [0, 0, 0, 10],
         },
         {
           text: nit,
           fontSize: 12,
-          alignment: 'center', // Alinea el texto al centro
+          alignment: 'center',
           margin: [0, 0, 0, 10],
         },
         {
@@ -317,13 +387,13 @@ export class PdfService {
           bold: true,
           alignment: 'center',
           margin: [0, 0, 0, 10],
-        }, // Centra el título
+        },
         {
           text: `Fecha generacion: ${currentDate}`,
           fontSize: 12,
           alignment: 'center',
           margin: [0, 0, 0, 10],
-        }, // Centra la fecha
+        },
         table,
         {
           text: `Total: ${totalPrice}`,
@@ -370,7 +440,6 @@ export class PdfService {
   calculateTotalSale(productsFact: ProductModel[]): number {
     let total: number = 0;
     for (let i = 0; i < productsFact.length; i++) {
-      console.log(productsFact[i].quantity, productsFact[i].price_sale);
       total += productsFact[i].quantity * productsFact[i].price_sale;
     }
     return total;

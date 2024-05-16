@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/service/authentication.service';
 import {UserModel} from "../../model/Users";
 import { ModalProductsLowService } from 'src/app/service/modal-products-low.service';
@@ -46,13 +46,11 @@ export class LoginComponent implements OnInit{
           localStorage.setItem('activeButton', 'Gestionar Productos');
 
         } else {
-          // Usuario no válido, mostrar un mensaje de error o realizar otras acciones
           this.mensaje = 'Usuario o contraseña incorrectos';
         }
       },
       error: (error: any) => {
         console.error('Error al autenticar:', error);
-        // Manejar errores, mostrar un mensaje de error, etc.
       }
     });
 

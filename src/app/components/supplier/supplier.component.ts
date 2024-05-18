@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { SupplierModel } from '../../model/SupplierModel';
 import { SupplierService } from '../../service/supplier.service';
 import { Observable } from 'rxjs';
@@ -30,12 +30,33 @@ export class SupplierComponent implements OnInit {
     this.formSupplier = new FormGroup({
       name: new FormControl('', Validators.required),
       id_supplier: new FormControl('', Validators.required),
-      phone: new FormControl('', [Validators.required, Validators.maxLength(10)]),
+      phone: new FormControl('', [Validators.required, this.phoneMaxLengthValidator, this.positiveNumberValidator]),
       email: new FormControl('', [Validators.required, Validators.email]),
       status: new FormControl(''),
     });
   }
 
+  phoneMaxLengthValidator() {
+    return (control: AbstractControl): ValidationErrors | null => {
+
+      const value = control.value;
+      this.console.log(control.value)
+      if (value === null || value === undefined || value === '') {
+        return null;
+      }
+      const isValid = value.toString().length <= 10; // Verifica si la longitud es menor o igual a 10
+      return isValid ? null : { phoneMaxLength: true }; // Devuelve el error si la longitud es mayor a 10
+    };
+  }
+
+  positiveNumberValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (value === null || value === undefined || value === '') {
+      return null;
+    }
+    const isValid = !isNaN(value) && parseFloat(value) >= 0;
+    return isValid ? null : { notPositiveNumber: true };
+  }
 
   onSearchTextChanged(term: string) {
     this.filteredSupplier = term.length < 1 ? this.listComplet : this.listComplet.filter((product) =>
@@ -79,7 +100,7 @@ export class SupplierComponent implements OnInit {
     if (this.formSupplier.valid) {
       this.console.log("HOLA");
       this.formSupplier.controls['status'].setValue('1');
-      /*this.supplierService.saveSupplier(this.formSupplier.value)
+      this.supplierService.saveSupplier(this.formSupplier.value)
         .subscribe((resp) => {
           if (resp) {
             this.showAlert(resp.message, resp.success);
@@ -90,7 +111,7 @@ export class SupplierComponent implements OnInit {
             }
             this.listSupplier();
           }
-        });*/
+        });
 
     }
 

@@ -137,21 +137,15 @@
                 type="number"
                 class="form-control"
                 formControlName="phone"
-              />
-              <div
-                class="text-danger"
-                *ngIf="
-                  formSupplier.controls['phone'].invalid &&
-                  (formSupplier.controls['phone'].touched ||
-                    isFormSubmitted ||
-                    formSupplier.controls['phone'].dirty)
-                "
+                maxlength="10"
               >
-                <span
-                  *ngIf="formSupplier.controls['phone'].errors?.['required']"
-                  >Este Campo es Obligatorio</span
-                >
-                <span *ngIf="formSupplier.controls['phone'].errors?.['maxlength']">Phone must be exactly 12 characters long.</span>
+              <div class="text-danger" *ngIf="formSupplier.controls['phone'].invalid && (formSupplier.controls['phone'].touched || isFormSubmitted || formSupplier.controls['phone'].dirty)">
+                <span *ngIf="formSupplier.controls['phone'].errors?.['required']">
+                  Este Campo es Obligatorio
+                </span>
+                <span *ngIf="formSupplier.controls['phone'].errors?.['maxlength']">
+                  El número de teléfono no puede tener más de 12 caracteres.
+                </span>
               </div>
             </div>
           </div>

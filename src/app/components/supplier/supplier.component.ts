@@ -30,11 +30,12 @@ export class SupplierComponent implements OnInit {
     this.formSupplier = new FormGroup({
       name: new FormControl('', Validators.required),
       id_supplier: new FormControl('', Validators.required),
-      phone: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.minLength(6)]),
+      phone: new FormControl('', [Validators.required, Validators.maxLength(10)]),
       email: new FormControl('', [Validators.required, Validators.email]),
       status: new FormControl(''),
     });
   }
+
 
   onSearchTextChanged(term: string) {
     this.filteredSupplier = term.length < 1 ? this.listComplet : this.listComplet.filter((product) =>
@@ -76,9 +77,9 @@ export class SupplierComponent implements OnInit {
     const isFormValid = this.formSupplier.valid;
     this.isFormSubmitted = !isFormValid;
     if (this.formSupplier.valid) {
-
+      this.console.log("HOLA");
       this.formSupplier.controls['status'].setValue('1');
-      this.supplierService.saveSupplier(this.formSupplier.value)
+      /*this.supplierService.saveSupplier(this.formSupplier.value)
         .subscribe((resp) => {
           if (resp) {
             this.showAlert(resp.message, resp.success);
@@ -89,7 +90,7 @@ export class SupplierComponent implements OnInit {
             }
             this.listSupplier();
           }
-        });
+        });*/
 
     }
 

@@ -176,7 +176,6 @@ export class ProductComponent implements OnInit {
         }
       });
     }
-    this.closeModal();
   }
 
   delete(id: any) {

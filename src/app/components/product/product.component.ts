@@ -138,7 +138,7 @@ export class ProductComponent implements OnInit {
     const isFormValid = this.formProduct.valid;
     this.isFormSubmitted = !isFormValid;
     if (isFormValid && !this.invalidSupplier) {
-      this.closeModal();
+
       const supplierId =
         this.formProduct.controls['id_supplier'].value.id_supplier;
       const supplierName = ' ';
@@ -171,6 +171,7 @@ export class ProductComponent implements OnInit {
           this.showAlert(resp.message, resp.seccess);
           this.listProducts();
           this.formProduct.reset();
+          this.closeModal();
         }
       });
     }

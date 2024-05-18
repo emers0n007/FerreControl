@@ -30,7 +30,7 @@ export class SupplierComponent implements OnInit {
     this.formSupplier = new FormGroup({
       name: new FormControl('', Validators.required),
       id_supplier: new FormControl('', Validators.required),
-      phone: new FormControl('', Validators.required),
+      phone: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.minLength(6)]),
       email: new FormControl('', [Validators.required, Validators.email]),
       status: new FormControl(''),
     });
@@ -81,20 +81,24 @@ export class SupplierComponent implements OnInit {
       this.supplierService.saveSupplier(this.formSupplier.value)
         .subscribe((resp) => {
           if (resp) {
-            this.showAlert(resp.message, resp.seccess);
+            this.showAlert(resp.message, resp.success);
+            if(resp.success){
+              this.closeModal();
+              this.newProduct();
+              this.formSupplier.reset();
+            }
             this.listSupplier();
-            this.formSupplier.reset();
           }
         });
+
     }
-    this.closeModal();
+
   }
 
   update() {
      const isFormValid = this.formSupplier.valid;
     this.isFormSubmitted = !isFormValid;
     if(this.formSupplier.valid){
-      this.closeModal();
       const supplierData = {
         id_supplier: this.formSupplier.controls['id_supplier'].value,
         name: this.formSupplier.controls['name'].value,
@@ -104,10 +108,15 @@ export class SupplierComponent implements OnInit {
       };
       this.supplierService.updateSupplier(supplierData).subscribe((resp) => {
         if (resp) {
-          this.showAlert(resp.message, resp.seccess);
-          this.console.log(resp);
+          this.showAlert(resp.message, resp.success);
+
+          if(resp.success){
+            this.closeModal();
+            this.newProduct();
+            this.formSupplier.reset();
+          }
           this.listSupplier();
-          this.formSupplier.reset();
+
         }
       });
     }

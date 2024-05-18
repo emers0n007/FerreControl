@@ -151,6 +151,7 @@
                   *ngIf="formSupplier.controls['phone'].errors?.['required']"
                   >Este Campo es Obligatorio</span
                 >
+                <span *ngIf="formSupplier.controls['phone'].errors?.['maxlength']">Phone must be exactly 12 characters long.</span>
               </div>
             </div>
           </div>
@@ -188,7 +189,7 @@
           *ngIf="!isUpdate"
           type="button"
           class="btn btn-success btn-sm"
-          (click)="save(); newProduct()"
+          (click)="save()"
         >
           Guardar
         </button>
@@ -197,7 +198,7 @@
           type="button"
           class="btn btn-warning btn-sm"
 
-          (click)="update(); newProduct()"
+          (click)="update()"
         >
           Actualizar
         </button>

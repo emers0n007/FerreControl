@@ -1,0 +1,195 @@
+<app-title [title]="'Gestionar Usuarios'"></app-title>
+
+<div class="col-md-12 p-5">
+  <div class="row">
+    <div class="col">
+      <app-search-bar
+        (searchTextChanged)="onSearchTextChanged($event)"
+        [placeholder]="'Buscar usuarios ...'"
+      ></app-search-bar>
+    </div>
+    <div class="col-auto">
+      <button
+        type="button"
+        class="btn btn-primary btn"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+      >
+        <i class="fa fa-save"></i>
+        Nuevo Usuario
+      </button>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table mt-2 table-bordered table-hover">
+      <thead class="table-warning">
+      <tr>
+        <th>Nombre De Usuario</th>
+        <th>Nombre</th>
+        <th>Rol</th>
+        <th>Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of list">
+        <td>{{ item.name_user }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.role }}</td>
+        <td>
+          &nbsp;&nbsp;
+          <button
+            type="button"
+            class="btn btn-danger btn-sm"
+            (click)="delete(item.name_user)"
+            title="Eliminar proveedor"
+          >
+            <i class="fa fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+  #actu
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 *ngIf="!isUpdate" class="modal-title fs-5">Nuevo Proveedor</h1>
+        <h1 *ngIf="isUpdate" class="modal-title fs-5">Actualizar Proveedor</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="close"
+          (click)="newProduct()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formUser">
+          <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Nombre De Usuario</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" formControlName="name" />
+              <div
+                class="text-danger"
+                *ngIf="
+                  formUser.controls['name_user'].invalid &&
+                  (formUser.controls['name_user'].touched ||
+                    isFormSubmitted ||
+                    formUser.controls['name_user'].dirty)
+                "
+              >
+                <span *ngIf="formUser.controls['name_user'].errors?.['required']"
+                >Este Campo es Obligatorio</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Contraseña</label>
+            <div class="col-sm-10">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="password"
+              />
+              <div
+                class="text-danger"
+                *ngIf="
+                  formUser.controls['password'].invalid &&
+                  (formUser.controls['password'].touched ||
+                    isFormSubmitted ||
+                    formUser.controls['password'].dirty)
+                "
+              >
+                <span
+                  *ngIf="formUser.controls['password'].errors?.['required']"
+                >Este Campo es Obligatorio</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Nombre</label>
+            <div class="col-sm-10">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="name"
+              />
+              <div
+                class="text-danger"
+                *ngIf="
+                  formUser.controls['name'].invalid &&
+                  (formUser.controls['name'].touched ||
+                    isFormSubmitted ||
+                    formUser.controls['name'].dirty)
+                "
+              >
+                <span
+                  *ngIf="formUser.controls['name'].errors?.['required']"
+                >Este Campo es Obligatorio</span
+                >
+                </div>
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Rol</label>
+            <div class="col-sm-10">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="rol"
+              />
+              <div
+                class="text-danger"
+                *ngIf="
+                  formUser.controls['rol'].invalid &&
+                  (formUser.controls['rol'].touched ||
+                    isFormSubmitted ||
+                    formUser.controls['rol'].dirty)
+                "
+              >
+                <span
+                  *ngIf="formUser.controls['rol'].errors?.['rol']"
+                >Este Campo es Obligatorio</span
+                >
+                <span *ngIf="formUser.controls['rol'].errors?.['rol']"
+                >Rol Invalido</span
+                >
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          *ngIf="!isUpdate"
+          type="button"
+          class="btn btn-success btn-sm"
+          (click)="save()"
+        >
+          Guardar
+        </button>
+        <button
+          *ngIf="isUpdate"
+          type="button"
+          class="btn btn-warning btn-sm"
+
+
+        >
+          Actualizar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

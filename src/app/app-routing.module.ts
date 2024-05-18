@@ -8,6 +8,7 @@ import {BuyComponent} from "./components/buy/buy.component";
 import {SaleComponent} from "./components/sale/sale.component";
 
 import { ReportComponent } from './components/report/report.component';
+import {UsersComponent} from "./components/users/users.component";
 
 const routes: Routes = [
   {path:'',redirectTo:'/login', pathMatch:'full'},
@@ -16,7 +17,8 @@ const routes: Routes = [
   {path:'supplier',component:SupplierComponent, canActivate: [AuthGuard]},
   {path:'buy',component:BuyComponent, canActivate: [AuthGuard]},
   {path:'sale',component:SaleComponent, canActivate: [AuthGuard]},
-  {path:'report',component:ReportComponent, canActivate: [AuthGuard]}
+  {path:'report',component:ReportComponent, canActivate: [AuthGuard]},
+  {path:'users',component:UsersComponent, canActivate: [AuthGuard]}
 
 ];
 @NgModule({

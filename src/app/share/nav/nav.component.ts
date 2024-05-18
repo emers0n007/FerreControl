@@ -49,6 +49,10 @@ export class NavComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('supplier')
   }
 
+  manageUser(){
+    this.router.navigateByUrl('users')
+  }
+
   report(){
     this.router.navigateByUrl('report')
   }

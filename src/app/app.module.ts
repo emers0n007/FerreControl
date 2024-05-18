@@ -17,6 +17,7 @@ import { TitleComponent } from './components/title/title.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { ReportComponent } from './components/report/report.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import {UsersComponent} from "./components/users/users.component";
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     SaleComponent,
     TitleComponent,
     SearchBarComponent,
-    ReportComponent
+    ReportComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,

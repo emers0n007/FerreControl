@@ -18,7 +18,7 @@ export class ModalProductsLowService {
   }
 
   openModal() {
-    this.getProductLowStock();
+    //this.getProductLowStock();
     const modal = document.getElementById('staticBackdrop');
     if (modal) {
       modal.classList.remove('modal-fade');

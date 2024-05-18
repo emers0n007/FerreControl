@@ -30,10 +30,24 @@
       </div>
     </div>
     <div class="col mx-auto">
-      <h3 class="text-center mb-4">Reporte de {{reportName}} del documento {{reportId}}</h3>
+      <h3 class="text-center mb-4">
+        Reporte de {{ reportName }} del documento {{ reportId }}
+      </h3>
       <div class="d-flex justify-content-around mb-4">
-        <button type="button" class="btn btn-outline-success" (click)="showPdf()">Ver PDF</button>
-        <button type="button" class="btn btn-outline-success" (click)="downloadPdf()">Descargar PDF</button>
+        <button
+          type="button"
+          class="btn btn-outline-success"
+          (click)="showPdf()"
+        >
+          Ver PDF
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-success"
+          (click)="downloadPdf()"
+        >
+          Descargar PDF
+        </button>
       </div>
       <div *ngIf="buySelect">
         <div class="card-header">
@@ -41,7 +55,7 @@
         </div>
         <div class="card-body">
           <table class="table">
-            <thead>
+            <thead class="table-warning">
               <tr>
                 <th>ID Producto</th>
                 <th>Nombre Producto</th>
@@ -52,7 +66,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let detail of buySelect.buyDetail">
-                <td>{{ detail.id_product}}</td>
+                <td>{{ detail.id_product }}</td>
                 <td>{{ detail.name }}</td>
                 <td>{{ detail.quantity }}</td>
                 <td>{{ detail.price_buy }}</td>
@@ -61,6 +75,40 @@
             </tbody>
           </table>
         </div>
+      </div>
+      <div *ngIf="saleSelect">
+        <div class="card-header">
+          <h4>Detalles de la venta</h4>
+        </div>
+        <div class="card-body">
+          <table class="table table-bordered">
+            <thead class="table-warning">
+              <tr>
+                <th >ID</th>
+                <th >Nombre Producto</th>
+                <th >Precio venta</th>
+                <th >Proveedor</th>
+                <th >Marca</th>
+                <th >Presentacion</th>
+                <th >Cantidad</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let detail of saleSelect.saleDetail">
+                <td>{{ detail.id_product }}</td>
+                <td>{{ detail.name }}</td>
+                <td>{{ detail.price_sale }}</td>
+                <td>{{ detail.supplier.name }}</td>
+                <td>{{ detail.mark.name_mark }}</td>
+                <td>{{ detail.presentation.name_presentation }}</td>
+                <td>{{ detail.quantity }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div *ngIf="!buySelect && !saleSelect" class="centered-message mt-5">
+        Selecciona algun reporte para visualizarlo
       </div>
     </div>
   </div>

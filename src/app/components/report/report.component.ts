@@ -119,8 +119,6 @@ export class ReportComponent implements OnInit {
       this.reportId = this.buySelect.id_buy + '';
       this.saleSelect = null;
     }
-
-    console.log(this.buySelect);
   }
 
   getSales(): void {
@@ -141,7 +139,6 @@ export class ReportComponent implements OnInit {
       this.reportId = this.saleSelect.id_sale + '';
       this.buySelect = null;
     }
-    console.log(this.saleSelect);
   }
 
   calculateTotalSale(productsFact: ProductModel[]): number {

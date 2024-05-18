@@ -1,3 +1,15 @@
-.bg-back {
-  background-color: rgb(169, 193, 204);
+
+
+.centered-message {
+  background-color: #e4e3ab;
+  border: 1px solid #dee155;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  font-size: 18px;
+  color: #55600c;
+  filter: drop-shadow(0 4mm 4mm rgba(0, 0, 0, 0.2));
+  margin: 20px auto;
+  width: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

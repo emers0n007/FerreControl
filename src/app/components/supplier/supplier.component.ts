@@ -30,23 +30,20 @@ export class SupplierComponent implements OnInit {
     this.formSupplier = new FormGroup({
       name: new FormControl('', Validators.required),
       id_supplier: new FormControl('', Validators.required),
-      phone: new FormControl('', [Validators.required, this.phoneMaxLengthValidator, this.positiveNumberValidator]),
+      phone: new FormControl('', [Validators.required, this.phoneMaxLengthValidator.bind(this), this.positiveNumberValidator]),
       email: new FormControl('', [Validators.required, Validators.email]),
       status: new FormControl(''),
     });
   }
 
-  phoneMaxLengthValidator() {
-    return (control: AbstractControl): ValidationErrors | null => {
-
+  phoneMaxLengthValidator(control: AbstractControl) :
+    ValidationErrors | null {
       const value = control.value;
-      this.console.log(control.value)
       if (value === null || value === undefined || value === '') {
         return null;
       }
-      const isValid = value.toString().length <= 10; // Verifica si la longitud es menor o igual a 10
-      return isValid ? null : { phoneMaxLength: true }; // Devuelve el error si la longitud es mayor a 10
-    };
+      const isValid = value.toString().length <= 10;
+      return isValid ? null : { phoneMaxLength: true };
   }
 
   positiveNumberValidator(control: AbstractControl): ValidationErrors | null {
@@ -98,7 +95,6 @@ export class SupplierComponent implements OnInit {
     const isFormValid = this.formSupplier.valid;
     this.isFormSubmitted = !isFormValid;
     if (this.formSupplier.valid) {
-      this.console.log("HOLA");
       this.formSupplier.controls['status'].setValue('1');
       this.supplierService.saveSupplier(this.formSupplier.value)
         .subscribe((resp) => {
@@ -144,10 +140,20 @@ export class SupplierComponent implements OnInit {
     }
   }
 
-  delete(id: any) {
-    this.supplierService.deleteSupplier(id).subscribe((resp) => {
+  id: any;
+
+  deleteGet(id: any){
+    this.id = id;
+  }
+
+  delete() {
+    this.supplierService.deleteSupplier(this.id).subscribe((resp) => {
       if (resp) {
         this.listSupplier();
+        this.showAlert(resp.message, resp.success);
+        if(resp.success){
+          this.id = 0;
+        }
       }
     });
   }

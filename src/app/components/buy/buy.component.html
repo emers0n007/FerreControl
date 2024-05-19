@@ -40,7 +40,7 @@
   </div>
 
   <div class="row">
-    <div class="col-md-6">
+    <div class="col mx-auto">
       <h4 class="text-center">Productos Disponibles</h4>
       <div class="row-auto">
         <div class="input-group mb-3">
@@ -57,7 +57,7 @@
         <thead class="table-warning">
           <tr>
             <th>Nombre</th>
-            <th>Presentacion</th>
+            <th>Presentación</th>
             <th>Cantidad</th>
             <th>Precio Unitario</th>
             <th>Acciones</th>
@@ -91,9 +91,9 @@
       </table>
     </div>
 
-    <div class="col-md-6">
+    <div class="col mx-auto">
       <div class="row">
-        <div class="col">
+        <div class="col mx-auto">
           <button
             type="button"
             class="btn btn-primary btn-sm"
@@ -104,7 +104,7 @@
             Nuevo Producto
           </button>
         </div>
-        <div class="col">
+        <div class="col mx-auto">
           <button
             type="button"
             class="btn btn-success btn-sm"
@@ -171,7 +171,7 @@
         ></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form [formGroup]="formBuy">
           <div class="mb-3">
             <label for="stockInput"
               >Cantidad de {{ selectedItem?.presentation?.name_presentation }} * {{selectedItem?.presentation?.description_presentation}} Unidades</label
@@ -181,9 +181,20 @@
               class="form-control"
               id="stockToAdd"
               name="stockToAdd"
+              formControlName="stockToAdd"
               [ngModel]="stockToAdd"
               (ngModelChange)="stockToAdd = $event"
             />
+            <div class="text-danger" *ngIf="formBuy.controls['stockToAdd'].invalid && (formBuy.controls['stockToAdd'].touched || isFormSubmitted || formBuy.controls['stockToAdd'].dirty)">
+              <span *ngIf="formBuy.controls['stockToAdd'].errors?.['required']">
+                Este Campo es Obligatorio
+              </span>
+              <span
+              *ngIf="formBuy.controls['stockToAdd'].errors?.['notPositiveNumber']"
+              >Solo numeros positivos</span
+            >
+
+            </div>
           </div>
           <div class="mb-3">
             <label for="stockCount" *ngIf="selectedItem?.presentation?.name_presentation!=='Metro'">Cantidad de Unidades </label>
@@ -194,7 +205,18 @@
               name="stockCount"
               [ngModel]="stockCount"
               (ngModelChange)="stockCount = $event"
+              formControlName="stockCount"
             />
+            <div class="text-danger" *ngIf="formBuy.controls['stockCount'].invalid && (formBuy.controls['stockCount'].touched || isFormSubmitted || formBuy.controls['stockCount'].dirty)">
+              <span *ngIf="formBuy.controls['stockCount'].errors?.['required']">
+                Este Campo es Obligatorio
+              </span>
+              <span
+              *ngIf="formBuy.controls['stockCount'].errors?.['notPositiveNumber']"
+              >Solo numeros positivos</span
+            >
+
+            </div>
           </div>
         </form>
       </div>
@@ -256,12 +278,16 @@
             </div>
             <div class="col">
               <label class="col-form-label text-center">ID</label>
-              <input
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">770</span>
+                </div>
+                <input
                 type="text"
                 class="form-control"
                 formControlName="id_product"
               />
-
+              </div>
               <div
                 class="text-danger"
                 *ngIf="
@@ -281,11 +307,20 @@
           <div class="row row-cols-2 mb-3">
             <div class="col">
               <label class="col-form-label">Precio de compra</label>
-              <input
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">$</span>
+                </div>
+                <input
                 type="text"
                 class="form-control"
                 formControlName="price_buy"
               />
+                <div class="input-group-append">
+                  <span class="input-group-text">.00</span>
+                </div>
+              </div>
+
               <div
                 class="text-danger"
                 *ngIf="
@@ -307,11 +342,20 @@
             </div>
             <div class="col">
               <label class="col-form-label">Precio de Venta</label>
-              <input
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">$</span>
+                </div>
+                <input
                 type="text"
                 class="form-control"
                 formControlName="price_sale"
               />
+                <div class="input-group-append">
+                  <span class="input-group-text">.00</span>
+                </div>
+              </div>
+
               <div
                 class="text-danger"
                 *ngIf="
@@ -564,6 +608,14 @@
                   *ngIf="formSupplier.controls['phone'].errors?.['required']"
                   >Este Campo es Obligatorio</span
                 >
+                <span
+                *ngIf="formSupplier.controls['phone'].errors?.['notPositiveNumber']"
+                >Solo numeros positivos</span
+              >
+              <span
+                *ngIf="formSupplier.controls['phone'].errors?.['phoneMaxLength']"
+                >Maximo 10 digitos</span
+              >
               </div>
             </div>
           </div>

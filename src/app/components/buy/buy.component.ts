@@ -58,6 +58,8 @@ export class BuyComponent implements OnInit, OnDestroy {
 
   // Modal Supplier //
   formSupplier: FormGroup = new FormGroup({});
+
+  formBuy: FormGroup = new FormGroup({});
   constructor(
     private producService: ProductService,
     private buyService: BuyService,
@@ -94,12 +96,27 @@ export class BuyComponent implements OnInit, OnDestroy {
     this.formSupplier = new FormGroup({
       name: new FormControl('', Validators.required),
       id_supplier: new FormControl('', Validators.required),
-      phone: new FormControl('', Validators.required),
+      phone: new FormControl('', [Validators.required, this.phoneMaxLengthValidator.bind(this), this.positiveNumberValidator]),
       email: new FormControl('', [Validators.required, Validators.email]),
       status: new FormControl(''),
     });
+    this.formBuy = new FormGroup({
+
+      stockToAdd: new FormControl('', [Validators.required,  this.positiveNumberValidator]),
+      stockCount: new FormControl('', [Validators.required,  this.positiveNumberValidator]),
+    });
     this.currentDate = new Date();
 
+  }
+
+  phoneMaxLengthValidator(control: AbstractControl) :
+    ValidationErrors | null {
+      const value = control.value;
+      if (value === null || value === undefined || value === '') {
+        return null;
+      }
+      const isValid = value.toString().length <= 10;
+      return isValid ? null : { phoneMaxLength: true };
   }
 
   listSupplier() {
@@ -170,17 +187,24 @@ export class BuyComponent implements OnInit, OnDestroy {
     this.selectedItem = Object.assign({}, item);
   }
 
+  isFormSubmitted: boolean = false;
+
+
   addProduct() {
-    if (this.selectedItem) {
-      const index = this.list.findIndex(
-        (item) => item.id_product === this.selectedItem?.id_product
-      );
-      if (index !== -1) {
-        this.list.splice(index, 1);
-        this.selectedItem.quantity = (this.stockToAdd*this.selectedItem.presentation.description_presentation) + this.stockCount;
-        this.productsFact.push(this.selectedItem);
+    const isFormValid = this.formBuy.valid;
+    this.isFormSubmitted = !isFormValid;
+    if(isFormValid){
+      if (this.selectedItem) {
+        const index = this.list.findIndex(
+          (item) => item.id_product === this.selectedItem?.id_product
+        );
+        if (index !== -1) {
+          this.list.splice(index, 1);
+          this.selectedItem.quantity = (this.stockToAdd*this.selectedItem.presentation.description_presentation) + this.stockCount;
+          this.productsFact.push(this.selectedItem);
+        }
+        this.selectedItem = undefined;
       }
-      this.selectedItem = undefined;
     }
     this.stockToAdd = 0;
     this.stockCount = 0;
@@ -276,7 +300,7 @@ export class BuyComponent implements OnInit, OnDestroy {
 
 
       const productData = {
-        id_product: this.formProduct.controls['id_product'].value,
+        id_product: '770' + this.formProduct.controls['id_product'].value,
         name: this.formProduct.controls['name'].value,
         stock: this.formProduct.controls['stock'].value,
         price_buy: this.formProduct.controls['price_buy'].value,
@@ -308,15 +332,14 @@ export class BuyComponent implements OnInit, OnDestroy {
 
         this.producService.saveProduct(productData).subscribe((resp) => {
           if (resp) {
-            this.showAlert(resp.message, resp.seccess);
+            this.showAlert(resp.message, resp.success);
+            if(resp.success){
+              this.getListMarks();
+              this.formProduct.reset();
+            }
             this.listProducts();
-            this.getListMarks();
-            this.formProduct.reset();
           }
         });
-
-
-      this.console.log(productData);
       this.closeModalProduct();
     }
   }

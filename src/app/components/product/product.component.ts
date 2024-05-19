@@ -166,13 +166,14 @@ export class ProductComponent implements OnInit {
         },
         status: 1,
       };
-      console.log(productData);
       this.producService.updateProduct(productData).subscribe((resp) => {
         if (resp) {
-          this.showAlert(resp.message, resp.seccess);
+          this.showAlert(resp.message, resp.success);
           this.listProducts();
-          this.formProduct.reset();
-          this.closeModal();
+          if(resp.success){
+            this.formProduct.reset();
+            this.closeModal();
+          }
         }
       });
     }

@@ -291,7 +291,6 @@ export class BuyComponent implements OnInit, OnDestroy {
 
       if (markControl.value.name_mark === 'Otro') {
         markName = this.formProduct.controls['OtherMark'].value;
-        this.console.log("SI INGRESAAA", markName)
         markId = 0;
       } else {
         markName = markControl.value.name_mark;
@@ -323,7 +322,6 @@ export class BuyComponent implements OnInit, OnDestroy {
         status: 1,
       };
 
-      console.log("PRESENTACION", this.formProduct.controls['presentation'].value);
       const mark = {
         id_mark: markId,
         name_mark: markName,
@@ -336,11 +334,12 @@ export class BuyComponent implements OnInit, OnDestroy {
             if(resp.success){
               this.getListMarks();
               this.formProduct.reset();
+              this.closeModalProduct();
             }
             this.listProducts();
           }
         });
-      this.closeModalProduct();
+
     }
   }
 

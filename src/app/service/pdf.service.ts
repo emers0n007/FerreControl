@@ -33,21 +33,23 @@ export class PdfService {
     const currentDate = formatDate(new Date(), 'yyyy/MM/dd HH:mm:ss', 'en-US');
     const totalPrice = this.formatCurrency(this.calculateTotalBuy(buy.buyDetail));
     const products = buy.buyDetail.map((product: ProductModel) => {
+      const subtotal = product.quantity * product.price_buy;
       return [
         product.id_product,
         product.name,
         product.presentation.name_presentation,
         product.quantity,
         this.formatCurrency(product.price_buy),
+        this.formatCurrency(subtotal),
       ];
     });
 
     const table = {
       table: {
         headerRows: 1,
-        widths: ['auto', '*', 'auto', 'auto', 'auto'],
+        widths: ['auto', '*', 'auto', 'auto', 'auto', 'auto'],
         body: [
-          ['Id', 'Articulo', 'Presentacion', 'Cantidad', 'Precio de Compra'],
+          ['Id', 'Articulo', 'Presentacion', 'Cantidad', 'Precio de Compra', 'Subtotal'],
           ...products,
         ],
       },
@@ -105,21 +107,23 @@ export class PdfService {
     const currentDate = formatDate(new Date(), 'yyyy/MM/dd HH:mm:ss', 'en-US');
     const totalPrice = this.formatCurrency(this.calculateTotalBuy(buy.buyDetail));
     const products = buy.buyDetail.map((product: ProductModel) => {
+      const subtotal = product.quantity * product.price_buy;
       return [
         product.id_product,
         product.name,
         product.presentation.name_presentation,
         product.quantity,
         this.formatCurrency(product.price_buy),
+        this.formatCurrency(subtotal),
       ];
     });
 
     const table = {
       table: {
         headerRows: 1,
-        widths: ['auto', '*', 'auto', 'auto', 'auto'],
+        widths: ['auto', '*', 'auto', 'auto', 'auto', 'auto'],
         body: [
-          ['Id', 'Articulo', 'Presentacion', 'Cantidad', 'Precio de Compra'],
+          ['Id', 'Articulo', 'Presentacion', 'Cantidad', 'Precio de Compra', 'Subtotal'],
           ...products,
         ],
       },
@@ -176,21 +180,23 @@ export class PdfService {
     const totalPrice = this.formatCurrency(this.calculateTotalSale(sale.saleDetail));
     const totalPriceNumber = this.calculateTotalSale(sale.saleDetail);
     const products = sale.saleDetail.map((product: ProductModel) => {
+      const subtotal = product.quantity * product.price_sale;
       return [
         product.id_product,
         product.name,
         product.presentation.name_presentation,
         product.quantity,
         this.formatCurrency(product.price_sale),
+        this.formatCurrency(subtotal)
       ];
     });
 
     const table = {
       table: {
         headerRows: 1,
-        widths: ['auto', '*', 'auto', 'auto', 'auto'],
+        widths: ['auto', '*', 'auto', 'auto', 'auto', 'auto'],
         body: [
-          ['Id', 'Articulo', 'Presentacion', 'Cantidad', 'Valor'],
+          ['Id', 'Articulo', 'Presentacion', 'Cantidad', 'Valor', 'Subtotal'],
           ...products,
         ],
       },
@@ -271,23 +277,24 @@ export class PdfService {
     const nit = 'NIT 91010777-8';
     const currentDate = formatDate(new Date(), 'yyyy/MM/dd HH:mm:ss', 'en-US');
     const totalPrice = this.formatCurrency(this.calculateTotalSale(sale.saleDetail));
-    const totalPriceNumber = this.calculateTotalSale(sale.saleDetail);
     const products = sale.saleDetail.map((product: ProductModel) => {
+      const subtotal = product.quantity * product.price_sale;
       return [
         product.id_product,
         product.name,
         product.presentation.name_presentation,
         product.quantity,
         this.formatCurrency(product.price_sale),
+        this.formatCurrency(subtotal),
       ];
     });
 
     const table = {
       table: {
         headerRows: 1,
-        widths: ['auto', '*', 'auto', 'auto', 'auto'],
+        widths: ['auto', '*', 'auto', 'auto', 'auto', 'auto'],
         body: [
-          ['Id', 'Articulo', 'Presentacion', 'Cantidad', 'Valor'],
+          ['Id', 'Articulo', 'Presentacion', 'Cantidad', 'Valor', 'Subtotal'],
           ...products,
         ],
       },

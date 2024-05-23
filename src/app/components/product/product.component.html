@@ -53,7 +53,9 @@
             <button
               type="button"
               class="btn btn-danger btn-sm"
-              (click)="delete(item.id_product)"
+              (click)="deleteGet(item.id_product)"
+              data-bs-toggle="modal"
+              data-bs-target="#modalConfirm"
               title="Eliminar Producto"
             >
               <i class="fa fa-trash"></i>
@@ -68,6 +70,7 @@
   class="modal fade custom-modal modal-lg"
   id="exampleModal"
   tabindex="-1"
+  data-bs-backdrop="static"
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
   #actu
@@ -248,6 +251,29 @@
           aria-label="Close"
           class="visually-hidden"
         ></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade"
+id="modalConfirm"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title">Estas seguro?</h4>
+      </div>
+      <div class="modal-body">
+        <p>Esta accion no es reversible</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" data-bs-dismiss="modal" class="btn btn-danger" (click)="delete()">Eliminar</button>
       </div>
     </div>
   </div>

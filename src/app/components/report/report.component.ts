@@ -144,7 +144,6 @@ export class ReportComponent implements OnInit {
   calculateTotalSale(productsFact: ProductModel[]): number {
     let total: number = 0;
     for (let i = 0; i < productsFact.length; i++) {
-      console.log(productsFact[i].quantity, productsFact[i].price_sale);
       total += productsFact[i].quantity * productsFact[i].price_sale;
     }
     return total;

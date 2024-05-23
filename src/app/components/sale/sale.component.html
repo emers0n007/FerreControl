@@ -58,7 +58,7 @@
             <td>{{ item.name }}</td>
             <td>{{ item.quantity }}</td>
             <td>{{ item.mark.name_mark }}</td>
-            <td>{{ item.price_sale }}</td>
+            <td>{{ item.price_sale | currency}}</td>
 
             <td>
               <button
@@ -115,6 +115,7 @@
   class="modal fade"
   id="exampleModal"
   tabindex="-1"
+  data-bs-backdrop="static"
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
 >
@@ -142,6 +143,9 @@
             />
           </div>
         </form>
+        <div *ngIf="selectedItem && stockToAdd > selectedItem.quantity" class="text-danger">
+          <span>No existe suficientes unidades para vender</span>
+        </div>
       </div>
       <div class="modal-footer">
         <button
@@ -158,7 +162,7 @@
   </div>
 </div>
 
-<!-- Modal -->
+
 <div class="modal modal-fade" id="clientInfoModal" tabindex="-1" aria-labelledby="clientInfoModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -186,7 +190,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="viewPdfClicked()">Ver PDF</button>
+        <button *ngIf="money >= total" type="button" class="btn btn-success" (click)="viewPdfClicked()">Ver PDF</button>
         <button type="button" class="btn btn-secondary" (click)="closeModal()" data-bs-dismiss="modal">Continuar</button>
       </div>
     </div>

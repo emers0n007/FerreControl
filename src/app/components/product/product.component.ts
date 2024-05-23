@@ -178,18 +178,28 @@ export class ProductComponent implements OnInit {
       });
     }
   }
+  id: any;
 
-  delete(id: any) {
-    this.producService.deleteProduct(id).subscribe((resp) => {
+  deleteGet(id: any){
+    this.id = id;
+  }
+
+  delete() {
+    this.producService.deleteProduct(this.id).subscribe((resp) => {
       if (resp) {
         this.listProducts();
+        this.showAlert(resp.message, resp.success);
+        if(resp.success){
+          this.id = 0;
+        }
       }
     });
   }
+
+
   selectItem(item: any) {
     this.isUpdate = true;
     this.disableId();
-    this.console.log(item);
     this.formProduct.controls['name'].setValue(item.name);
     this.formProduct.controls['id_product'].setValue(item.id_product);
     this.formProduct.controls['stock'].setValue(item.stock);

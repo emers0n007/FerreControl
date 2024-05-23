@@ -6,6 +6,7 @@ import { SaleService } from 'src/app/service/sale.service';
 import { PdfService } from 'src/app/service/pdf.service';
 import { AlertService } from 'src/app/service/alert.service';
 import { ProductModel } from 'src/app/model/ProductModel';
+import { ProductService } from 'src/app/service/product.service';
 
 @Component({
   selector: 'app-report',
@@ -13,6 +14,12 @@ import { ProductModel } from 'src/app/model/ProductModel';
   styleUrls: ['./report.component.css'],
 })
 export class ReportComponent implements OnInit {
+
+  reports = [
+    { value: 'totalInventory', label: 'Total Inventario' },
+    { value: 'totalSales', label: 'Total Ventas' },
+    { value: 'totalPurchases', label: 'Total Compras' }
+  ];
 
   buys: BuyModel[] = [];
   sales: SaleModel[] = [];
@@ -27,21 +34,74 @@ export class ReportComponent implements OnInit {
   document: number = 0;
   money: number = 0;
   total: number = 0;
+  reportCon: boolean = false;
+
+  listProduct: ProductModel[] = [];
 
   constructor(
     private _buyService: BuyService,
     private _saleService: SaleService,
     private _pdfService: PdfService,
-    private _alertService: AlertService
+    private _alertService: AlertService,
+    private _productService: ProductService
   ) {}
 
   ngOnInit(): void {
     this.getBuys();
     this.getSales();
+    this.listProducts();
   }
 
   setDetailsClient(){
 
+  }
+
+  listProducts() {
+    this._productService.getProducts().subscribe((resp) => {
+      if (resp) {
+        this.listProduct = resp;
+        console.log(this.listProduct)
+      }
+    });
+  }
+
+  selectReport(event: Event) {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    this.resetTwoReports();
+    this.reportName = "Contabilidad";
+
+    switch (selectedValue) {
+      case 'totalInventory':
+        this.generateTotalInventoryReport();
+        break;
+      case 'totalSales':
+        this.generateTotalSalesReport();
+        break;
+      case 'totalPurchases':
+        this.generateTotalPurchasesReport();
+        break;
+      default:
+        // Handle case when no valid option is selected
+        break;
+    }
+  }
+
+  resetTwoReports(){
+    this.reportCon = true;
+    this.buySelect = null;
+    this.saleSelect = null;
+  }
+
+  generateTotalInventoryReport() {
+    this.reportId = "Inventario";
+  }
+
+  generateTotalSalesReport() {
+    this.reportId = "Venta";
+  }
+
+  generateTotalPurchasesReport() {
+    this.reportId = "Compra";
   }
 
   showPdfBuy() {
@@ -118,6 +178,7 @@ export class ReportComponent implements OnInit {
       this.reportName = 'Entrada';
       this.reportId = this.buySelect.id_buy + '';
       this.saleSelect = null;
+      this.reportCon = false;
     }
   }
 
@@ -138,6 +199,7 @@ export class ReportComponent implements OnInit {
       this.reportName = 'Salida';
       this.reportId = this.saleSelect.id_sale + '';
       this.buySelect = null;
+      this.reportCon = false;
     }
   }
 

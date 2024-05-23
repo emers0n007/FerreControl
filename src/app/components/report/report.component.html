@@ -21,12 +21,13 @@
       </div>
       <div class="mb-4">
         <h4>Contabilidad</h4>
-        <select class="form-select" (change)="selectBuy($event)">
-          <option value="">Selecciona una compra...</option>
-          <option *ngFor="let buy of buys" [value]="buy.id_buy">
-            {{ buy.id_buy }}
+          <select class="form-select" (change)="selectReport($event)">
+          <option value="">Selecciona un reporte...</option>
+          <option *ngFor="let report of reports" [value]="report.value">
+            {{ report.label }}
           </option>
         </select>
+
       </div>
     </div>
     <div class="col mx-auto">
@@ -107,7 +108,13 @@
           </table>
         </div>
       </div>
-      <div *ngIf="!buySelect && !saleSelect" class="centered-message mt-5">
+      <div *ngIf="reportCon">
+        <div class="card-header">
+          <h4>Reporte de Contabilidad</h4>
+        </div>
+
+      </div>
+      <div *ngIf="!buySelect && !saleSelect && !reportCon" class="centered-message mt-5">
         Selecciona algun reporte para visualizarlo
       </div>
     </div>

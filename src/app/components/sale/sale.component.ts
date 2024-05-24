@@ -75,14 +75,24 @@ export class SaleComponent {
       return null;
     }
 
+
     const isValid = !isNaN(value) && parseFloat(value) >= 0;
     return isValid ? null : { notPositiveNumber: true };
   }
 
-  valid: boolean = true;
+  valid: boolean = false;
 
   validNumberNegative(){
-
+    if(this.stockToAdd !== null){
+      if (this.stockToAdd < 0) {
+        this.valid = false;
+      }
+    if (this.stockToAdd <= this.selectedItem.quantity) {
+        this.valid = true;
+    }
+    }else {
+      this.valid = false;
+    }
   }
 
 
@@ -140,7 +150,8 @@ export class SaleComponent {
   }
 
   addProduct() {
-    if (this.selectedItem) {
+    this.validNumberNegative();
+    if (this.selectedItem && this.valid) {
       const index = this.list.findIndex(
         (item) => item.id_product === this.selectedItem?.id_product
       );

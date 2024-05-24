@@ -160,7 +160,7 @@
           type="button"
           data-bs-dismiss="modal"
           class="btn btn-primary"
-          *ngIf="selectedItem && stockToAdd > selectedItem.quantity || input.controls['stockToAdd'].errors?.['notPositiveNumber']"
+          *ngIf="valid || !input.controls['stockToAdd'].errors?.['notPositiveNumber']"
           (click)="addProduct()"
         >
           Aceptar

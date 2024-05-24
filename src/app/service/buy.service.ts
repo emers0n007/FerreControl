@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {map, Observable} from "rxjs";
 import { BuyModel } from '../model/BuyModel';
 
@@ -10,11 +10,13 @@ export class BuyService {
 
   constructor(private httpClient:HttpClient) { }
 
-  getBuys(): Observable<BuyModel[]>{
-    return this.httpClient.get<BuyModel[]>('http://localhost:9000/FerreControl' + '/list/buy').pipe(map(res => res));
+  getBuys(request2:string): Observable<BuyModel[]>{
+    const headers = new HttpHeaders().set('name_user', request2);
+    return this.httpClient.get<BuyModel[]>('http://localhost:9000/FerreControl' + '/list/buy', {headers}).pipe(map(res => res));
   }
-  saveBuy(request: any): Observable<any>{
-    return this.httpClient.post<any>('http://localhost:9000/FerreControl' + '/save/buy', request).pipe(map(resp => resp));
+  saveBuy(request: any,request2:string): Observable<any>{
+    const headers = new HttpHeaders().set('name_user', request2);
+    return this.httpClient.post<any>('http://localhost:9000/FerreControl' + '/save/buy', request, {headers}).pipe(map(resp => resp));
   }
 
 

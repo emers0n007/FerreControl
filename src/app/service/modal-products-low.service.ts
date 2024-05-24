@@ -9,12 +9,20 @@ import { ProductModel } from '../model/ProductModel';
 export class ModalProductsLowService {
 
   lowStockProducts: ProductModel[] = [];
+  private readonly AUTH_USER = 'No debe estar aqui';
 
   constructor(private alertService: AlertService, private productService: ProductService) { }
 
 
   showAlert(message: string, okay: boolean) {
     this.alertService.showAlert(message, okay);
+  }
+
+  createUserAux(){
+    const user={
+      name_user:localStorage.getItem(this.AUTH_USER)
+    }
+    return user;
   }
 
   openModal() {
@@ -31,7 +39,7 @@ export class ModalProductsLowService {
   }
 
   getProductLowStock() {
-    this.productService.getProductoLowStock().subscribe(
+    this.productService.getProductoLowStock(this.createUserAux().name_user).subscribe(
       (products: ProductModel[]) => {
         this.lowStockProducts = products;
         if (this.lowStockProducts && this.lowStockProducts.length > 0) {

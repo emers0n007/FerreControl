@@ -38,6 +38,8 @@ export class ReportComponent implements OnInit {
 
   listProduct: ProductModel[] = [];
 
+  private readonly AUTH_USER = 'No debe estar aqui';
+
   constructor(
     private _buyService: BuyService,
     private _saleService: SaleService,
@@ -56,8 +58,15 @@ export class ReportComponent implements OnInit {
 
   }
 
+  createUserAux(){
+    const user={
+      name_user:localStorage.getItem(this.AUTH_USER)
+    }
+    return user;
+  }
+
   listProducts() {
-    this._productService.getProducts().subscribe((resp) => {
+    this._productService.getProducts(this.createUserAux().name_user).subscribe((resp) => {
       if (resp) {
         this.listProduct = resp;
         console.log(this.listProduct)
@@ -163,7 +172,7 @@ export class ReportComponent implements OnInit {
   }
 
   getBuys(): void {
-    this._buyService.getBuys().subscribe((buys) => {
+    this._buyService.getBuys(this.createUserAux().name_user).subscribe((buys) => {
       this.buys = buys;
     });
   }
@@ -183,7 +192,7 @@ export class ReportComponent implements OnInit {
   }
 
   getSales(): void {
-    this._saleService.getSales().subscribe((sales) => {
+    this._saleService.getSales(this.createUserAux().name_user).subscribe((sales) => {
       this.sales = sales;
     });
   }

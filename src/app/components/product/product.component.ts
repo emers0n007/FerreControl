@@ -44,6 +44,8 @@ export class ProductComponent implements OnInit {
     { id: '3', label: 'Metro', value: 'Metro' },
   ];
 
+  private readonly AUTH_USER = 'No debe estar aqui';
+
   constructor(
     private producService: ProductService,
     private alertService: AlertService,
@@ -95,8 +97,16 @@ export class ProductComponent implements OnInit {
     this.formProduct.get('id_product')?.enable();
   }
 
+  createUserAux(){
+    const user={
+      name_user:localStorage.getItem(this.AUTH_USER)
+    }
+    console.log(user);
+    return user;
+  }
+
   listProducts() {
-    this.producService.getProducts().subscribe((resp) => {
+    this.producService.getProducts(this.createUserAux().name_user).subscribe((resp) => {
       if (resp) {
         this.list = resp;
         this.listComplet = resp;
@@ -113,7 +123,7 @@ export class ProductComponent implements OnInit {
   }
 
   listSupplier() {
-    this.supplierService.getSupplier().subscribe((resp) => {
+    this.supplierService.getSupplier(this.createUserAux().name_user).subscribe((resp) => {
       if (resp) {
         this.listSuppliers = resp;
       }
@@ -166,7 +176,7 @@ export class ProductComponent implements OnInit {
         },
         status: 1,
       };
-      this.producService.updateProduct(productData).subscribe((resp) => {
+      this.producService.updateProduct(productData, this.createUserAux()).subscribe((resp) => {
         if (resp) {
           this.showAlert(resp.message, resp.success);
           this.listProducts();
@@ -185,7 +195,7 @@ export class ProductComponent implements OnInit {
   }
 
   delete() {
-    this.producService.deleteProduct(this.id).subscribe((resp) => {
+    this.producService.deleteProduct(this.id, this.createUserAux().name_user).subscribe((resp) => {
       if (resp) {
         this.listProducts();
         this.showAlert(resp.message, resp.success);

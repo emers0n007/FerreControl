@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {map, Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {SaleModel} from "../model/SaleModel";
 
 @Injectable({
@@ -10,14 +10,17 @@ export class SaleService {
 
   constructor(private httpClient:HttpClient) { }
 
-  getSales(): Observable<SaleModel[]>{
-    return this.httpClient.get<SaleModel[]>('http://localhost:9000/FerreControl' + '/list/sale').pipe(map(res => res));
+  getSales(request2:string): Observable<SaleModel[]>{
+    const headers = new HttpHeaders().set('name_user', request2);
+    return this.httpClient.get<SaleModel[]>('http://localhost:9000/FerreControl' + '/list/sale',{headers}).pipe(map(res => res));
   }
-  saveSupplier(request: any): Observable<any>{
-    return this.httpClient.post<any>('http://localhost:9000/FerreControl' + '/save/sale', request).pipe(map(resp => resp));
+  saveSale(request: any, request2:string): Observable<any>{
+    const headers = new HttpHeaders().set('name_user', request2);
+    return this.httpClient.post<any>('http://localhost:9000/FerreControl' + '/save/sale', request,{headers}).pipe(map(resp => resp));
   }
-  getSale(id: string): Observable<SaleModel> {
-    return this.httpClient.get<any>(`http://localhost:9000/FerreControl/search/sale/${id}`).pipe(
+  getSale(id: string, request2:string): Observable<SaleModel> {
+    const headers = new HttpHeaders().set('name_user', request2);
+    return this.httpClient.get<any>(`http://localhost:9000/FerreControl/search/sale/${id}`,{headers}).pipe(
       map(resp => {
         const sale = new SaleModel();
         sale.id_sale = resp.data.id_sale;

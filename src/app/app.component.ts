@@ -18,6 +18,7 @@ export class AppComponent implements OnInit{
   shakeAlert: boolean = false;
   navbarVisible: boolean = true;
   lowStockProducts: ProductModel[] = [];
+  private readonly AUTH_USER = 'No debe estar aqui';
 
   constructor(private authService: AuthenticationService, private alertService: AlertService, private productService: ProductService, private renderer: Renderer2, private modalService: ModalProductsLowService) {
 
@@ -66,8 +67,15 @@ export class AppComponent implements OnInit{
    this.modalService.closeModal();
   }
 
+  createUserAux(){
+    const user={
+      name_user:localStorage.getItem(this.AUTH_USER)
+    }
+    return user;
+  }
+
   getProductLowStock() {
-    this.productService.getProductoLowStock().subscribe(
+    this.productService.getProductoLowStock(this.createUserAux().name_user).subscribe(
       (products: ProductModel[]) => {
         this.lowStockProducts = products;
         /*console.log('Productos con bajo stock:', this.lowStockProducts);

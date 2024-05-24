@@ -120,7 +120,7 @@ export class BuyComponent implements OnInit, OnDestroy {
   }
 
   listSupplier() {
-    this.supplierService.getSupplier().subscribe((resp) => {
+    this.supplierService.getSupplier(this.createUserAux().name_user).subscribe((resp) => {
       if (resp) {
         this.listSuppliers = resp;
       }
@@ -139,8 +139,15 @@ export class BuyComponent implements OnInit, OnDestroy {
   }
 
 
+  createUserAux(){
+    const user={
+      name_user:localStorage.getItem(this.AUTH_USER)
+    }
+    return user;
+  }
+
   listProducts() {
-    this.producService.getProducts().subscribe((resp) => {
+    this.producService.getProducts(this.createUserAux().name_user).subscribe((resp) => {
       if (resp) {
         this.list = resp;
         this.listComplet = resp;
@@ -234,10 +241,11 @@ export class BuyComponent implements OnInit, OnDestroy {
         name_user: localStorage.getItem(this.AUTH_USER),
       };
       console.log(buyData);
-      this.buyService.saveBuy(buyData).subscribe((resp) => {
+      console.log(this.createUserAux());
+      this.buyService.saveBuy(buyData, this.createUserAux().name_user).subscribe((resp) => {
         if (resp) {
           this.console.log(resp);
-          this.showAlert(resp.message, resp.seccess);
+          this.showAlert(resp.message, resp.success);
           this.listProducts();
           this.productsFact = [];
           this.uuid = '';
@@ -328,7 +336,7 @@ export class BuyComponent implements OnInit, OnDestroy {
       }
 
 
-        this.producService.saveProduct(productData).subscribe((resp) => {
+        this.producService.saveProduct(productData, this.createUserAux().name_user).subscribe((resp) => {
           if (resp) {
             this.showAlert(resp.message, resp.success);
             if(resp.success){
@@ -453,7 +461,7 @@ export class BuyComponent implements OnInit, OnDestroy {
     this.isFormSubmittedSupplier = !isFormValid;
     if (this.formSupplier.valid) {
       this.formSupplier.controls['status'].setValue('1');
-      this.supplierService.saveSupplier(this.formSupplier.value)
+      this.supplierService.saveSupplier(this.formSupplier.value, this.createUserAux().name_user)
         .subscribe((resp) => {
 
           if (resp) {

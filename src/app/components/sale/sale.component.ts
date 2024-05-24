@@ -75,8 +75,15 @@ export class SaleComponent {
     this.uuid = `${year}${month}${day}${hours}${minutes}${seconds}${milliseconds}`;
   }
 
+  createUserAux(){
+    const user={
+      name_user:localStorage.getItem(this.AUTH_USER)
+    }
+    return user;
+  }
+
   listProducts() {
-    this.producService.getProducts().subscribe((resp) => {
+    this.producService.getProducts(this.createUserAux().name_user).subscribe((resp) => {
       if (resp) {
         this.list = [...resp];
         this.listComplet = [...resp];
@@ -147,7 +154,7 @@ export class SaleComponent {
         saleDetail: this.productsFact,
         name_user: localStorage.getItem(this.AUTH_USER),
       };
-      this.saleService.saveSupplier(saleData).subscribe((resp) => {
+      this.saleService.saveSale(saleData, this.createUserAux().name_user).subscribe((resp) => {
         if (resp) {
           this.showAlert(resp.message, resp.success);
           if (resp.success) {
@@ -190,7 +197,7 @@ export class SaleComponent {
   sale: SaleModel;
 
   openModal() {
-    this.saleService.getSale(this.uuidCopy).subscribe(
+    this.saleService.getSale(this.uuidCopy, this.createUserAux().name_user).subscribe(
       (sale: SaleModel) => {
         this.sale = sale;
         this.total = this.sale.total_price;

@@ -18,6 +18,7 @@ export class SupplierComponent implements OnInit {
   formSupplier: FormGroup = new FormGroup({});
   isUpdate: boolean = false;
   filteredSupplier: SupplierModel[] = [];
+  private readonly AUTH_USER = 'No debe estar aqui';
   @ViewChild('actu') modal: ElementRef | undefined;
 
   constructor(
@@ -70,8 +71,15 @@ export class SupplierComponent implements OnInit {
     this.formSupplier.get('id_supplier')?.enable();
   }
 
+  createUserAux(){
+    const user={
+      name_user:localStorage.getItem(this.AUTH_USER)
+    }
+    return user;
+  }
+
   listSupplier() {
-    this.supplierService.getSupplier().subscribe((resp) => {
+    this.supplierService.getSupplier(this.createUserAux().name_user).subscribe((resp) => {
       if (resp) {
         this.list = resp;
         this.listComplet = resp;
@@ -96,7 +104,7 @@ export class SupplierComponent implements OnInit {
     this.isFormSubmitted = !isFormValid;
     if (this.formSupplier.valid) {
       this.formSupplier.controls['status'].setValue('1');
-      this.supplierService.saveSupplier(this.formSupplier.value)
+      this.supplierService.saveSupplier(this.formSupplier.value, this.createUserAux().name_user)
         .subscribe((resp) => {
           if (resp) {
             this.showAlert(resp.message, resp.success);
@@ -124,7 +132,7 @@ export class SupplierComponent implements OnInit {
         email: this.formSupplier.controls['email'].value,
         status: 1,
       };
-      this.supplierService.updateSupplier(supplierData).subscribe((resp) => {
+      this.supplierService.updateSupplier(supplierData, this.createUserAux().name_user).subscribe((resp) => {
         if (resp) {
           this.showAlert(resp.message, resp.success);
 
@@ -147,7 +155,7 @@ export class SupplierComponent implements OnInit {
   }
 
   delete() {
-    this.supplierService.deleteSupplier(this.id).subscribe((resp) => {
+    this.supplierService.deleteSupplier(this.id, this.createUserAux().name_user).subscribe((resp) => {
       if (resp) {
         this.listSupplier();
         this.showAlert(resp.message, resp.success);

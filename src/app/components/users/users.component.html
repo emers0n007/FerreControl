@@ -63,8 +63,8 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 *ngIf="!isUpdate" class="modal-title fs-5">Nuevo Proveedor</h1>
-        <h1 *ngIf="isUpdate" class="modal-title fs-5">Actualizar Proveedor</h1>
+        <h1 *ngIf="!isUpdate" class="modal-title fs-5">Nuevo Usuario</h1>
+        <h1 *ngIf="isUpdate" class="modal-title fs-5">Actualizar Usuario</h1>
         <button
           type="button"
           class="btn-close"
@@ -78,7 +78,7 @@
           <div class="mb-3 row">
             <label class="col-sm-2 col-form-label">Nombre De Usuario</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" formControlName="name" />
+              <input type="text" class="form-control" formControlName="name_user" />
               <div
                 class="text-danger"
                 *ngIf="

@@ -34,7 +34,7 @@ export class ProductService {
 
   }
 
-  updateProduct(request: any, request2:any): Observable<any>{
+  updateProduct(request: any, request2:string): Observable<any>{
     const headers = new HttpHeaders().set('name_user', request2);
     return this.httpClient.post<any>('http://localhost:9000/FerreControl' + '/update/product', request,{headers}).pipe(map(resp => resp));
   }

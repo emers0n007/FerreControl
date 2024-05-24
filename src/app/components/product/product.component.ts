@@ -176,7 +176,7 @@ export class ProductComponent implements OnInit {
         },
         status: 1,
       };
-      this.producService.updateProduct(productData, this.createUserAux()).subscribe((resp) => {
+      this.producService.updateProduct(productData, this.createUserAux().name_user).subscribe((resp) => {
         if (resp) {
           this.showAlert(resp.message, resp.success);
           this.listProducts();

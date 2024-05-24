@@ -159,11 +159,11 @@ export class SaleComponent {
           this.showAlert(resp.message, resp.success);
           if (resp.success) {
             this.uuidCopy = this.uuid;
+            this.generateUUID();
             this.openModal();
           }
           this.listProducts();
           this.productsFact = [];
-          this.generateUUID();
         }
       });
     } else {

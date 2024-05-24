@@ -81,14 +81,14 @@ export class BuyComponent implements OnInit, OnDestroy {
     this.getListMarks();
     this.formProduct = new FormGroup({
       name: new FormControl('', Validators.required),
-      id_product: new FormControl('', Validators.required),
-      stock: new FormControl('', Validators.required),
+      id_product: new FormControl('', [Validators.required, this.positiveNumberValidator]),
+      stock: new FormControl('', [Validators.required, this.positiveNumberValidator]),
       price_buy: new FormControl('', [Validators.required, this.positiveNumberValidator]),
       price_sale: new FormControl('', [Validators.required, this.positiveNumberValidator]),
       id_supplier: new FormControl('', Validators.required),
       status: new FormControl('1'),
       presentation: new FormControl('', Validators.required),
-      description_presentation: new FormControl('', Validators.required),
+      description_presentation: new FormControl('', [Validators.required, this.positiveNumberValidator]),
       id_mark: new FormControl(''),
       OtherMark: new FormControl(''),
       units: new FormControl('')

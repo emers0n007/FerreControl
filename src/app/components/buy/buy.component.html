@@ -279,7 +279,7 @@
               </div>
               <div class="col">
                 <label class="col-form-label text-center">ID</label>
-                <div class="input-group mb-3">
+                <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">770</span>
                   </div>
@@ -301,6 +301,10 @@
                   <span
                     *ngIf="formProduct.controls['id_product'].errors?.['required']"
                     >Este Campo es Obligatorio</span
+                  >
+                  <span
+                    *ngIf="formProduct.controls['id_product'].errors?.['notPositiveNumber']"
+                    >Solo numeros positivos</span
                   >
                 </div>
               </div>
@@ -451,6 +455,10 @@
                       *ngIf="formProduct.controls['description_presentation'].errors?.['required']"
                       >Este Campo es Obligatorio</span
                     >
+                    <span
+                    *ngIf="formProduct.controls['description_presentation'].errors?.['notPositiveNumber']"
+                    >Solo numeros positivos</span
+                  >
                   </div>
                 </div>
               </div>
@@ -478,6 +486,10 @@
                   *ngIf="formProduct.controls['stock'].errors?.['required']"
                   >Este Campo es Obligatorio</span
                 >
+                <span
+                *ngIf="formProduct.controls['stock'].errors?.['notPositiveNumber']"
+                >Solo numeros positivos</span
+              >
               </div>
               </div>
             </div>

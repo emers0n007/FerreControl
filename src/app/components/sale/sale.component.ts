@@ -163,7 +163,7 @@ export class SaleComponent {
           }
           this.listProducts();
           this.productsFact = [];
-          this.uuid = '';
+          this.generateUUID();
         }
       });
     } else {

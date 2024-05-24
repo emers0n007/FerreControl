@@ -30,8 +30,8 @@ export class UsersComponent {
     this.formUser = new FormGroup({
       name_user: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
-      name: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.minLength(6)]),
-      rol: new FormControl('', [Validators.required, Validators.email]),
+      name: new FormControl('', [Validators.required]),
+      role: new FormControl('', [Validators.required]),
     });
   }
 
@@ -75,7 +75,7 @@ export class UsersComponent {
     const isFormValid = this.formUser.valid;
     this.isFormSubmitted = !isFormValid;
     if (this.formUser.valid) {
-
+      console.log("Entraa")
       this.userService.saveUser(this.formUser.value)
         .subscribe((resp) => {
           if (resp) {

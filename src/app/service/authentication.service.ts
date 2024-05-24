@@ -22,12 +22,16 @@ export class AuthenticationService {
     const body = { name_user: username, password: password };
     return this.httpClient.post<any>('http://localhost:9000/FerreControl/login', body).pipe(
       tap((resp: any) => {
-        console.log(resp.name_user)
         localStorage.setItem(this.AUTH_USER, resp.name_user);
         localStorage.setItem(this.AUTH_ROLE, resp.role);
         localStorage.setItem(this.AUTH_USERNAME, resp.name);
         })
     );
+  }
+
+  exit(): Observable<any> {
+    const body = { name_user: localStorage.getItem(this.AUTH_USER), password: '0' };
+    return this.httpClient.post<any>('http://localhost:9000/FerreControl/exit', body);
   }
 
 
@@ -67,11 +71,19 @@ export class AuthenticationService {
     this.usuarioAutenticado = true;
   }
 
-  cerrarSesion() {
-    localStorage.setItem(this.AUTH_KEY, 'false');
-    localStorage.setItem(this.AUTH_USER,"No debe estar aqui");
-    localStorage.setItem(this.AUTH_ROLE,"Rol Invalido");
-    this.usuarioAutenticado = false;
+  cerrarSesion(): void {
+    this.exit().subscribe({
+      next: () => {
+        localStorage.setItem(this.AUTH_KEY, 'false');
+        localStorage.setItem(this.AUTH_USER, "No debe estar aqui");
+        localStorage.setItem(this.AUTH_ROLE, "Rol Invalido");
+        this.usuarioAutenticado = false;
+      },
+      error: (err) => {
+        console.error('Error during exit:', err);
+        // Manejar el error aquí si es necesario
+      }
+    });
   }
 
 

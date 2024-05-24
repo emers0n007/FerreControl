@@ -97,11 +97,10 @@ export class ProductComponent implements OnInit {
     this.formProduct.get('id_product')?.enable();
   }
 
-  createUserAux(){
-    const user={
-      name_user:localStorage.getItem(this.AUTH_USER)
+  createUserAux() {
+    const user = {
+      name_user: localStorage.getItem(this.AUTH_USER)
     }
-    console.log(user);
     return user;
   }
 

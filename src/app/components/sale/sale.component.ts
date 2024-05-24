@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import {
   Observable,
   Subscription,
@@ -20,12 +21,12 @@ import { SaleService } from 'src/app/service/sale.service';
 })
 export class SaleComponent {
   currentDate: Date = new Date();
-  selectedItem: ProductModel | undefined;
+  selectedItem: ProductModel;
   list: ProductModel[] = [];
   listComplet: ProductModel[] = [];
   filteredPro: ProductModel[] = [];
   productsFact: ProductModel[] = [];
-  private readonly AUTH_USERNAME = 'Desconocido';
+  private readonly AUTH_USERNAME = 'Desconocdido';
   private readonly AUTH_USER = 'No debe estar aqui';
   username: string | null = '';
   private subscription: Subscription;
@@ -38,7 +39,8 @@ export class SaleComponent {
   document: number = 0;
   money: number = 0;
   total: number = 0;
-
+  input: FormGroup = new FormGroup({});
+  isFormSubmitted: boolean = false;
   constructor(
     private producService: ProductService,
     private alertService: AlertService,
@@ -54,6 +56,11 @@ export class SaleComponent {
     this.listProducts();
     this.currentDate = new Date();
     this.generateUUID();
+
+    this.input = new FormGroup({
+      stockToAdd: new FormControl('', [Validators.required, this.positiveNumberValidator]),
+
+    });
   }
 
   ngOnDestroy(): void {
@@ -61,6 +68,23 @@ export class SaleComponent {
       this.subscription.unsubscribe();
     }
   }
+
+  positiveNumberValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (value === null || value === undefined || value === '') {
+      return null;
+    }
+
+    const isValid = !isNaN(value) && parseFloat(value) >= 0;
+    return isValid ? null : { notPositiveNumber: true };
+  }
+
+  valid: boolean = true;
+
+  validNumberNegative(){
+
+  }
+
 
   generateUUID(){
     const now = new Date();
@@ -74,6 +98,7 @@ export class SaleComponent {
 
     this.uuid = `${year}${month}${day}${hours}${minutes}${seconds}${milliseconds}`;
   }
+
 
   createUserAux(){
     const user={

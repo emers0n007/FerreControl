@@ -131,19 +131,27 @@
         ></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form [formGroup]="input">
           <div class="mb-3">
             <input
               type="number"
               class="form-control"
               id="stockInput"
               name="stockToAdd"
+              formControlName="stockToAdd"
               [ngModel]="stockToAdd"
               (ngModelChange)="stockToAdd = $event"
+
             />
+            <div class="text-danger" *ngIf="input.controls['stockToAdd'].invalid && (input.controls['stockToAdd'].touched || isFormSubmitted || input.controls['stockToAdd'].dirty)">
+              <span *ngIf="input.controls['stockToAdd'].errors?.['required']">
+                Este Campo es Obligatorio
+              </span>
+
+            </div>
           </div>
         </form>
-        <div *ngIf="selectedItem && stockToAdd > selectedItem.quantity" class="text-danger">
+        <div *ngIf="selectedItem && stockToAdd > selectedItem.quantity || input.controls['stockToAdd'].errors?.['notPositiveNumber']" class="text-danger">
           <span>No existe suficientes unidades para vender</span>
         </div>
       </div>
@@ -152,7 +160,7 @@
           type="button"
           data-bs-dismiss="modal"
           class="btn btn-primary"
-          *ngIf="selectedItem && stockToAdd <= selectedItem.quantity"
+          *ngIf="selectedItem && stockToAdd > selectedItem.quantity || input.controls['stockToAdd'].errors?.['notPositiveNumber']"
           (click)="addProduct()"
         >
           Aceptar

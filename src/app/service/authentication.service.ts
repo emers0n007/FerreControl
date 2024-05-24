@@ -68,10 +68,18 @@ export class AuthenticationService {
   }
 
   cerrarSesion() {
-    localStorage.setItem(this.AUTH_KEY, 'false');
-    localStorage.setItem(this.AUTH_USER,"No debe estar aqui");
-    localStorage.setItem(this.AUTH_ROLE,"Rol Invalido");
-    this.usuarioAutenticado = false;
+    const body = { name_user: localStorage.getItem(this.AUTH_USER), password: 0 };
+    return this.httpClient.post<any>('http://localhost:9000/FerreControl/login', body).pipe(
+      tap((resp: any) => {
+        localStorage.setItem(this.AUTH_KEY, 'false');
+        localStorage.setItem(this.AUTH_USER,"No debe estar aqui");
+        localStorage.setItem(this.AUTH_ROLE,"Rol Invalido");
+        this.usuarioAutenticado = false;
+      })
+    );
+
+
+
   }
 
 

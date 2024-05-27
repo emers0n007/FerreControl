@@ -28,7 +28,7 @@
       >
         <div class="container text-center">
           <div class="row">
-            <div class="col-1">
+            <div class="col-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="40"
@@ -64,7 +64,7 @@
       >
         <div class="container text-center">
           <div class="row">
-            <div class="col-1">
+            <div class="col-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="40"
@@ -99,7 +99,7 @@
       >
         <div class="container text-center">
           <div class="row">
-            <div class="col-1">
+            <div class="col-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="36"
@@ -140,7 +140,7 @@
       >
         <div class="container text-center">
           <div class="row">
-            <div class="col-1">
+            <div class="col-2">
               <svg width="36" height="36" viewBox="0 0 32 32">
                 <defs>
                   <style>
@@ -176,7 +176,7 @@
       >
         <div class="container text-center">
           <div class="row">
-            <div class="col-1">
+            <div class="col-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="40"
@@ -210,40 +210,40 @@
       </button>
 
       <button
-        *ngIf="role === 'Admin'"
-        type="button"
-        class="nav-link btn btn-primary mb-2"
-        (click)="manageUser(); activarBoton('Gestionar Usuarios')"
-        [ngClass]="{ active: botonActivo === 'Gestionar Usuarios' }"
-      >
-        <div class="container text-center">
-          <div class="row">
-            <div class="col-1">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="40"
-                height="40"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="#ffffff"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                <path
-                  d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5"
-                />
-              </svg>
-            </div>
-            <div class="col">
-              <span>Gestionar Usuarios</span>
-            </div>
-          </div>
-        </div>
-      </button>
+  *ngIf="role === 'Admin'"
+  type="button"
+  class="nav-link btn btn-primary mb-2"
+  (click)="manageUser(); activarBoton('Gestionar Usuarios')"
+  [ngClass]="{ active: botonActivo === 'Gestionar Usuarios' }"
+>
+  <div class="container text-center">
+    <div class="row align-items-center"> <!-- Alineamos verticalmente el contenido -->
+      <div class="col-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="40"
+          height="40"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="#ffffff"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+          <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+          <path
+            d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5"
+          />
+        </svg>
+      </div>
+      <div class="col">
+        <span class="text-wrap">Gestionar Usuarios</span>
+      </div>
+    </div>
+  </div>
+</button>
 
       <button
         type="button"
@@ -253,7 +253,7 @@
       >
         <div class="container text-center">
           <div class="row">
-            <div class="col-1">
+            <div class="col-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon icon-tabler icon-tabler-door-exit"
@@ -279,8 +279,6 @@
           </div>
         </div>
       </button>
-
-
     </ul>
   </nav>
 </div>

@@ -21,13 +21,12 @@
       </div>
       <div class="mb-4">
         <h4>Contabilidad</h4>
-          <select class="form-select" (change)="selectReport($event)">
+        <select class="form-select" (change)="selectReport($event)">
           <option value="">Selecciona un reporte...</option>
           <option *ngFor="let report of reports" [value]="report.value">
             {{ report.label }}
           </option>
         </select>
-
       </div>
     </div>
     <div class="col mx-auto">
@@ -85,13 +84,13 @@
           <table class="table table-bordered">
             <thead class="table-warning">
               <tr>
-                <th >ID</th>
-                <th >Nombre Producto</th>
-                <th >Precio venta</th>
-                <th >Proveedor</th>
-                <th >Marca</th>
-                <th >Presentacion</th>
-                <th >Cantidad</th>
+                <th>ID</th>
+                <th>Nombre Producto</th>
+                <th>Precio venta</th>
+                <th>Proveedor</th>
+                <th>Marca</th>
+                <th>Presentacion</th>
+                <th>Cantidad</th>
               </tr>
             </thead>
             <tbody>
@@ -108,13 +107,92 @@
           </table>
         </div>
       </div>
-      <div *ngIf="reportCon">
+      <div *ngIf="reportTotal">
         <div class="card-header">
-          <h4>Reporte de Contabilidad</h4>
+          <h2>Información de Productos</h2>
+          <p>Total de productos: {{ listProduct.length }}</p>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Presentación</th>
+                <th>Stock</th>
+                <th>Precio de Venta</th>
+                <th>Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let product of listProduct">
+                <td>{{ product.id_product }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.presentation.name_presentation }}</td>
+                <td>{{ product.stock }}</td>
+                <td>{{ product.price_sale | currency }}</td>
+                <td>{{ product.stock * product.price_sale | currency }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-
       </div>
-      <div *ngIf="!buySelect && !saleSelect && !reportCon" class="centered-message mt-5">
+      <div *ngIf="reportTotalSale">
+        <div class="card-header">
+          <h2>Información de Ventas</h2>
+          <p>Total de ventas: {{ sales.length }}</p>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID Venta</th>
+                <th>Fecha de Venta</th>
+                <th>Usuario</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let sale of sales">
+                <td>{{ sale.id_sale }}</td>
+                <td>{{ sale.sale_date | date : "yyyy/MM/dd" }}</td>
+                <td>{{ sale.name_user }}</td>
+                <td>{{ sale.total_price | currency }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div *ngIf="reportTotalBuy">
+        <div class="card-header">
+          <h2>Información de Compras</h2>
+          <p>Total de compras: {{ buys.length }}</p>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID Compra</th>
+                <th>Fecha de Compra</th>
+                <th>Usuario</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let buy of buys">
+                <td>{{ buy.id_buy }}</td>
+                <td>{{ buy.purchase_date | date : "yyyy/MM/dd" }}</td>
+                <td>{{ buy.name_user }}</td>
+                <td>{{ buy.total_price | currency }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div
+        *ngIf="
+          !buySelect &&
+          !saleSelect &&
+          !reportTotal &&
+          !reportTotalSale &&
+          !reportTotalBuy
+        "
+        class="centered-message mt-5"
+      >
         Selecciona algun reporte para visualizarlo
       </div>
     </div>

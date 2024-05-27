@@ -348,31 +348,33 @@ export class PdfService {
     });
   }
 
- /* showTotalInventory(productsTotal: ProductModel[]) {
-    const title = `Total del inventario`;
+  showTotalBuy(buys: BuyModel[], download: boolean) {
     const establishment = 'Ferrecasa';
     const nit = 'NIT 91010777-8';
     const currentDate = formatDate(new Date(), 'yyyy/MM/dd HH:mm:ss', 'en-US');
-    const totalPrice = this.formatCurrency(this.calculateTotalSale(sale.saleDetail));
-    const products = sale.saleDetail.map((product: ProductModel) => {
-      const subtotal = product.quantity * product.price_sale;
+
+    let totalSale = 0;
+
+    const tableRows = buys.map((buy: BuyModel) => {
+      const subtotal = buy.total_price;
+      totalSale += subtotal;
       return [
-        product.id_product,
-        product.name,
-        product.presentation.name_presentation,
-        product.quantity,
-        this.formatCurrency(product.price_sale),
-        this.formatCurrency(subtotal),
+        buy.id_buy,
+        formatDate(buy.purchase_date, 'yyyy/MM/dd', 'en-US'),
+        buy.name_user,
+        this.formatCurrency(buy.total_price),
       ];
     });
+
+    const totalPrice = this.formatCurrency(totalSale);
 
     const table = {
       table: {
         headerRows: 1,
-        widths: ['auto', '*', 'auto', 'auto', 'auto', 'auto'],
+        widths: ['auto', 'auto', '*', 'auto'],
         body: [
-          ['Id', 'Articulo', 'Presentacion', 'Cantidad', 'Valor', 'Subtotal'],
-          ...products,
+          ['ID Compra', 'Fecha', 'Usuario', 'Total'],
+          ...tableRows,
         ],
       },
     };
@@ -393,35 +395,186 @@ export class PdfService {
           margin: [0, 0, 0, 10],
         },
         {
-          text: title,
-          fontSize: 14,
-          bold: true,
+          text: `Total Monetario de Compras: ${totalPrice}`,
+          fontSize: 16,
           alignment: 'center',
-          margin: [0, 0, 0, 10],
+          margin: [0, 0, 0, 20],
         },
         {
-          text: `Fecha generacion: ${currentDate}`,
+          text: `Fecha de Generación: ${currentDate}`,
           fontSize: 12,
           alignment: 'center',
           margin: [0, 0, 0, 10],
         },
         table,
-        {
-          text: `Total: ${totalPrice}`,
-          fontSize: 16,
-          alignment: 'right',
-          margin: [0, 20, 0, 10],
-        },
       ],
     };
 
-    pdfMake.createPdf(pdfDefinition).getBlob((blob: any) => {
-      const url = URL.createObjectURL(blob);
-      window.open(url, '_blank');
-      URL.revokeObjectURL(url);
-    });
+    const pdfDocGenerator = pdfMake.createPdf(pdfDefinition);
+
+    if (download) {
+      pdfDocGenerator.download('total-inventario.pdf');
+    } else {
+      pdfDocGenerator.getBlob((blob: any) => {
+        const url = URL.createObjectURL(blob);
+        window.open(url, '_blank');
+        URL.revokeObjectURL(url);
+      });
+    }
   }
-*/
+
+ showTotalInventory(productsTotal: ProductModel[], download: boolean) {
+  const establishment = 'Ferrecasa';
+  const nit = 'NIT 91010777-8';
+  const currentDate = formatDate(new Date(), 'yyyy/MM/dd HH:mm:ss', 'en-US');
+  let totalSale = 0;
+  const products = productsTotal.map((product: ProductModel) => {
+    const subtotal = product.stock * product.price_sale;
+    totalSale += subtotal;
+    return [
+      product.id_product,
+      product.name,
+      product.presentation.name_presentation,
+      product.stock,
+      this.formatCurrency(product.price_sale),
+      this.formatCurrency(subtotal),
+    ];
+  });
+
+  const totalPrice = this.formatCurrency(totalSale);
+
+
+  const table = {
+    table: {
+      headerRows: 1,
+      widths: ['auto', '*', 'auto', 'auto', 'auto', 'auto'],
+      body: [
+        ['Id', 'Articulo', 'Presentacion', 'Cantidad', 'Valor', 'Subtotal'],
+        ...products,
+      ],
+    },
+  };
+
+  const pdfDefinition: any = {
+    content: [
+      {
+        text: establishment,
+        fontSize: 16,
+        bold: true,
+        alignment: 'center',
+        margin: [0, 0, 0, 10],
+      },
+      {
+        text: nit,
+        fontSize: 12,
+        alignment: 'center',
+        margin: [0, 0, 0, 10],
+      },
+      {
+        text: `Total Monetario: ${totalPrice}`,
+        fontSize: 16,
+        alignment: 'center',
+        margin: [0, 0, 0, 20],
+      },
+      {
+        text: `Fecha generacion: ${currentDate}`,
+        fontSize: 12,
+        alignment: 'center',
+        margin: [0, 0, 0, 10],
+      },
+      table,
+    ],
+  };
+
+  const pdfDocGenerator = pdfMake.createPdf(pdfDefinition);
+
+    if (download) {
+      pdfDocGenerator.download('total-inventario.pdf');
+    } else {
+      pdfDocGenerator.getBlob((blob: any) => {
+        const url = URL.createObjectURL(blob);
+        window.open(url, '_blank');
+        URL.revokeObjectURL(url);
+      });
+    }
+
+  }
+
+  showTotalSale(sales: SaleModel[], download: boolean) {
+    const establishment = 'Ferrecasa';
+    const nit = 'NIT 91010777-8';
+    const currentDate = formatDate(new Date(), 'yyyy/MM/dd HH:mm:ss', 'en-US');
+
+    let totalSale = 0;
+
+    const tableRows = sales.map((sale: SaleModel) => {
+      const subtotal = sale.total_price;
+      totalSale += subtotal;
+      return [
+        sale.id_sale,
+        formatDate(sale.sale_date, 'yyyy/MM/dd', 'en-US'),
+        sale.name_user,
+        this.formatCurrency(sale.total_price),
+      ];
+    });
+
+    const totalPrice = this.formatCurrency(totalSale);
+
+    const table = {
+      table: {
+        headerRows: 1,
+        widths: ['auto', 'auto', '*', 'auto'],
+        body: [
+          ['ID Venta', 'Fecha', 'Usuario', 'Total'],
+          ...tableRows,
+        ],
+      },
+    };
+
+    const pdfDefinition: any = {
+      content: [
+        {
+          text: establishment,
+          fontSize: 16,
+          bold: true,
+          alignment: 'center',
+          margin: [0, 0, 0, 10],
+        },
+        {
+          text: nit,
+          fontSize: 12,
+          alignment: 'center',
+          margin: [0, 0, 0, 10],
+        },
+        {
+          text: `Total Monetario de Ventas: ${totalPrice}`,
+          fontSize: 16,
+          alignment: 'center',
+          margin: [0, 0, 0, 20],
+        },
+        {
+          text: `Fecha de Generación: ${currentDate}`,
+          fontSize: 12,
+          alignment: 'center',
+          margin: [0, 0, 0, 10],
+        },
+        table,
+      ],
+    };
+
+    const pdfDocGenerator = pdfMake.createPdf(pdfDefinition);
+
+    if (download) {
+      pdfDocGenerator.download('total-inventario.pdf');
+    } else {
+      pdfDocGenerator.getBlob((blob: any) => {
+        const url = URL.createObjectURL(blob);
+        window.open(url, '_blank');
+        URL.revokeObjectURL(url);
+      });
+    }
+  }
+
   downloadPdfSale(sale: SaleModel) {
     const title = `Venta #${sale.id_sale}`;
     const establishment = 'Ferrecasa';

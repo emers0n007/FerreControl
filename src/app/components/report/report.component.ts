@@ -14,11 +14,10 @@ import { ProductService } from 'src/app/service/product.service';
   styleUrls: ['./report.component.css'],
 })
 export class ReportComponent implements OnInit {
-
   reports = [
     { value: 'totalInventory', label: 'Total Inventario' },
     { value: 'totalSales', label: 'Total Ventas' },
-    { value: 'totalPurchases', label: 'Total Compras' }
+    { value: 'totalPurchases', label: 'Total Compras' },
   ];
 
   buys: BuyModel[] = [];
@@ -30,11 +29,14 @@ export class ReportComponent implements OnInit {
   saleSelect: SaleModel;
   buySelect: BuyModel;
 
-  clientName: string = "";
+  clientName: string = '';
   document: number = 0;
   money: number = 0;
   total: number = 0;
-  reportCon: boolean = false;
+
+  reportTotal: boolean = false;
+  reportTotalSale: boolean = false;
+  reportTotalBuy: boolean = false;
 
   listProduct: ProductModel[] = [];
 
@@ -54,30 +56,29 @@ export class ReportComponent implements OnInit {
     this.listProducts();
   }
 
-  setDetailsClient(){
+  setDetailsClient() {}
 
-  }
-
-  createUserAux(){
-    const user={
-      name_user:localStorage.getItem(this.AUTH_USER)
-    }
+  createUserAux() {
+    const user = {
+      name_user: localStorage.getItem(this.AUTH_USER),
+    };
     return user;
   }
 
   listProducts() {
-    this._productService.getProducts(this.createUserAux().name_user).subscribe((resp) => {
-      if (resp) {
-        this.listProduct = resp;
-        console.log(this.listProduct)
-      }
-    });
+    this._productService
+      .getProducts(this.createUserAux().name_user)
+      .subscribe((resp) => {
+        if (resp) {
+          this.listProduct = resp;
+        }
+      });
   }
 
   selectReport(event: Event) {
     const selectedValue = (event.target as HTMLSelectElement).value;
     this.resetTwoReports();
-    this.reportName = "Contabilidad";
+    this.reportName = 'Contabilidad';
 
     switch (selectedValue) {
       case 'totalInventory':
@@ -90,27 +91,34 @@ export class ReportComponent implements OnInit {
         this.generateTotalPurchasesReport();
         break;
       default:
-        // Handle case when no valid option is selected
         break;
     }
   }
 
-  resetTwoReports(){
-    this.reportCon = true;
+  resetTwoReports() {
     this.buySelect = null;
     this.saleSelect = null;
   }
 
   generateTotalInventoryReport() {
-    this.reportId = "Inventario";
+    this.reportTotal = true;
+    this.reportTotalBuy = false;
+    this.reportTotalSale = false;
+    this.reportId = 'Inventario';
   }
 
   generateTotalSalesReport() {
-    this.reportId = "Venta";
+    this.reportTotal = false;
+    this.reportTotalBuy = false;
+    this.reportTotalSale = true;
+    this.reportId = 'Venta';
   }
 
   generateTotalPurchasesReport() {
-    this.reportId = "Compra";
+    this.reportTotal = false;
+    this.reportTotalBuy = true;
+    this.reportTotalSale = false;
+    this.reportId = 'Compra';
   }
 
   showPdfBuy() {
@@ -141,16 +149,22 @@ export class ReportComponent implements OnInit {
     if (this.buySelect) {
       this.downloadPdfBuy();
     } else if (this.saleSelect) {
-      if(this.clientName === ""){
-        this.clientName = "Cliente Generico"
+      if (this.clientName === '') {
+        this.clientName = 'Cliente Generico';
       }
-      if(this.document == 0){
+      if (this.document == 0) {
         this.document = 7777777;
       }
       this._pdfService.setValues(this.clientName, this.document, this.money);
       this.downloadPdfSale();
-    }else {
-      this.showAlert("No se ha seleccionado un reporte valido", false);
+    } else if (this.reportTotal) {
+      this._pdfService.showTotalInventory(this.listProduct, true);
+    } else if (this.reportTotalBuy) {
+      this._pdfService.showTotalBuy(this.buys, true);
+    } else if (this.reportTotalSale) {
+      this._pdfService.showTotalSale(this.sales, true);
+    } else {
+      this.showAlert('No se ha seleccionado un reporte valido', false);
     }
   }
 
@@ -158,23 +172,31 @@ export class ReportComponent implements OnInit {
     if (this.buySelect) {
       this.showPdfBuy();
     } else if (this.saleSelect) {
-      if(this.clientName === ""){
-        this.clientName = " Cliente Generico"
+      if (this.clientName === '') {
+        this.clientName = ' Cliente Generico';
       }
-      if(this.document == 0){
+      if (this.document == 0) {
         this.document = 7777777;
       }
       this._pdfService.setValues(this.clientName, this.document, this.money);
       this.showPdfSale();
-    }else {
-      this.showAlert("No se ha seleccionado un reporte valido", false);
+    } else if (this.reportTotal) {
+      this._pdfService.showTotalInventory(this.listProduct, false);
+    } else if (this.reportTotalBuy) {
+      this._pdfService.showTotalBuy(this.buys, false);
+    } else if (this.reportTotalSale) {
+      this._pdfService.showTotalSale(this.sales, false);
+    } else {
+      this.showAlert('No se ha seleccionado un reporte valido', false);
     }
   }
 
   getBuys(): void {
-    this._buyService.getBuys(this.createUserAux().name_user).subscribe((buys) => {
-      this.buys = buys;
-    });
+    this._buyService
+      .getBuys(this.createUserAux().name_user)
+      .subscribe((buys) => {
+        this.buys = buys;
+      });
   }
 
   selectBuy(event: Event) {
@@ -187,14 +209,18 @@ export class ReportComponent implements OnInit {
       this.reportName = 'Entrada';
       this.reportId = this.buySelect.id_buy + '';
       this.saleSelect = null;
-      this.reportCon = false;
+      this.reportTotal = false;
+      this.reportTotalBuy = false;
+      this.reportTotalSale = false;
     }
   }
 
   getSales(): void {
-    this._saleService.getSales(this.createUserAux().name_user).subscribe((sales) => {
-      this.sales = sales;
-    });
+    this._saleService
+      .getSales(this.createUserAux().name_user)
+      .subscribe((sales) => {
+        this.sales = sales;
+      });
   }
 
   selectSale(event: Event) {
@@ -208,7 +234,9 @@ export class ReportComponent implements OnInit {
       this.reportName = 'Salida';
       this.reportId = this.saleSelect.id_sale + '';
       this.buySelect = null;
-      this.reportCon = false;
+      this.reportTotal = false;
+      this.reportTotalBuy = false;
+      this.reportTotalSale = false;
     }
   }
 

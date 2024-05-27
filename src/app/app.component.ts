@@ -4,6 +4,7 @@ import { AlertService } from './service/alert.service';
 import { ProductService } from './service/product.service';
 import { ProductModel } from './model/ProductModel';
 import { ModalProductsLowService } from './service/modal-products-low.service';
+import { SharedProductService } from './service/shared-product.service';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,7 @@ export class AppComponent implements OnInit{
   lowStockProducts: ProductModel[] = [];
   private readonly AUTH_USER = 'No debe estar aqui';
 
-  constructor(private authService: AuthenticationService, private alertService: AlertService, private productService: ProductService, private renderer: Renderer2, private modalService: ModalProductsLowService) {
+  constructor(private authService: AuthenticationService, private alertService: AlertService, private productService: ProductService, private renderer: Renderer2, private modalService: ModalProductsLowService, private sharedProduct: SharedProductService) {
 
   }
 
@@ -47,7 +48,10 @@ export class AppComponent implements OnInit{
     }
   }
   ngOnInit(): void {
-    this.getProductLowStock();
+    this.sharedProduct.lowStockProducts$.subscribe(products => {
+      this.lowStockProducts = products;
+    });
+    //this.getProductLowStock();
     this.alertService.alert$.subscribe((res: any) => {
       this.mesage = res.message;
       this.okay = res.okay;
@@ -71,17 +75,14 @@ export class AppComponent implements OnInit{
     const user={
       name_user:localStorage.getItem(this.AUTH_USER)
     }
+
     return user;
   }
 
   getProductLowStock() {
     this.productService.getProductoLowStock(this.createUserAux().name_user).subscribe(
       (products: ProductModel[]) => {
-        this.lowStockProducts = products;
-        /*console.log('Productos con bajo stock:', this.lowStockProducts);
-        if (this.lowStockProducts && this.lowStockProducts.length > 0) {
-          //this.openModal();
-        }/*/
+        this.sharedProduct.updateLowStockProducts(products);
       },
       error => {
         console.error('Error al obtener productos con bajo stock:', error);

@@ -26,7 +26,7 @@ export class SaleComponent {
   listComplet: ProductModel[] = [];
   filteredPro: ProductModel[] = [];
   productsFact: ProductModel[] = [];
-  private readonly AUTH_USERNAME = 'Desconocdido';
+  private readonly AUTH_USERNAME = 'Desconocido';
   private readonly AUTH_USER = 'No debe estar aqui';
   username: string | null = '';
   private subscription: Subscription;
@@ -52,7 +52,7 @@ export class SaleComponent {
     });
   }
   ngOnInit(): void {
-    this.username = localStorage.getItem(this.AUTH_USERNAME);
+
     this.listProducts();
     this.currentDate = new Date();
     this.generateUUID();
@@ -61,6 +61,8 @@ export class SaleComponent {
       stockToAdd: new FormControl('', [Validators.required, this.positiveNumberValidator]),
 
     });
+    this.username = localStorage.getItem(this.AUTH_USERNAME);
+    this.console.log(localStorage.getItem(this.AUTH_USERNAME));
   }
 
   ngOnDestroy(): void {

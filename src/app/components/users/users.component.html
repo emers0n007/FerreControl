@@ -21,36 +21,54 @@
     </div>
   </div>
 
+
   <div class="table-responsive">
     <table class="table mt-2 table-bordered table-hover">
       <thead class="table-warning">
-      <tr>
-        <th>Nombre De Usuario</th>
-        <th>Nombre</th>
-        <th>Rol</th>
-        <th>Acciones</th>
-      </tr>
+        <tr>
+          <th>Nombre De Usuario</th>
+          <th>Nombre</th>
+          <th>Rol</th>
+          <th>Acciones</th>
+        </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let item of list">
-        <td>{{ item.name_user }}</td>
-        <td>{{ item.name }}</td>
-        <td>{{ item.role }}</td>
-        <td>
-          &nbsp;&nbsp;
-          <button
-            type="button"
-            class="btn btn-danger btn-sm"
-            (click)="delete(item.name_user)"
-            title="Eliminar proveedor"
-          >
-            <i class="fa fa-trash"></i>
-          </button>
-        </td>
-      </tr>
+        <!-- Iterar sobre los elementos de la lista -->
+        <ng-container *ngFor="let item of list; let i = index">
+          <tr>
+            <td>{{ item.name_user }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.role }}</td>
+            <td>
+              &nbsp;&nbsp;
+              <!-- Utilizar una directiva *ngIf para desactivar el primer botón -->
+              <button
+                *ngIf="i !== 0; else disableButton"
+                type="button"
+                class="btn btn-danger btn-sm"
+                (click)="delete(item.name_user)"
+                title="Eliminar proveedor"
+              >
+                <i class="fa fa-trash"></i>
+              </button>
+              <!-- Contenido alternativo si el índice es 0 -->
+              <ng-template #disableButton>
+                <button
+                  type="button"
+                  class="btn btn-danger btn-sm"
+                  disabled
+                  title="No puedes eliminar el primer proveedor"
+                >
+                  <i class="fa fa-trash"></i>
+                </button>
+              </ng-template>
+            </td>
+          </tr>
+        </ng-container>
       </tbody>
     </table>
   </div>
+
 </div>
 <div
   class="modal fade"

@@ -11,7 +11,7 @@ export class AuthenticationService {
 
   constructor(private httpClient:HttpClient) {
   }
-  private readonly AUTH_KEY = 'true';
+  private readonly AUTH_KEY = 'false';
   private readonly AUTH_USER = 'No debe estar aqui';
   private readonly AUTH_ROLE = 'Rol Invalido';
   private readonly AUTH_USERNAME = 'Desconocido';
